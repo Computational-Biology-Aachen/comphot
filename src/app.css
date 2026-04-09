@@ -1,0 +1,60 @@
+:root {
+  /* Typography */
+  --font-sans: system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+  --font-size-base: 1rem;
+  --line-height-base: 1.6;
+
+  /* Colour palette */
+  --color-bg: #ffffff;
+  --color-surface: #f5f6f8;
+  --color-border: #dde1e9;
+  --color-text: #1a1d23;
+  --color-text-muted: #727682;
+  --color-primary: #1c5bc7;      /* matches dark-phase highlight in original plots */
+  --color-accent: #cf6d0c;       /* matches light-phase highlight in original plots */
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+
+  /* Layout */
+  --sidebar-width: 220px;
+  --content-max-width: 900px;
+  --nav-height: 56px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+a {
+  color: var(--color-primary);
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
