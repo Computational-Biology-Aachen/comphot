@@ -20,11 +20,7 @@
 	<link rel="icon" href={favicon} />
 	<!-- Alternate locale links for crawlers -->
 	{#each locales as locale (locale)}
-		<link
-			rel="alternate"
-			hreflang={locale}
-			href="{base}{localizeHref(routePath(), { locale })}"
-		/>
+		<link rel="alternate" hreflang={locale} href="{base}{localizeHref(routePath(), { locale })}" />
 	{/each}
 </svelte:head>
 
