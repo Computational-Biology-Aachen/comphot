@@ -6,7 +6,7 @@ State variables: P, H, E, A, Pr, V
 """
 
 import numpy as np
-from scipy.integrate import solve_ivp
+from scipy.integrate import solve_ivp  # type: ignore[import-untyped]
 
 # ---------------------------------------------------------------------------
 # Default parameters (from model.py get_model())
@@ -136,7 +136,7 @@ def _fluorescence(B0, B2, Q, kH, kF, kP):
 # ODE right-hand side
 # ---------------------------------------------------------------------------
 
-def _npq_ode(t, y, pars, PFD):
+def _npq_ode(_t, y, pars, PFD):
     P, H, E, A, Pr, V = y
 
     # Unpack parameters
@@ -193,7 +193,7 @@ def _npq_ode(t, y, pars, PFD):
 
     # Algebraic modules
     Q  = _quencher(Pr, V, Xtot, PsbStot, Kzsat, gamma0, gamma1, gamma2, gamma3)
-    B0, B1, B2, B3 = _ps2states(P, Q, PFD, PQtot, kPQred, KeqQAPQ, kH, kF, kP, PSIItot)
+    _B0, B1, _B2, _B3 = _ps2states(P, Q, PFD, PQtot, kPQred, KeqQAPQ, kH, kF, kP, PSIItot)
 
     # Rates
     # vps2: reduction of PQ by PSII
@@ -296,18 +296,16 @@ class ModelFunctions:
         y_current = list(y0)
 
         for step in proto_py:
-            try:
-                t_end = float(step["t_end"]) if isinstance(step, dict) else float(step.t_end)
-                PFD   = float(step["PFD"])   if isinstance(step, dict) else float(step.PFD)
-            except Exception:
-                # Try attribute access for Pyodide JsProxy objects
-                t_end = float(step.t_end)
-                PFD   = float(step.PFD)
+            # Support both plain dicts and Pyodide JsProxy objects
+            if isinstance(step, dict):
+                t_end = float(step["t_end"])
+                PFD   = float(step["PFD"])
+            else:
+                t_end = float(step.t_end)  # type: ignore[union-attr]
+                PFD   = float(step.PFD)    # type: ignore[union-attr]
 
             if t_end <= t_start:
                 continue
-
-            n_eval = max(2, int((t_end - t_start) * 10) + 1)
 
             try:
                 sol = solve_ivp(
@@ -334,7 +332,7 @@ class ModelFunctions:
                 KeqQAPQ = _KeqQAPQ(pars["F"], pars["E0QAQAm"], pars["E0PQPQH2"], pars["pHstroma"], RT)
                 fluo_arr = []
                 for i in range(y_arr.shape[1]):
-                    P_i, H_i, E_i, A_i, Pr_i, V_i = y_arr[:, i]
+                    P_i, H_i, _E_i, _A_i, Pr_i, V_i = y_arr[:, i]
                     P_i  = max(P_i,  0.0)
                     H_i  = max(H_i,  1e-15)
                     Pr_i = max(min(Pr_i, pars["PsbStot"]), 0.0)
@@ -342,7 +340,7 @@ class ModelFunctions:
                     Q_i  = _quencher(Pr_i, V_i, pars["Xtot"], pars["PsbStot"],
                                      pars["Kzsat"], pars["gamma0"], pars["gamma1"],
                                      pars["gamma2"], pars["gamma3"])
-                    B0_i, B1_i, B2_i, B3_i = _ps2states(
+                    B0_i, _B1_i, B2_i, _B3_i = _ps2states(
                         P_i, Q_i, PFD,
                         pars["PQtot"], pars["kPQred"], KeqQAPQ,
                         pars["kH"], pars["kF"], pars["kP"], pars["PSIItot"]
@@ -366,4 +364,4 @@ class ModelFunctions:
 
 
 model_functions = ModelFunctions()
-model_functions
+model_functions  # noqa: B018 — Pyodide captures the last expression as the module return value
