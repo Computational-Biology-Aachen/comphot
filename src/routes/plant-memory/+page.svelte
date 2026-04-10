@@ -224,7 +224,7 @@
 
 <!-- ── Guiding questions ─────────────────────────────── -->
 <Expander title={t('mem_guiding_expander')} open>
-	<h3>{@html marked.parseInline(t('mem_guiding_header'))}</h3>
+	<div class="prose">{@html marked(t('mem_guiding_header'))}</div>
 	<label class="toggle-label">
 		<input type="checkbox" bind:checked={showAnswers} />
 		{@html marked.parseInline(t('mem_guiding_toggle'))}
@@ -386,6 +386,15 @@
 />
 
 <style>
+	.prose :global(h1),
+	.prose :global(h2),
+	.prose :global(h3),
+	.prose :global(h4) {
+		margin-top: var(--space-5);
+		margin-bottom: var(--space-2);
+		line-height: 1.3;
+	}
+
 	.intro-content {
 		margin: var(--space-4) 0;
 	}

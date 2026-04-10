@@ -22,8 +22,10 @@ function callMessage(mod: MessageModule, key: string): string | null {
  */
 export function t(key: string): string {
 	const audience = audienceStore.audience;
+	// Map '4bio' → 'bio', '4math' → 'math' for message key prefixes
+	const prefix = audience === '4math' ? 'math' : 'bio';
 	// Try audience-prefixed variant first (e.g. "bio_fal_headline_experiments")
-	const audienceResult = callMessage(m, `${audience}_${key}`);
+	const audienceResult = callMessage(m, `${prefix}_${key}`);
 	if (audienceResult !== null) return audienceResult;
 	// Fall back to unprefixed key
 	const baseResult = callMessage(m, key);

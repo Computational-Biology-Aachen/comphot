@@ -110,6 +110,7 @@
 			datasets.push({
 				label: 'New',
 				data,
+				parsing: false as const,
 				borderColor: NEW_COLOR,
 				backgroundColor: NEW_COLOR,
 				borderWidth: 2,
@@ -125,6 +126,7 @@
 			datasets.push({
 				label: 'Old',
 				data,
+				parsing: false as const,
 				borderColor: OLD_COLOR,
 				backgroundColor: OLD_COLOR,
 				borderWidth: 2,

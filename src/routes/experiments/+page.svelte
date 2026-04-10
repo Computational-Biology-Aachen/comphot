@@ -186,7 +186,7 @@
 />
 
 <!-- ── Model Construction ───────────────────────────── -->
-<h2>{@html marked.parseInline(t('fal_headline_model_construction'))}</h2>
+<div class="prose">{@html marked(t('fal_headline_model_construction'))}</div>
 
 <p>{@html marked(t('fal_construction_explanation_1'))}</p>
 
@@ -210,7 +210,7 @@
 
 <!-- 4math: ODE equations + code walkthrough -->
 {#if audienceStore.audience === '4math'}
-	<h3>{@html marked.parseInline(t('fal_headline_model_equations'))}</h3>
+	<div class="prose">{@html marked(t('fal_headline_model_equations'))}</div>
 	<p>{@html marked(t('fal_model_equations_introduction'))}</p>
 
 	<div class="math-block">
@@ -240,7 +240,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 	</Expander>
 
 	<Expander title={t('fal_model_code_expander')}>
-		<h4>{@html marked.parseInline(t('fal_construction_header'))}</h4>
+		<div class="prose">{@html marked(t('fal_construction_header'))}</div>
 		<p>{@html marked(t('fal_construction_1'))}</p>
 		<pre><code>{CODE.define}</code></pre>
 
@@ -257,7 +257,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 		<p>{@html marked(t('fal_construction_3'))}</p>
 		<pre><code>{CODE.addCompsPars}</code></pre>
 
-		<h4>{@html marked.parseInline(t('fal_simulation_header'))}</h4>
+		<div class="prose">{@html marked(t('fal_simulation_header'))}</div>
 		<p>{@html marked(t('fal_simulation_1'))}</p>
 		<pre><code>{CODE.definesim}</code></pre>
 
@@ -267,32 +267,32 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 {/if}
 
 <!-- ── Implementation ── -->
-<h3>{@html marked.parseInline(t('fal_headline_implementation'))}</h3>
+<div class="prose">{@html marked(t('fal_headline_implementation'))}</div>
 <p>{@html marked(t('fal_implementation_description'))}</p>
 {#if audienceStore.audience === '4bio'}
 	<p>{@html t('fal_implementation_to_expert')}</p>
 {/if}
 
 <!-- ── Analysis ─────────────────────────────────────── -->
-<h2>{@html marked.parseInline(t('fal_headline_analyse'))}</h2>
+<div class="prose">{@html marked(t('fal_headline_analyse'))}</div>
 <p>{@html marked(t('fal_introduktion'))}</p>
 
-<h5>{@html marked.parseInline(t('fal_headline_slider'))}</h5>
+<div class="prose">{@html marked(t('fal_headline_slider'))}</div>
 <p>{@html marked(t('fal_explanatnion'))}</p>
 
 <Expander title={t('fal_graph_explanation_expander')} open>
-	<h3>{@html marked.parseInline(t('fal_graph_explanation_header_single'))}</h3>
+	<div class="prose">{@html marked(t('fal_graph_explanation_header_single'))}</div>
 	<p>{@html marked(t('fal_graph_explanation_1'))}</p>
 	<div class="math-inline">
 		<Katex displayMode>{"NPQ = \\dfrac{F_m - F_m'}{F_m'}"}</Katex>
 	</div>
 	<p>{@html t('fal_graph_explanation_2')}</p>
-	<h3>{@html marked.parseInline(t('fal_graph_explanation_header_duo'))}</h3>
+	<div class="prose">{@html marked(t('fal_graph_explanation_header_duo'))}</div>
 	<p>{@html marked(t('fal_graph_explanation_duo'))}</p>
 </Expander>
 
 <Expander title={t('fal_guiding_expander')} open>
-	<h3>{@html marked.parseInline(t('fal_guiding_header'))}</h3>
+	<div class="prose">{@html marked(t('fal_guiding_header'))}</div>
 	<label class="toggle-label">
 		<input type="checkbox" bind:checked={showAnswers} />
 		{@html marked.parseInline(t('fal_guiding_toggle'))}
@@ -455,6 +455,20 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 />
 
 <style>
+	.prose :global(h1),
+	.prose :global(h2),
+	.prose :global(h3),
+	.prose :global(h4),
+	.prose :global(h5) {
+		margin-top: var(--space-5);
+		margin-bottom: var(--space-2);
+		line-height: 1.3;
+	}
+
+	.prose :global(p) {
+		margin-bottom: var(--space-3);
+	}
+
 	.fig {
 		margin: var(--space-6) auto;
 		text-align: center;

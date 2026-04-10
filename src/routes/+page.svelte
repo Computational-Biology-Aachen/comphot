@@ -21,7 +21,7 @@
 	</div>
 
 	<section class="usage-section">
-		<h2>{t('str_headline_usage')}</h2>
+		<div class="prose">{@html marked(t('str_headline_usage'))}</div>
 		<div class="two-col">
 			<div class="col-text prose">
 				{@html marked(t('str_usage'))}
@@ -39,7 +39,7 @@
 	</div>
 
 	<section class="learning-objectives">
-		<h3>{t('str_learning_objectives_header')}</h3>
+		<div class="prose">{@html marked(t('str_learning_objectives_header'))}</div>
 		<InfoBox>
 			<div class="prose">
 				{@html marked(t('str_learning_objectives'))}
