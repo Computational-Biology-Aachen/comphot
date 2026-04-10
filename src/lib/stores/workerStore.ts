@@ -12,7 +12,7 @@ export interface SimRequest {
 	type?: '__INIT__';
 	basePath?: string;
 	requestId: string;
-	protocol: { t_end: number; pfd: number }[];
+	protocol: { t_end: number; PFD: number }[];
 	y0: number[]; // [P, H, E, A, Pr, V]
 	parsOverride: Record<string, number>;
 }
