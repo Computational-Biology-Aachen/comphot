@@ -29,13 +29,16 @@
 	<nav class="sidebar-nav" aria-label="Main navigation">
 		{#each navLinks as link (link.href)}
 			{@const href = `${base}${link.href}`}
-			{@const isActive = page.url.pathname === href || (link.href !== '/' && page.url.pathname.startsWith(href))}
+			{@const isActive =
+				page.url.pathname === href || (link.href !== '/' && page.url.pathname.startsWith(href))}
 			<a
 				{href}
 				class="nav-link"
 				class:active={isActive}
 				aria-current={isActive ? 'page' : undefined}
-				onclick={() => { menuOpen = false; }}
+				onclick={() => {
+					menuOpen = false;
+				}}
 			>
 				{link.label}
 			</a>
@@ -84,7 +87,10 @@
 		font-size: 0.9rem;
 		font-weight: 400;
 		border-left: 3px solid transparent;
-		transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+		transition:
+			color 0.15s,
+			border-color 0.15s,
+			background-color 0.15s;
 	}
 
 	.nav-link:hover {

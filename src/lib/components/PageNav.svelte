@@ -58,7 +58,9 @@
 		text-decoration: none;
 		border: 1px solid var(--color-border);
 		border-radius: 6px;
-		transition: background-color 0.15s, border-color 0.15s;
+		transition:
+			background-color 0.15s,
+			border-color 0.15s;
 	}
 
 	.page-nav-btn:hover {
