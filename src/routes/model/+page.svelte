@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { marked } from 'marked';
 	import { base } from '$app/paths';
+	import Expander from '$lib/components/Expander.svelte';
+	import InfoBox from '$lib/components/InfoBox.svelte';
+	import PageNav from '$lib/components/PageNav.svelte';
+	import VideoTranscriptToggle from '$lib/components/VideoTranscriptToggle.svelte';
+	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
 	import { t } from '$lib/i18n';
 	import { audienceStore } from '$lib/stores/audience.svelte';
-	import PageNav from '$lib/components/PageNav.svelte';
-	import Expander from '$lib/components/Expander.svelte';
-	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
-	import InfoBox from '$lib/components/InfoBox.svelte';
-	import VideoTranscriptToggle from '$lib/components/VideoTranscriptToggle.svelte';
+	import { marked } from 'marked';
 	import Katex from 'svelte-katex';
 
 	// Python code snippets for 4math tabs
@@ -365,8 +365,8 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 			<p>{t('literature_onpage')}</p>
 			<ol>
 				<li>
-					van Aalst, M., Ebenhöh, O., &amp; Matuszyńska, A. (2021). Constructing and analysing dynamic
-					models with modelbase v1.2.3. BMC Bioinformatics, 22(1), 1–15.
+					van Aalst, M., Ebenhöh, O., &amp; Matuszyńska, A. (2021). Constructing and analysing
+					dynamic models with modelbase v1.2.3. BMC Bioinformatics, 22(1), 1–15.
 					<a href="https://doi.org/10.1186/s12859-021-04122-7">
 						https://doi.org/10.1186/s12859-021-04122-7
 					</a>
