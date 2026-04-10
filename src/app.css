@@ -1,3 +1,5 @@
+@import 'katex/dist/katex.min.css';
+
 :root {
 	/* Typography */
 	--font-sans: system-ui, sans-serif;
