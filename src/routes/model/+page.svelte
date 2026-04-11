@@ -169,7 +169,12 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 				{#if activeTab === 'sir'}
 					<div class="prose">
 						{@html marked(m.mdl_headline_sir())}
-						{@html marked(ta(m.bio_mdl_mathematical_modelling_example(), m.math_mdl_mathematical_modelling_example()))}
+						{@html marked(
+							ta(
+								m.bio_mdl_mathematical_modelling_example(),
+								m.math_mdl_mathematical_modelling_example()
+							)
+						)}
 					</div>
 
 					{#if audienceStore.audience === '4bio'}
@@ -192,7 +197,12 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 					{/if}
 
 					<div class="prose">
-						{@html marked(ta(m.bio_mdl_mathematical_modelling_example_1(), m.math_mdl_mathematical_modelling_example_1()))}
+						{@html marked(
+							ta(
+								m.bio_mdl_mathematical_modelling_example_1(),
+								m.math_mdl_mathematical_modelling_example_1()
+							)
+						)}
 					</div>
 
 					{#if audienceStore.audience === '4bio'}
@@ -215,7 +225,12 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 					{/if}
 
 					<div class="prose">
-						{@html marked(ta(m.bio_mdl_mathematical_modelling_example_2(), m.math_mdl_mathematical_modelling_example_2()))}
+						{@html marked(
+							ta(
+								m.bio_mdl_mathematical_modelling_example_2(),
+								m.math_mdl_mathematical_modelling_example_2()
+							)
+						)}
 					</div>
 
 					{#if audienceStore.audience === '4bio'}
@@ -238,7 +253,12 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 					{/if}
 
 					<div class="prose">
-						{@html marked(ta(m.bio_mdl_mathematical_modelling_example_simple(), m.math_mdl_mathematical_modelling_example_simple()))}
+						{@html marked(
+							ta(
+								m.bio_mdl_mathematical_modelling_example_simple(),
+								m.math_mdl_mathematical_modelling_example_simple()
+							)
+						)}
 					</div>
 				{:else if activeTab === 'manual'}
 					<div class="prose">

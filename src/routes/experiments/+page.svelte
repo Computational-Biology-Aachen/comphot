@@ -21,8 +21,7 @@
 
 	// ── Logspace steps: np.round(np.logspace(0, 4, 21))
 	const LOG_STEPS = [
-		1, 2, 3, 4, 6, 10, 16, 25, 40, 63, 100, 158, 251, 398, 631, 1000, 1585, 2512, 3981, 6310,
-		10000
+		1, 2, 3, 4, 6, 10, 16, 25, 40, 63, 100, 158, 251, 398, 631, 1000, 1585, 2512, 3981, 6310, 10000
 	];
 
 	// ── Slider state
@@ -269,7 +268,11 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 
 <!-- ── Implementation ── -->
 <div class="prose">{@html marked(m.fal_headline_implementation())}</div>
-<p>{@html marked(ta(m.bio_fal_implementation_description(), m.math_fal_implementation_description()))}</p>
+<p>
+	{@html marked(
+		ta(m.bio_fal_implementation_description(), m.math_fal_implementation_description())
+	)}
+</p>
 {#if audienceStore.audience === '4bio'}
 	<p>{@html m.bio_fal_implementation_to_expert()}</p>
 {/if}
@@ -338,13 +341,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 				</label>
 				<label class="slider-label">
 					{@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
-					<input
-						type="range"
-						min="0"
-						max={totalMinutes * 60}
-						step="5"
-						bind:value={darkLength}
-					/>
+					<input type="range" min="0" max={totalMinutes * 60} step="5" bind:value={darkLength} />
 				</label>
 			</div>
 			<div class="slider-col">

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { marked } from 'marked';
 	import { base } from '$app/paths';
-	import * as m from '$lib/paraglide/messages';
-	import { ta } from '$lib/i18n';
 	import PageNav from '$lib/components/PageNav.svelte';
+	import { ta } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
+	import { marked } from 'marked';
 </script>
 
 <svelte:head>

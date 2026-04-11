@@ -40,7 +40,11 @@
 	</div>
 
 	<section class="learning-objectives">
-		<div class="prose">{@html marked(ta(m.bio_str_learning_objectives_header(), m.math_str_learning_objectives_header()))}</div>
+		<div class="prose">
+			{@html marked(
+				ta(m.bio_str_learning_objectives_header(), m.math_str_learning_objectives_header())
+			)}
+		</div>
 		<InfoBox>
 			<div class="prose">
 				{@html marked(ta(m.bio_str_learning_objectives(), m.math_str_learning_objectives()))}

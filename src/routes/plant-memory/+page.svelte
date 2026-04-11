@@ -20,8 +20,7 @@
 
 	// ── Logspace steps (same as experiments page)
 	const LOG_STEPS = [
-		1, 2, 3, 4, 6, 10, 16, 25, 40, 63, 100, 158, 251, 398, 631, 1000, 1585, 2512, 3981, 6310,
-		10000
+		1, 2, 3, 4, 6, 10, 16, 25, 40, 63, 100, 158, 251, 398, 631, 1000, 1585, 2512, 3981, 6310, 10000
 	];
 
 	// ── Slider state
@@ -231,9 +230,13 @@
 		{@html marked.parseInline(m.mem_guiding_toggle())}
 	</label>
 	{#if !showAnswers}
-		<div class="qa-text">{@html marked(ta(m.bio_mem_guiding_questions(), m.math_mem_guiding_questions()))}</div>
+		<div class="qa-text">
+			{@html marked(ta(m.bio_mem_guiding_questions(), m.math_mem_guiding_questions()))}
+		</div>
 	{:else}
-		<div class="qa-text">{@html marked(ta(m.bio_mem_guiding_answers(), m.math_mem_guiding_answers()))}</div>
+		<div class="qa-text">
+			{@html marked(ta(m.bio_mem_guiding_answers(), m.math_mem_guiding_answers()))}
+		</div>
 	{/if}
 </Expander>
 

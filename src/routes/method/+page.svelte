@@ -67,7 +67,9 @@
 
 	<Expander title={m.mth_measuring_fluoreszenz()} open={true}>
 		<div class="prose">
-			{@html marked(ta(m.bio_mth_explanation_measurement_1(), m.math_mth_explanation_measurement_1()))}
+			{@html marked(
+				ta(m.bio_mth_explanation_measurement_1(), m.math_mth_explanation_measurement_1())
+			)}
 			{@html marked(ta(m.bio_mth_introduction_phi(), m.math_mth_introduction_phi()))}
 		</div>
 		<YouTubeEmbed videoId="EwXkOlMBl3o" title="Measuring fluorescence with PAM" />
@@ -77,19 +79,22 @@
 
 	<div class="prose">
 		{@html marked(m.mth_headline_pam_measurement())}
-		{@html marked(ta(m.bio_mth_introduction_pam_measurement(), m.math_mth_introduction_pam_measurement()))}
+		{@html marked(
+			ta(m.bio_mth_introduction_pam_measurement(), m.math_mth_introduction_pam_measurement())
+		)}
 	</div>
 
 	<Expander title={m.mth_measuring_light_fluorescence()} open={true}>
 		<div class="prose">
-			{@html marked(ta(m.bio_mth_explanation_introduction_attempts(), m.math_mth_explanation_introduction_attempts()))}
+			{@html marked(
+				ta(
+					m.bio_mth_explanation_introduction_attempts(),
+					m.math_mth_explanation_introduction_attempts()
+				)
+			)}
 		</div>
 		<figure class="page-figure">
-			<img
-				src="{base}/pictures/PAMbasics.png"
-				alt="PAM basics diagram"
-				class="page-img centered"
-			/>
+			<img src="{base}/pictures/PAMbasics.png" alt="PAM basics diagram" class="page-img centered" />
 			<figcaption class="caption">{m.mth_caption_abb2()}</figcaption>
 		</figure>
 	</Expander>
@@ -125,8 +130,8 @@
 				</li>
 				<li>
 					Nies, T., Niu, Y., Ebenhöh, O., Matsubara, S., &amp; Matuszyńska, A. (2021). Chlorophyll
-					fluorescence: How the quality of information about PAM instrument parameters may affect our
-					research. bioRxiv.
+					fluorescence: How the quality of information about PAM instrument parameters may affect
+					our research. bioRxiv.
 					<a href="https://doi.org/10.1101/2021.05.12.443801">
 						https://doi.org/10.1101/2021.05.12.443801
 					</a>

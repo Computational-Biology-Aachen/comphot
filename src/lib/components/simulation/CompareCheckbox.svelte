@@ -5,17 +5,15 @@
 		onchange?: (checked: boolean) => void;
 	}
 
-	let { checked = $bindable(true), label = 'Compare with last simulation', onchange }: Props =
-		$props();
+	let {
+		checked = $bindable(true),
+		label = 'Compare with last simulation',
+		onchange
+	}: Props = $props();
 </script>
 
 <label class="compare-label">
-	<input
-		type="checkbox"
-		bind:checked
-		onchange={() => onchange?.(checked)}
-		class="compare-input"
-	/>
+	<input type="checkbox" bind:checked onchange={() => onchange?.(checked)} class="compare-input" />
 	{label}
 </label>
 
