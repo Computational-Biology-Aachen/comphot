@@ -2,7 +2,8 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { marked } from 'marked';
 	import { base } from '$app/paths';
-	import { t } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
+	import { ta } from '$lib/i18n';
 	import { audienceStore } from '$lib/stores/audience.svelte';
 	import { WorkerManager, simWorker } from '$lib/stores/workerStore';
 	import { buildPamProtocol } from '$lib/simulations/pam';
@@ -174,10 +175,10 @@
 	<title>Experiments in Silico</title>
 </svelte:head>
 
-<h1>{@html marked(t('fal_headline_experiments'))}</h1>
+<h1>{@html marked(m.fal_headline_experiments())}</h1>
 
 <InfoBox>
-	{@html marked(t('fal_learning_objectives'))}
+	{@html marked(ta(m.bio_fal_learning_objectives(), m.math_fal_learning_objectives()))}
 </InfoBox>
 
 <PageNav
@@ -186,32 +187,32 @@
 />
 
 <!-- ── Model Construction ───────────────────────────── -->
-<div class="prose">{@html marked(t('fal_headline_model_construction'))}</div>
+<div class="prose">{@html marked(m.fal_headline_model_construction())}</div>
 
-<p>{@html marked(t('fal_construction_explanation_1'))}</p>
+<p>{@html marked(m.fal_construction_explanation_1())}</p>
 
 <figure class="fig">
-	<img src="{base}/pictures/NPQphotosynthesis.png" alt={t('fal_caption_model_npq')} />
-	<figcaption>{t('fal_caption_model_npq')}</figcaption>
+	<img src="{base}/pictures/NPQphotosynthesis.png" alt={m.fal_caption_model_npq()} />
+	<figcaption>{m.fal_caption_model_npq()}</figcaption>
 </figure>
 
-<p>{@html marked(t('fal_construction_explanation_2'))}</p>
-<p>{@html t('fal_rates_1')}</p>
-<p>{@html marked(t('fal_rates_2'))}</p>
-<p>{@html marked(t('fal_rates_3'))}</p>
-<p>{@html marked(t('fal_rates_4'))}</p>
-<p>{@html marked(t('fal_rates_5'))}</p>
-<p>{@html t('fal_rates_6')}</p>
+<p>{@html marked(m.fal_construction_explanation_2())}</p>
+<p>{@html m.fal_rates_1()}</p>
+<p>{@html marked(m.fal_rates_2())}</p>
+<p>{@html marked(m.fal_rates_3())}</p>
+<p>{@html marked(m.fal_rates_4())}</p>
+<p>{@html marked(m.fal_rates_5())}</p>
+<p>{@html m.fal_rates_6()}</p>
 
-<Expander title={t('fal_components_explanation_header')}>
-	<div>{@html marked(t('fal_molecules_explanation_table'))}</div>
-	<div>{@html marked(t('fal_enzymes_explanation_table'))}</div>
+<Expander title={m.fal_components_explanation_header()}>
+	<div>{@html marked(m.fal_molecules_explanation_table())}</div>
+	<div>{@html marked(m.fal_enzymes_explanation_table())}</div>
 </Expander>
 
 <!-- 4math: ODE equations + code walkthrough -->
 {#if audienceStore.audience === '4math'}
-	<div class="prose">{@html marked(t('fal_headline_model_equations'))}</div>
-	<p>{@html marked(t('fal_model_equations_introduction'))}</p>
+	<div class="prose">{@html marked(m.math_fal_headline_model_equations())}</div>
+	<p>{@html marked(m.math_fal_model_equations_introduction())}</p>
 
 	<div class="math-block">
 		<Katex displayMode
@@ -226,8 +227,8 @@ b_\mathrm{H} \cdot \frac{\mathrm{dH}}{\mathrm{d}t} &= 2 v_\mathrm{PSII} + 4 v_\m
 		>
 	</div>
 
-	<Expander title={t('fal_reaction_rates')}>
-		<p>{@html marked(t('fal_rates_dynamic'))}</p>
+	<Expander title={m.math_fal_reaction_rates()}>
+		<p>{@html marked(m.math_fal_rates_dynamic())}</p>
 		<div class="math-block">
 			<Katex displayMode
 				>{String.raw`\begin{aligned}
@@ -239,12 +240,12 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 		</div>
 	</Expander>
 
-	<Expander title={t('fal_model_code_expander')}>
-		<div class="prose">{@html marked(t('fal_construction_header'))}</div>
-		<p>{@html marked(t('fal_construction_1'))}</p>
+	<Expander title={m.math_fal_model_code_expander()}>
+		<div class="prose">{@html marked(m.math_fal_construction_header())}</div>
+		<p>{@html marked(m.math_fal_construction_1())}</p>
 		<pre><code>{CODE.define}</code></pre>
 
-		<p>{@html marked(t('fal_construction_2'))}</p>
+		<p>{@html marked(m.math_fal_construction_2())}</p>
 		<details>
 			<summary>Parameters</summary>
 			<pre><code>{CODE.params}</code></pre>
@@ -254,58 +255,58 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 			<pre><code>{CODE.comps}</code></pre>
 		</details>
 
-		<p>{@html marked(t('fal_construction_3'))}</p>
+		<p>{@html marked(m.math_fal_construction_3())}</p>
 		<pre><code>{CODE.addCompsPars}</code></pre>
 
-		<div class="prose">{@html marked(t('fal_simulation_header'))}</div>
-		<p>{@html marked(t('fal_simulation_1'))}</p>
+		<div class="prose">{@html marked(m.math_fal_simulation_header())}</div>
+		<p>{@html marked(m.math_fal_simulation_1())}</p>
 		<pre><code>{CODE.definesim}</code></pre>
 
-		<p>{@html marked(t('fal_simulation_2'))}</p>
+		<p>{@html marked(m.math_fal_simulation_2())}</p>
 		<pre><code>{CODE.initialisesim}</code></pre>
 	</Expander>
 {/if}
 
 <!-- ── Implementation ── -->
-<div class="prose">{@html marked(t('fal_headline_implementation'))}</div>
-<p>{@html marked(t('fal_implementation_description'))}</p>
+<div class="prose">{@html marked(m.fal_headline_implementation())}</div>
+<p>{@html marked(ta(m.bio_fal_implementation_description(), m.math_fal_implementation_description()))}</p>
 {#if audienceStore.audience === '4bio'}
-	<p>{@html t('fal_implementation_to_expert')}</p>
+	<p>{@html m.bio_fal_implementation_to_expert()}</p>
 {/if}
 
 <!-- ── Analysis ─────────────────────────────────────── -->
-<div class="prose">{@html marked(t('fal_headline_analyse'))}</div>
-<p>{@html marked(t('fal_introduktion'))}</p>
+<div class="prose">{@html marked(m.fal_headline_analyse())}</div>
+<p>{@html marked(ta(m.bio_fal_introduktion(), m.math_fal_introduktion()))}</p>
 
-<div class="prose">{@html marked(t('fal_headline_slider'))}</div>
-<p>{@html marked(t('fal_explanatnion'))}</p>
+<div class="prose">{@html marked(m.fal_headline_slider())}</div>
+<p>{@html marked(m.fal_explanatnion())}</p>
 
-<Expander title={t('fal_graph_explanation_expander')} open>
-	<div class="prose">{@html marked(t('fal_graph_explanation_header_single'))}</div>
-	<p>{@html marked(t('fal_graph_explanation_1'))}</p>
+<Expander title={m.fal_graph_explanation_expander()} open>
+	<div class="prose">{@html marked(m.fal_graph_explanation_header_single())}</div>
+	<p>{@html marked(m.fal_graph_explanation_1())}</p>
 	<div class="math-inline">
 		<Katex displayMode>{"NPQ = \\dfrac{F_m - F_m'}{F_m'}"}</Katex>
 	</div>
-	<p>{@html t('fal_graph_explanation_2')}</p>
-	<div class="prose">{@html marked(t('fal_graph_explanation_header_duo'))}</div>
-	<p>{@html marked(t('fal_graph_explanation_duo'))}</p>
+	<p>{@html ta(m.bio_fal_graph_explanation_2(), m.math_fal_graph_explanation_2())}</p>
+	<div class="prose">{@html marked(m.fal_graph_explanation_header_duo())}</div>
+	<p>{@html marked(m.fal_graph_explanation_duo())}</p>
 </Expander>
 
-<Expander title={t('fal_guiding_expander')} open>
-	<div class="prose">{@html marked(t('fal_guiding_header'))}</div>
+<Expander title={m.fal_guiding_expander()} open>
+	<div class="prose">{@html marked(m.fal_guiding_header())}</div>
 	<label class="toggle-label">
 		<input type="checkbox" bind:checked={showAnswers} />
-		{@html marked.parseInline(t('fal_guiding_toggle'))}
+		{@html marked.parseInline(m.fal_guiding_toggle())}
 	</label>
 	{#if !showAnswers}
-		<div class="qa-text">{@html marked(t('fal_guiding_questions'))}</div>
+		<div class="qa-text">{@html marked(m.fal_guiding_questions())}</div>
 		{#if audienceStore.audience === '4bio'}
-			<div class="qa-text">{@html marked(t('fal_guiding_questions_extend'))}</div>
+			<div class="qa-text">{@html marked(m.bio_fal_guiding_questions_extend())}</div>
 		{/if}
 	{:else}
-		<div class="qa-text">{@html marked(t('fal_guiding_answers'))}</div>
+		<div class="qa-text">{@html marked(m.fal_guiding_answers())}</div>
 		{#if audienceStore.audience === '4bio'}
-			<div class="qa-text">{@html marked(t('fal_guiding_answers_extend'))}</div>
+			<div class="qa-text">{@html marked(m.bio_fal_guiding_answers_extend())}</div>
 		{/if}
 	{/if}
 </Expander>
@@ -313,17 +314,17 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 <!-- ── Slider controls ──────────────────────────────── -->
 <div class="slider-section">
 	<label class="slider-label">
-		{@html t('slider_light')}: <strong>{lightIntensity}</strong>
+		{@html m.slider_light()}: <strong>{lightIntensity}</strong>
 		<input type="range" min="50" max="900" step="50" bind:value={lightIntensity} />
 	</label>
 
 	<div class="slider-row">
 		<label class="slider-label">
-			{@html t('fal_slider_time')}: <strong>{totalMinutes} min</strong>
+			{@html m.fal_slider_time()}: <strong>{totalMinutes} min</strong>
 			<input type="range" min="1" max="15" step="1" bind:value={totalMinutes} />
 		</label>
 		<label class="slider-label">
-			{@html t('slider_pulses')}: <strong>{pulseInterval} s</strong>
+			{@html m.slider_pulses()}: <strong>{pulseInterval} s</strong>
 			<input type="range" min="5" max="150" step="5" bind:value={pulseInterval} />
 		</label>
 	</div>
@@ -332,11 +333,11 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 		<div class="slider-row">
 			<div class="slider-col">
 				<label class="slider-label">
-					{@html t('slider_activation')}: <strong>{activationMultiplier}</strong>
+					{@html m.slider_activation()}: <strong>{activationMultiplier}</strong>
 					<input type="range" min="0" max="20" step="1" bind:value={activationIdx} />
 				</label>
 				<label class="slider-label">
-					{@html t('fal_slider_darklength')}: <strong>{darkLength} s</strong>
+					{@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
 					<input
 						type="range"
 						min="0"
@@ -348,11 +349,11 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 			</div>
 			<div class="slider-col">
 				<label class="slider-label">
-					{@html t('slider_deactivation')}: <strong>{deactivationMultiplier}</strong>
+					{@html m.slider_deactivation()}: <strong>{deactivationMultiplier}</strong>
 					<input type="range" min="0" max="20" step="1" bind:value={deactivationIdx} />
 				</label>
 				<label class="slider-label">
-					{@html t('fal_slider_saturate')}: <strong>{saturatingPulse}</strong>
+					{@html m.fal_slider_saturate()}: <strong>{saturatingPulse}</strong>
 					<input type="range" min="0" max="10000" step="500" bind:value={saturatingPulse} />
 				</label>
 			</div>
@@ -377,14 +378,14 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 	<div class="charts-section">
 		<div class="charts-grid" class:three-cols={audienceStore.audience === '4bio'}>
 			<div class="chart-card">
-				<p class="chart-label">{t('fluo')}</p>
+				<p class="chart-label">{ta(m.bio_fluo(), m.math_fluo())}</p>
 				<SimChart
 					xNew={currentResult.time}
 					yNew={currentResult.fluo}
 					xOld={showOld && previousResult ? previousResult.time : []}
 					yOld={showOld && previousResult ? previousResult.fluo : []}
 					{phases}
-					yLabel={t('fluo')}
+					yLabel={ta(m.bio_fluo(), m.math_fluo())}
 					showLine={true}
 					{totalTime}
 				/>
@@ -392,28 +393,28 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 
 			{#if audienceStore.audience === '4bio'}
 				<div class="chart-card">
-					<p class="chart-label">{t('axis_npq')}</p>
+					<p class="chart-label">{m.axis_npq()}</p>
 					<SimChart
 						xNew={currentResult.npqTime}
 						yNew={currentResult.npq}
 						xOld={showOld && previousResult ? previousResult.npqTime : []}
 						yOld={showOld && previousResult ? previousResult.npq : []}
 						{phases}
-						yLabel={t('axis_npq')}
+						yLabel={m.axis_npq()}
 						showLine={false}
 						{totalTime}
 					/>
 				</div>
 
 				<div class="chart-card">
-					<p class="chart-label">{t('axis_phipsii')}</p>
+					<p class="chart-label">{m.axis_phipsii()}</p>
 					<SimChart
 						xNew={currentResult.phiTime}
 						yNew={currentResult.phiPSII}
 						xOld={showOld && previousResult ? previousResult.phiTime : []}
 						yOld={showOld && previousResult ? previousResult.phiPSII : []}
 						{phases}
-						yLabel={t('axis_phipsii')}
+						yLabel={m.axis_phipsii()}
 						showLine={false}
 						{totalTime}
 					/>
@@ -426,8 +427,8 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 				<ParameterTable
 					rows={paramRows}
 					showOld={showOld && previousParams !== null}
-					newLabel={t('new_label')}
-					oldLabel={t('old_label')}
+					newLabel={m.new_label()}
+					oldLabel={m.old_label()}
 				/>
 			</div>
 		{/if}
@@ -435,8 +436,8 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 {/if}
 
 <!-- ── Literature ── -->
-<Expander title={t('literature')}>
-	<p>{@html marked(t('literature_onpage'))}</p>
+<Expander title={m.literature()}>
+	<p>{@html marked(m.literature_onpage())}</p>
 	<ul>
 		<li>
 			Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A mathematical model of

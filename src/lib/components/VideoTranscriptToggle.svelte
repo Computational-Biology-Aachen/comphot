@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
 
 	interface Props {
-		transcriptKey: string;
+		transcript: string;
 	}
 
-	let { transcriptKey }: Props = $props();
+	let { transcript }: Props = $props();
 
 	let showTranscript = $state(false);
 </script>
@@ -18,11 +18,11 @@
 		aria-expanded={showTranscript}
 	>
 		{showTranscript ? '▼' : '▶'}
-		{t('expander_video_transcript')}
+		{m.expander_video_transcript()}
 	</button>
 	{#if showTranscript}
 		<div class="transcript-content">
-			{t(transcriptKey)}
+			{transcript}
 		</div>
 	{/if}
 </div>

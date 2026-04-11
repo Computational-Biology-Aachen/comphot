@@ -1,65 +1,68 @@
 <script lang="ts">
-	import { marked } from 'marked';
 	import { base } from '$app/paths';
-	import { t } from '$lib/i18n';
-	import { audienceStore } from '$lib/stores/audience.svelte';
-	import PageNav from '$lib/components/PageNav.svelte';
 	import Expander from '$lib/components/Expander.svelte';
-	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
 	import InfoBox from '$lib/components/InfoBox.svelte';
+	import PageNav from '$lib/components/PageNav.svelte';
 	import VideoTranscriptToggle from '$lib/components/VideoTranscriptToggle.svelte';
+	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
+	import { ta } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
+	import { audienceStore } from '$lib/stores/audience.svelte';
+	import { marked } from 'marked';
 </script>
 
 <svelte:head>
-	<title>{t('pho_headline_photosynthesis_page')} | ComPhot</title>
+	<title>{m.pho_headline_photosynthesis_page()} | ComPhot</title>
 </svelte:head>
 
 <article class="page-content">
 	<div class="prose">
-		{@html marked(t('pho_headline_photosynthesis_page'))}
+		{@html marked(m.pho_headline_photosynthesis_page())}
 	</div>
 
 	<InfoBox>
 		<div class="prose">
-			{@html marked(t('pho_learning_objectives'))}
+			{@html marked(ta(m.bio_pho_learning_objectives(), m.math_pho_learning_objectives()))}
 		</div>
 	</InfoBox>
 
 	<PageNav
-		prev={{ href: '/', label: t('sde_pagenames_start') }}
-		next={{ href: '/method', label: t('sde_pagenames_measuringmethod') }}
+		prev={{ href: '/', label: m.sde_pagenames_start() }}
+		next={{ href: '/method', label: m.sde_pagenames_measuringmethod() }}
 	/>
 
 	<section>
 		<div class="prose">
-			{@html marked(t('pho_headline_climate'))}
-			{@html marked(t('pho_introduction_climate_change'))}
+			{@html marked(m.pho_headline_climate())}
+			{@html marked(
+				ta(m.bio_pho_introduction_climate_change(), m.math_pho_introduction_climate_change())
+			)}
 		</div>
 
 		{#if audienceStore.audience === '4math'}
 			<div class="two-col-images">
 				<img src="{base}/pictures/plants_basics.jpeg" alt="Plant basics" class="page-img" />
-				<img
-					src="{base}/pictures/plants_stress.jpeg"
-					alt="Plants under stress"
-					class="page-img"
-				/>
+				<img src="{base}/pictures/plants_stress.jpeg" alt="Plants under stress" class="page-img" />
 			</div>
 		{:else}
 			<div class="prose">
-				{@html marked(t('pho_point_1'))}
-				{@html marked(t('pho_point_2'))}
-				{@html marked(t('pho_point_3'))}
-				{@html marked(t('pho_end_of_introduction'))}
+				{@html marked(m.bio_pho_point_1())}
+				{@html marked(m.bio_pho_point_2())}
+				{@html marked(m.bio_pho_point_3())}
+				{@html marked(m.bio_pho_end_of_introduction())}
 			</div>
 		{/if}
 	</section>
 
 	<section>
 		<div class="prose">
-			{@html marked(t('pho_headline_photosynthesis'))}
-			{@html marked(t('pho_photosynthesis_explanation_1'))}
-			{@html marked(t('pho_photosynthesis_explanation_2'))}
+			{@html marked(m.pho_headline_photosynthesis())}
+			{@html marked(
+				ta(m.bio_pho_photosynthesis_explanation_1(), m.math_pho_photosynthesis_explanation_1())
+			)}
+			{@html marked(
+				ta(m.bio_pho_photosynthesis_explanation_2(), m.math_pho_photosynthesis_explanation_2())
+			)}
 		</div>
 
 		<figure class="page-figure">
@@ -68,14 +71,21 @@
 				alt="Photosynthesis diagram"
 				class="page-img centered"
 			/>
-			<figcaption class="caption">{t('pho_caption_fotosynthese_picture')}</figcaption>
+			<figcaption class="caption">
+				{ta(m.bio_pho_caption_fotosynthese_picture(), m.math_pho_caption_fotosynthese_picture())}
+			</figcaption>
 		</figure>
 	</section>
 
 	<section>
 		<div class="prose">
-			{@html marked(t('pho_headline_photosynthesis_location'))}
-			{@html marked(t('pho_photosynthesis_location_explanation'))}
+			{@html marked(m.pho_headline_photosynthesis_location())}
+			{@html marked(
+				ta(
+					m.bio_pho_photosynthesis_location_explanation(),
+					m.math_pho_photosynthesis_location_explanation()
+				)
+			)}
 		</div>
 
 		<figure class="page-figure">
@@ -84,7 +94,12 @@
 				alt="Leaf cross-section showing chloroplasts"
 				class="page-img centered"
 			/>
-			<figcaption class="caption">{t('pho_caption_fotosynthese_leaf_zoom')}</figcaption>
+			<figcaption class="caption">
+				{ta(
+					m.bio_pho_caption_fotosynthese_leaf_zoom(),
+					m.math_pho_caption_fotosynthese_leaf_zoom()
+				)}
+			</figcaption>
 		</figure>
 
 		<figure class="page-figure">
@@ -93,33 +108,42 @@
 				alt="NPQ photosynthesis apparatus"
 				class="page-img centered"
 			/>
-			<figcaption class="caption">{t('pho_caption_fotosynthese_apparat_picture')}</figcaption>
+			<figcaption class="caption">{m.pho_caption_fotosynthese_apparat_picture()}</figcaption>
 		</figure>
 
 		<div class="prose">
-			{@html marked(t('pho_photosynthesis_location_continue'))}
+			{@html marked(
+				ta(
+					m.bio_pho_photosynthesis_location_continue(),
+					m.math_pho_photosynthesis_location_continue()
+				)
+			)}
 		</div>
 	</section>
 
 	<section>
 		<YouTubeEmbed videoId="hMCA0bBVoxE" title="Journey into a leaf" />
-		<VideoTranscriptToggle transcriptKey="pho_video_transcript_journey" />
+		<VideoTranscriptToggle
+			transcript={ta(m.bio_pho_video_transcript_journey(), m.math_pho_video_transcript_journey())}
+		/>
 	</section>
 
 	<section>
 		<div class="prose">
-			{@html marked(t('pho_headline_npq'))}
-			{@html marked(t('pho_npq_explanation'))}
+			{@html marked(m.pho_headline_npq())}
+			{@html marked(ta(m.bio_pho_npq_explanation(), m.math_pho_npq_explanation()))}
 		</div>
 
 		<InfoBox>
 			<div class="prose">
-				{@html marked(t('pho_npq_explanation_detailed'))}
+				{@html marked(m.pho_npq_explanation_detailed())}
 			</div>
 		</InfoBox>
 
 		<div class="prose">
-			{@html marked(t('pho_npq_explanation_continued'))}
+			{@html marked(
+				ta(m.bio_pho_npq_explanation_continued(), m.math_pho_npq_explanation_continued())
+			)}
 		</div>
 
 		<figure class="page-figure">
@@ -128,42 +152,49 @@
 				alt="Violaxanthin scheme - Xanthophyll cycle"
 				class="page-img centered"
 			/>
-			<figcaption class="caption">{t('pho_caption_npq')}</figcaption>
+			<figcaption class="caption">
+				{ta(m.bio_pho_caption_npq(), m.math_pho_caption_npq())}
+			</figcaption>
 		</figure>
 	</section>
 
 	<section>
 		<div class="prose">
-			{@html marked(t('pho_header_model_organismen'))}
-			{@html marked(t('pho_model_organismen_explanation'))}
+			{@html marked(m.pho_header_model_organismen())}
+			{@html marked(
+				ta(m.bio_pho_model_organismen_explanation(), m.math_pho_model_organismen_explanation())
+			)}
 		</div>
 
-		<Expander title={t('pho_expander_model_organismen')}>
+		<Expander title={m.pho_expander_model_organismen()}>
 			<div class="arabidopsis-section">
 				<img
 					src="{base}/pictures/Arabidopsis.jpg"
 					alt="Arabidopsis thaliana"
 					class="arabidopsis-img"
 				/>
-				<p class="caption">{t('pho_caption_thaiana_picture')}</p>
+				<p class="caption">{m.pho_caption_thaiana_picture()}</p>
 			</div>
 			<div class="prose">
-				{@html t('pho_expander_model_organism_explanation')}
+				{@html ta(
+					m.bio_pho_expander_model_organism_explanation(),
+					m.math_pho_expander_model_organism_explanation()
+				)}
 			</div>
 		</Expander>
 	</section>
 
 	{#if audienceStore.audience === '4bio'}
-		<Expander title={t('literature')}>
+		<Expander title={m.literature()}>
 			<div class="prose">
-				<p>{t('literature_onpage')}</p>
+				<p>{m.literature_onpage()}</p>
 				<ul>
 					<li>
 						Cook, J., Oreskes, N., Doran, P. T., Anderegg, W. R. L., Verheggen, B., Maibach, E. W.,
 						Carlton, J. S., Lewandowsky, S., Skuce, A. G., Green, S. A., Nuccitelli, D., Jacobs, P.,
-						Richardson, M., Winkler, B., Painting, R., &amp; Rice, K. (2016). Consensus on consensus:
-						A synthesis of consensus estimates on human-caused global warming. Environmental Research
-						Letters, 11(4), 048002.
+						Richardson, M., Winkler, B., Painting, R., &amp; Rice, K. (2016). Consensus on
+						consensus: A synthesis of consensus estimates on human-caused global warming.
+						Environmental Research Letters, 11(4), 048002.
 						<a href="https://doi.org/10.1088/1748-9326/11/4/048002">
 							https://doi.org/10.1088/1748-9326/11/4/048002
 						</a>
@@ -174,8 +205,8 @@
 	{/if}
 
 	<PageNav
-		prev={{ href: '/', label: t('sde_pagenames_start') }}
-		next={{ href: '/method', label: t('sde_pagenames_measuringmethod') }}
+		prev={{ href: '/', label: m.sde_pagenames_start() }}
+		next={{ href: '/method', label: m.sde_pagenames_measuringmethod() }}
 	/>
 </article>
 

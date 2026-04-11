@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { marked } from 'marked';
 	import { base } from '$app/paths';
-	import { t } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
+	import { ta } from '$lib/i18n';
 	import { audienceStore } from '$lib/stores/audience.svelte';
 	import PageNav from '$lib/components/PageNav.svelte';
 	import Expander from '$lib/components/Expander.svelte';
@@ -11,20 +12,20 @@
 </script>
 
 <svelte:head>
-	<title>{t('str_headline_main')} | ComPhot</title>
+	<title>{m.str_headline_main()} | ComPhot</title>
 </svelte:head>
 
 <article class="page-content">
 	<div class="prose">
-		{@html marked(t('str_headline_main'))}
-		{@html marked(t('str_intro'))}
+		{@html marked(m.str_headline_main())}
+		{@html marked(m.str_intro())}
 	</div>
 
 	<section class="usage-section">
-		<div class="prose">{@html marked(t('str_headline_usage'))}</div>
+		<div class="prose">{@html marked(m.str_headline_usage())}</div>
 		<div class="two-col">
 			<div class="col-text prose">
-				{@html marked(t('str_usage'))}
+				{@html marked(ta(m.bio_str_usage(), m.math_str_usage()))}
 			</div>
 			<div class="col-video">
 				<YouTubeEmbed videoId="KvyjIWLD8rU" title="Introduction video" />
@@ -32,66 +33,66 @@
 		</div>
 	</section>
 
-	<VideoTranscriptToggle transcriptKey="str_video_transcript_introduction" />
+	<VideoTranscriptToggle transcript={m.str_video_transcript_introduction()} />
 
 	<div class="prose">
-		{@html marked(t('str_specific_use'))}
+		{@html marked(ta(m.bio_str_specific_use(), m.math_str_specific_use()))}
 	</div>
 
 	<section class="learning-objectives">
-		<div class="prose">{@html marked(t('str_learning_objectives_header'))}</div>
+		<div class="prose">{@html marked(ta(m.bio_str_learning_objectives_header(), m.math_str_learning_objectives_header()))}</div>
 		<InfoBox>
 			<div class="prose">
-				{@html marked(t('str_learning_objectives'))}
+				{@html marked(ta(m.bio_str_learning_objectives(), m.math_str_learning_objectives()))}
 			</div>
 		</InfoBox>
 	</section>
 
 	<div class="prose">
-		{@html marked(t('str_link_plants_and_python'))}
+		{@html marked(m.str_link_plants_and_python())}
 	</div>
 
 	<section class="chapters">
 		<div class="prose">
-			{@html marked(t('str_headline_pages'))}
-			{@html marked(t('str_introduction_pages'))}
-			{@html marked(t('str_photosynthesis'))}
-			{@html marked(t('str_method'))}
-			{@html marked(t('str_model'))}
-			{@html marked(t('str_experiment'))}
-			{@html marked(t('str_memory'))}
+			{@html marked(m.str_headline_pages())}
+			{@html marked(ta(m.bio_str_introduction_pages(), m.math_str_introduction_pages()))}
+			{@html marked(ta(m.bio_str_photosynthesis(), m.math_str_photosynthesis()))}
+			{@html marked(ta(m.bio_str_method(), m.math_str_method()))}
+			{@html marked(ta(m.bio_str_model(), m.math_str_model()))}
+			{@html marked(ta(m.bio_str_experiment(), m.math_str_experiment()))}
+			{@html marked(ta(m.bio_str_memory(), m.math_str_memory()))}
 		</div>
 	</section>
 
 	{#if audienceStore.audience === '4math'}
 		<hr />
 		<div class="prose">
-			{@html marked(t('str_drop_box_intro'))}
+			{@html marked(m.str_drop_box_intro())}
 		</div>
-		<Expander title={t('str_expander_in')}>
+		<Expander title={m.str_expander_in()}>
 			<div class="prose">
-				{@html marked(t('str_explanation_in_vitro'))}
-				{@html marked(t('str_explanation_in_vivo'))}
-				{@html marked(t('str_explanation_in_silico'))}
+				{@html marked(m.str_explanation_in_vitro())}
+				{@html marked(m.str_explanation_in_vivo())}
+				{@html marked(m.str_explanation_in_silico())}
 			</div>
 		</Expander>
 		<hr />
 	{/if}
 
-	<Expander title={t('str_expander_about')}>
+	<Expander title={m.str_expander_about()}>
 		<div class="prose">
-			{@html marked(t('str_explanation_about'))}
-			{@html marked(t('programs_used'))}
+			{@html marked(m.str_explanation_about())}
+			{@html marked(m.programs_used())}
 		</div>
 	</Expander>
 
-	<Expander title={t('appearances')}>
+	<Expander title={m.appearances()}>
 		<div class="prose">
-			{@html marked(t('appearance_explanation'))}
-			{@html marked(t('eps2_conference_title'))}
-			<div>{@html t('eps2_conference_1')}</div>
-			<div>{@html t('eps2_conference_2')}</div>
-			<div>{@html t('eps2_conference_3')}</div>
+			{@html marked(m.appearance_explanation())}
+			{@html marked(m.eps2_conference_title())}
+			<div>{@html m.eps2_conference_1()}</div>
+			<div>{@html m.eps2_conference_2()}</div>
+			<div>{@html m.eps2_conference_3()}</div>
 		</div>
 		<div class="poster-row">
 			<img src="{base}/pictures/Poster.png" alt="ComPhot Poster" class="poster-img" />
@@ -103,9 +104,9 @@
 		</div>
 	</Expander>
 
-	<Expander title={t('literature')}>
+	<Expander title={m.literature()}>
 		<div class="prose">
-			<p>{t('literature_onpage')}</p>
+			<p>{m.literature_onpage()}</p>
 			<ul>
 				<li>
 					Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A mathematical model of
@@ -116,11 +117,11 @@
 					</a>
 				</li>
 			</ul>
-			<p>{@html marked(t('literature_plants_and_python'))}</p>
+			<p>{@html marked(m.literature_plants_and_python())}</p>
 		</div>
 	</Expander>
 
-	<PageNav next={{ href: '/photosynthesis', label: t('sde_pagenames_photosynthesis') }} />
+	<PageNav next={{ href: '/photosynthesis', label: m.sde_pagenames_photosynthesis() }} />
 </article>
 
 <style>

@@ -5,7 +5,8 @@
 	import PageNav from '$lib/components/PageNav.svelte';
 	import VideoTranscriptToggle from '$lib/components/VideoTranscriptToggle.svelte';
 	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
-	import { t } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
+	import { ta } from '$lib/i18n';
 	import { audienceStore } from '$lib/stores/audience.svelte';
 	import { marked } from 'marked';
 	import Katex from 'svelte-katex';
@@ -86,29 +87,29 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 </script>
 
 <svelte:head>
-	<title>{t('mdl_headline_computational_models')} | ComPhot</title>
+	<title>{m.mdl_headline_computational_models()} | ComPhot</title>
 </svelte:head>
 
 <article class="page-content">
 	<div class="prose">
-		{@html marked(t('mdl_headline_computational_models'))}
+		{@html marked(m.mdl_headline_computational_models())}
 	</div>
 
 	<InfoBox>
 		<div class="prose">
-			{@html marked(t('mdl_learning_objectives'))}
+			{@html marked(ta(m.bio_mdl_learning_objectives(), m.math_mdl_learning_objectives()))}
 		</div>
 	</InfoBox>
 
 	<PageNav
-		prev={{ href: '/method', label: t('sde_pagenames_measuringmethod') }}
-		next={{ href: '/experiments', label: t('sde_pagenames_experimentsinsilico') }}
+		prev={{ href: '/method', label: m.sde_pagenames_measuringmethod() }}
+		next={{ href: '/experiments', label: m.sde_pagenames_experimentsinsilico() }}
 	/>
 
 	<section>
 		<div class="prose">
-			{@html marked(t('mdl_headline_model'))}
-			{@html marked(t('mdl_mathematical_modelling_explanation_1'))}
+			{@html marked(m.mdl_headline_model())}
+			{@html marked(m.mdl_mathematical_modelling_explanation_1())}
 		</div>
 
 		<figure class="page-figure">
@@ -117,20 +118,20 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 				alt="Modeling cycle diagram"
 				class="page-img centered"
 			/>
-			<figcaption class="caption">{t('mdl_caption_modelling_picture')}</figcaption>
+			<figcaption class="caption">{m.mdl_caption_modelling_picture()}</figcaption>
 		</figure>
 
 		<div class="prose">
-			{@html marked(t('mdl_mathematical_modelling_explanation_1b'))}
+			{@html marked(m.mdl_mathematical_modelling_explanation_1b())}
 		</div>
 
 		<YouTubeEmbed videoId="oVME5KIHrO8" title="Building mathematical models" />
-		<VideoTranscriptToggle transcriptKey="mdl_video_transcript_models" />
+		<VideoTranscriptToggle transcript={m.mdl_video_transcript_models()} />
 	</section>
 
 	<section>
 		<div class="prose">
-			{@html marked(t('mdl_example_mathematical_model'))}
+			{@html marked(m.mdl_example_mathematical_model())}
 		</div>
 
 		<!-- Tabbed SIR section -->
@@ -142,7 +143,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 					class:active={activeTab === 'sir'}
 					onclick={() => (activeTab = 'sir')}
 				>
-					{t('mdl_tab_sir')}
+					{m.mdl_tab_sir()}
 				</button>
 				{#if audienceStore.audience === '4math'}
 					<button
@@ -151,7 +152,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 						class:active={activeTab === 'manual'}
 						onclick={() => (activeTab = 'manual')}
 					>
-						{t('mdl_tab_manual')}
+						{m.math_mdl_tab_manual()}
 					</button>
 					<button
 						role="tab"
@@ -159,7 +160,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 						class:active={activeTab === 'modelbase'}
 						onclick={() => (activeTab = 'modelbase')}
 					>
-						{t('mdl_tab_modelbase')}
+						{m.math_mdl_tab_modelbase()}
 					</button>
 				{/if}
 			</div>
@@ -167,8 +168,8 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 			<div class="tab-panel">
 				{#if activeTab === 'sir'}
 					<div class="prose">
-						{@html marked(t('mdl_headline_sir'))}
-						{@html marked(t('mdl_mathematical_modelling_example'))}
+						{@html marked(m.mdl_headline_sir())}
+						{@html marked(ta(m.bio_mdl_mathematical_modelling_example(), m.math_mdl_mathematical_modelling_example()))}
 					</div>
 
 					{#if audienceStore.audience === '4bio'}
@@ -191,7 +192,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 					{/if}
 
 					<div class="prose">
-						{@html marked(t('mdl_mathematical_modelling_example_1'))}
+						{@html marked(ta(m.bio_mdl_mathematical_modelling_example_1(), m.math_mdl_mathematical_modelling_example_1()))}
 					</div>
 
 					{#if audienceStore.audience === '4bio'}
@@ -214,7 +215,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 					{/if}
 
 					<div class="prose">
-						{@html marked(t('mdl_mathematical_modelling_example_2'))}
+						{@html marked(ta(m.bio_mdl_mathematical_modelling_example_2(), m.math_mdl_mathematical_modelling_example_2()))}
 					</div>
 
 					{#if audienceStore.audience === '4bio'}
@@ -224,7 +225,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 							>
 						</div>
 						<div class="prose">
-							{@html marked(t('mdl_mathematical_modelling_example_3'))}
+							{@html marked(m.bio_mdl_mathematical_modelling_example_3())}
 						</div>
 						<div class="katex-block">
 							<Katex displayMode
@@ -232,20 +233,20 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 							>
 						</div>
 						<div class="prose">
-							{@html marked(t('mdl_mathematical_modelling_example_4'))}
+							{@html marked(m.bio_mdl_mathematical_modelling_example_4())}
 						</div>
 					{/if}
 
 					<div class="prose">
-						{@html marked(t('mdl_mathematical_modelling_example_simple'))}
+						{@html marked(ta(m.bio_mdl_mathematical_modelling_example_simple(), m.math_mdl_mathematical_modelling_example_simple()))}
 					</div>
 				{:else if activeTab === 'manual'}
 					<div class="prose">
-						{@html marked(t('mdl_headline_manual'))}
+						{@html marked(m.math_mdl_headline_manual())}
 					</div>
 					<pre class="code-block"><code>{sirV1Integ}</code></pre>
 					<div class="prose">
-						{@html marked(t('mdl_sir_implementation_manual_1'))}
+						{@html marked(m.math_mdl_sir_implementation_manual_1())}
 					</div>
 					<figure class="page-figure">
 						<img
@@ -256,24 +257,24 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 					</figure>
 					<pre class="code-block"><code>{sirV1Plot}</code></pre>
 					<div class="prose">
-						{@html marked(t('mdl_sir_implementation_manual_2'))}
+						{@html marked(m.math_mdl_sir_implementation_manual_2())}
 					</div>
 				{:else if activeTab === 'modelbase'}
 					<div class="prose">
-						{@html marked(t('mdl_headline_modelbase'))}
-						{@html marked(t('mdl_sir_implementation_modelbase_1'))}
+						{@html marked(m.math_mdl_headline_modelbase())}
+						{@html marked(m.math_mdl_sir_implementation_modelbase_1())}
 					</div>
 					<pre class="code-block"><code>{sirV2RateFns}</code></pre>
 					<div class="prose">
-						{@html marked(t('mdl_sir_implementation_modelbase_2'))}
+						{@html marked(m.math_mdl_sir_implementation_modelbase_2())}
 					</div>
 					<pre class="code-block"><code>{sirV2Model}</code></pre>
 					<div class="prose">
-						{@html marked(t('mdl_sir_implementation_modelbase_3'))}
+						{@html marked(m.math_mdl_sir_implementation_modelbase_3())}
 					</div>
 					<pre class="code-block"><code>{sirV2Reactions}</code></pre>
 					<div class="prose">
-						{@html marked(t('mdl_sir_implementation_modelbase_4'))}
+						{@html marked(m.math_mdl_sir_implementation_modelbase_4())}
 					</div>
 					<figure class="page-figure">
 						<img
@@ -284,11 +285,11 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 					</figure>
 					<pre class="code-block"><code>{sirV2Simulation}</code></pre>
 					<div class="prose">
-						{@html marked(t('mdl_sir_implementation_modelbase_5'))}
+						{@html marked(m.math_mdl_sir_implementation_modelbase_5())}
 					</div>
 					<pre class="code-block"><code>{sird}</code></pre>
 					<div class="prose">
-						{@html marked(t('mdl_sir_implementation_modelbase_6'))}
+						{@html marked(m.math_mdl_sir_implementation_modelbase_6())}
 					</div>
 				{/if}
 			</div>
@@ -296,21 +297,21 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 	</section>
 
 	<div class="prose">
-		{@html marked(t('mdl_link_plants_and_python'))}
+		{@html marked(m.mdl_link_plants_and_python())}
 	</div>
 
 	<section>
 		<div class="prose">
-			{@html marked(t('mdl_headline_model_photosynthesis'))}
-			{@html marked(t('mdl_models_overview'))}
+			{@html marked(m.mdl_headline_model_photosynthesis())}
+			{@html marked(m.mdl_models_overview())}
 		</div>
 
 		<!-- Photosynthesis model tabs -->
 		<div class="accordion">
-			<Expander title={t('mdl_headline_fvcb')}>
+			<Expander title={m.mdl_headline_fvcb()}>
 				<div class="prose">
-					{@html marked(t('mdl_fvcb_1'))}
-					{@html marked(t('mdl_fvcb_2'))}
+					{@html marked(ta(m.bio_mdl_fvcb_1(), m.math_mdl_fvcb_1()))}
+					{@html marked(ta(m.bio_mdl_fvcb_2(), m.math_mdl_fvcb_2()))}
 				</div>
 				{#if audienceStore.audience === '4math'}
 					<div class="katex-block">
@@ -320,49 +321,49 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 					</div>
 				{/if}
 				<div class="prose">
-					{@html marked(t('mdl_fvcb_3'))}
-					{@html marked(t('mdl_fvcb_4'))}
+					{@html marked(ta(m.bio_mdl_fvcb_3(), m.math_mdl_fvcb_3()))}
+					{@html marked(ta(m.bio_mdl_fvcb_4(), m.math_mdl_fvcb_4()))}
 				</div>
 				{#if audienceStore.audience === '4math'}
 					<div class="prose">
-						{@html marked(t('mdl_fvcb_5'))}
+						{@html marked(m.math_mdl_fvcb_5())}
 					</div>
 				{/if}
 			</Expander>
 
-			<Expander title={t('mdl_headline_e_photosynthesis')}>
+			<Expander title={m.mdl_headline_e_photosynthesis()}>
 				<div class="prose">
-					{@html marked(t('mdl_e_photosynthesis_1'))}
-					{@html marked(t('mdl_e_photosynthesis_2'))}
-					{@html marked(t('mdl_e_photosynthesis_3'))}
+					{@html marked(ta(m.bio_mdl_e_photosynthesis_1(), m.math_mdl_e_photosynthesis_1()))}
+					{@html marked(ta(m.bio_mdl_e_photosynthesis_2(), m.math_mdl_e_photosynthesis_2()))}
+					{@html marked(ta(m.bio_mdl_e_photosynthesis_3(), m.math_mdl_e_photosynthesis_3()))}
 				</div>
 			</Expander>
 
-			<Expander title={t('mdl_headline_bellasio')}>
+			<Expander title={m.mdl_headline_bellasio()}>
 				<div class="prose">
-					{@html marked(t('mdl_bellasio_1'))}
-					{@html marked(t('mdl_bellasio_2'))}
-					{@html marked(t('mdl_bellasio_3'))}
-					{@html marked(t('mdl_bellasio_4'))}
+					{@html marked(ta(m.bio_mdl_bellasio_1(), m.math_mdl_bellasio_1()))}
+					{@html marked(ta(m.bio_mdl_bellasio_2(), m.math_mdl_bellasio_2()))}
+					{@html marked(ta(m.bio_mdl_bellasio_3(), m.math_mdl_bellasio_3()))}
+					{@html marked(ta(m.bio_mdl_bellasio_4(), m.math_mdl_bellasio_4()))}
 				</div>
 			</Expander>
 		</div>
 
-		<Expander title={t('mdl_expander_c3c4cam')}>
+		<Expander title={ta(m.bio_mdl_expander_c3c4cam(), m.math_mdl_expander_c3c4cam())}>
 			<div class="prose">
-				<div>{@html t('mdl_headline_c3')}</div>
-				<div>{@html t('mdl_c3_1')}</div>
-				<div>{@html t('mdl_headline_c4')}</div>
-				<div>{@html t('mdl_c4_1')}</div>
-				<div>{@html t('mdl_headline_cam')}</div>
-				<div>{@html t('mdl_cam_1')}</div>
+				<div>{@html m.mdl_headline_c3()}</div>
+				<div>{@html m.mdl_c3_1()}</div>
+				<div>{@html m.mdl_headline_c4()}</div>
+				<div>{@html m.mdl_c4_1()}</div>
+				<div>{@html m.mdl_headline_cam()}</div>
+				<div>{@html ta(m.bio_mdl_cam_1(), m.math_mdl_cam_1())}</div>
 			</div>
 		</Expander>
 	</section>
 
-	<Expander title={t('literature')}>
+	<Expander title={m.literature()}>
 		<div class="prose">
-			<p>{t('literature_onpage')}</p>
+			<p>{m.literature_onpage()}</p>
 			<ol>
 				<li>
 					van Aalst, M., Ebenhöh, O., &amp; Matuszyńska, A. (2021). Constructing and analysing
@@ -394,13 +395,13 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 					</a>
 				</li>
 			</ol>
-			<p>{@html marked(t('literature_plants_and_python'))}</p>
+			<p>{@html marked(m.literature_plants_and_python())}</p>
 		</div>
 	</Expander>
 
 	<PageNav
-		prev={{ href: '/method', label: t('sde_pagenames_measuringmethod') }}
-		next={{ href: '/experiments', label: t('sde_pagenames_experimentsinsilico') }}
+		prev={{ href: '/method', label: m.sde_pagenames_measuringmethod() }}
+		next={{ href: '/experiments', label: m.sde_pagenames_experimentsinsilico() }}
 	/>
 </article>
 

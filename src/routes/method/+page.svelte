@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { marked } from 'marked';
 	import { base } from '$app/paths';
-	import { t } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
+	import { ta } from '$lib/i18n';
 	import PageNav from '$lib/components/PageNav.svelte';
 	import Expander from '$lib/components/Expander.svelte';
 	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
@@ -10,23 +11,23 @@
 </script>
 
 <svelte:head>
-	<title>{t('mth_headline_one')} | ComPhot</title>
+	<title>{m.mth_headline_one()} | ComPhot</title>
 </svelte:head>
 
 <article class="page-content">
 	<div class="prose">
-		{@html marked(t('mth_headline_one'))}
+		{@html marked(m.mth_headline_one())}
 	</div>
 
 	<InfoBox>
 		<div class="prose">
-			{@html marked(t('mth_learning_objectives'))}
+			{@html marked(ta(m.bio_mth_learning_objectives(), m.math_mth_learning_objectives()))}
 		</div>
 	</InfoBox>
 
 	<PageNav
-		prev={{ href: '/photosynthesis', label: t('sde_pagenames_photosynthesis') }}
-		next={{ href: '/model', label: t('sde_pagenames_computationalmodels') }}
+		prev={{ href: '/photosynthesis', label: m.sde_pagenames_photosynthesis() }}
+		next={{ href: '/model', label: m.sde_pagenames_computationalmodels() }}
 	/>
 
 	<section class="gif-section">
@@ -40,7 +41,7 @@
 	</section>
 
 	<div class="prose">
-		{@html marked(t('mth_introduction_measurement'))}
+		{@html marked(ta(m.bio_mth_introduction_measurement(), m.math_mth_introduction_measurement()))}
 	</div>
 
 	<figure class="page-figure">
@@ -49,39 +50,39 @@
 			alt="A plant fluorescing under UV light"
 			class="page-img"
 		/>
-		<figcaption class="caption">{t('mth_caption_abb1')}</figcaption>
+		<figcaption class="caption">{m.mth_caption_abb1()}</figcaption>
 	</figure>
 
-	<Expander title={t('mth_growing_plants_1')} open={true}>
+	<Expander title={ta(m.bio_mth_growing_plants_1(), m.math_mth_growing_plants_1())} open={true}>
 		<div class="prose">
-			{@html marked(t('mth_introduction_glowing'))}
-			{@html marked(t('mth_plant_are_shining_red'))}
-			{@html marked(t('mth_introduction_experiment'))}
+			{@html marked(ta(m.bio_mth_introduction_glowing(), m.math_mth_introduction_glowing()))}
+			{@html marked(ta(m.bio_mth_plant_are_shining_red(), m.math_mth_plant_are_shining_red()))}
+			{@html marked(ta(m.bio_mth_introduction_experiment(), m.math_mth_introduction_experiment()))}
 		</div>
 		<YouTubeEmbed videoId="g3uTNWsDEdo" title="Chlorophyll fluorescence experiment" />
 		<div class="prose">
-			{@html marked(t('mth_explanation_video'))}
+			{@html marked(ta(m.bio_mth_explanation_video(), m.math_mth_explanation_video()))}
 		</div>
 	</Expander>
 
-	<Expander title={t('mth_measuring_fluoreszenz')} open={true}>
+	<Expander title={m.mth_measuring_fluoreszenz()} open={true}>
 		<div class="prose">
-			{@html marked(t('mth_explanation_measurement_1'))}
-			{@html marked(t('mth_introduction_phi'))}
+			{@html marked(ta(m.bio_mth_explanation_measurement_1(), m.math_mth_explanation_measurement_1()))}
+			{@html marked(ta(m.bio_mth_introduction_phi(), m.math_mth_introduction_phi()))}
 		</div>
 		<YouTubeEmbed videoId="EwXkOlMBl3o" title="Measuring fluorescence with PAM" />
 	</Expander>
 
-	<VideoTranscriptToggle transcriptKey="mth_video_transcript_pam" />
+	<VideoTranscriptToggle transcript={m.mth_video_transcript_pam()} />
 
 	<div class="prose">
-		{@html marked(t('mth_headline_pam_measurement'))}
-		{@html marked(t('mth_introduction_pam_measurement'))}
+		{@html marked(m.mth_headline_pam_measurement())}
+		{@html marked(ta(m.bio_mth_introduction_pam_measurement(), m.math_mth_introduction_pam_measurement()))}
 	</div>
 
-	<Expander title={t('mth_measuring_light_fluorescence')} open={true}>
+	<Expander title={m.mth_measuring_light_fluorescence()} open={true}>
 		<div class="prose">
-			{@html marked(t('mth_explanation_introduction_attempts'))}
+			{@html marked(ta(m.bio_mth_explanation_introduction_attempts(), m.math_mth_explanation_introduction_attempts()))}
 		</div>
 		<figure class="page-figure">
 			<img
@@ -89,15 +90,15 @@
 				alt="PAM basics diagram"
 				class="page-img centered"
 			/>
-			<figcaption class="caption">{t('mth_caption_abb2')}</figcaption>
+			<figcaption class="caption">{m.mth_caption_abb2()}</figcaption>
 		</figure>
 	</Expander>
 
 	<section>
 		<div class="prose">
-			{@html marked(t('mth_headline_illustration'))}
-			{@html marked(t('mth_explanation_illustration_units'))}
-			{@html marked(t('mth_explanation_illustration'))}
+			{@html marked(m.mth_headline_illustration())}
+			{@html marked(m.mth_explanation_illustration_units())}
+			{@html marked(m.mth_explanation_illustration())}
 		</div>
 
 		<figure class="page-figure">
@@ -106,13 +107,13 @@
 				alt="Example PAM measurement result"
 				class="page-img"
 			/>
-			<figcaption class="caption">{t('mth_caption_abb2')}</figcaption>
+			<figcaption class="caption">{m.mth_caption_abb2()}</figcaption>
 		</figure>
 	</section>
 
-	<Expander title={t('literature')}>
+	<Expander title={m.literature()}>
 		<div class="prose">
-			{@html marked(t('mth_literature_declaration'))}
+			{@html marked(m.mth_literature_declaration())}
 			<ul>
 				<li>
 					Brooks, M. D., &amp; Niyogi, K. K. (2011). Use of a pulse-amplitude modulated chlorophyll
@@ -135,8 +136,8 @@
 	</Expander>
 
 	<PageNav
-		prev={{ href: '/photosynthesis', label: t('sde_pagenames_photosynthesis') }}
-		next={{ href: '/model', label: t('sde_pagenames_computationalmodels') }}
+		prev={{ href: '/photosynthesis', label: m.sde_pagenames_photosynthesis() }}
+		next={{ href: '/model', label: m.sde_pagenames_computationalmodels() }}
 	/>
 </article>
 

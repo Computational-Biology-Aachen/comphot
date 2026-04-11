@@ -2,7 +2,8 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { marked } from 'marked';
 	import { base } from '$app/paths';
-	import { t } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
+	import { ta } from '$lib/i18n';
 	import { audienceStore } from '$lib/stores/audience.svelte';
 	import { WorkerManager, simWorker } from '$lib/stores/workerStore';
 	import { buildMemoryProtocol } from '$lib/simulations/pam';
@@ -150,7 +151,7 @@
 				start: trainStart,
 				end: relaxStart,
 				color: 'rgba(207, 109, 12, 0.25)',
-				label: t('mem_anno_training')
+				label: m.mem_anno_training()
 			});
 		}
 		if (relaxationLength > 0) {
@@ -158,7 +159,7 @@
 				start: relaxStart,
 				end: memStart,
 				color: 'rgba(28, 91, 199, 0.25)',
-				label: t('mem_anno_relaxation')
+				label: m.mem_anno_relaxation()
 			});
 		}
 		if (memoryLength > 0) {
@@ -166,7 +167,7 @@
 				start: memStart,
 				end,
 				color: 'rgba(209, 10, 13, 0.25)',
-				label: t('mem_anno_memory')
+				label: m.mem_anno_memory()
 			});
 		}
 		return regions;
@@ -197,10 +198,10 @@
 	<title>Plant Light Memory</title>
 </svelte:head>
 
-<h1>{@html marked(t('mem_headline_brain'))}</h1>
+<h1>{@html marked(m.mem_headline_brain())}</h1>
 
 <InfoBox>
-	{@html marked(t('mem_learning_objectives'))}
+	{@html marked(ta(m.bio_mem_learning_objectives(), m.math_mem_learning_objectives()))}
 </InfoBox>
 
 <PageNav
@@ -210,7 +211,7 @@
 
 <!-- ── Explanation ──────────────────────────────────── -->
 <div class="intro-content">
-	{@html marked(t('mem_introduction_brain'))}
+	{@html marked(ta(m.bio_mem_introduction_brain(), m.math_mem_introduction_brain()))}
 </div>
 
 <figure class="fig">
@@ -223,16 +224,16 @@
 </figure>
 
 <!-- ── Guiding questions ─────────────────────────────── -->
-<Expander title={t('mem_guiding_expander')} open>
-	<div class="prose">{@html marked(t('mem_guiding_header'))}</div>
+<Expander title={m.mem_guiding_expander()} open>
+	<div class="prose">{@html marked(m.mem_guiding_header())}</div>
 	<label class="toggle-label">
 		<input type="checkbox" bind:checked={showAnswers} />
-		{@html marked.parseInline(t('mem_guiding_toggle'))}
+		{@html marked.parseInline(m.mem_guiding_toggle())}
 	</label>
 	{#if !showAnswers}
-		<div class="qa-text">{@html marked(t('mem_guiding_questions'))}</div>
+		<div class="qa-text">{@html marked(ta(m.bio_mem_guiding_questions(), m.math_mem_guiding_questions()))}</div>
 	{:else}
-		<div class="qa-text">{@html marked(t('mem_guiding_answers'))}</div>
+		<div class="qa-text">{@html marked(ta(m.bio_mem_guiding_answers(), m.math_mem_guiding_answers()))}</div>
 	{/if}
 </Expander>
 
@@ -241,37 +242,37 @@
 	<!-- Common sliders -->
 	<div class="slider-row">
 		<label class="slider-label">
-			{@html t('slider_light')}: <strong>{lightIntensity}</strong>
+			{@html m.slider_light()}: <strong>{lightIntensity}</strong>
 			<input type="range" min="50" max="900" step="50" bind:value={lightIntensity} />
 		</label>
 		<label class="slider-label">
-			{@html t('slider_pulses')}: <strong>{pulseInterval} s</strong>
+			{@html m.slider_pulses()}: <strong>{pulseInterval} s</strong>
 			<input type="range" min="5" max="150" step="5" bind:value={pulseInterval} />
 		</label>
 	</div>
 
 	<div class="slider-row">
 		<label class="slider-label">
-			{@html t('fal_slider_darklength')}: <strong>{darkLength} s</strong>
+			{@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
 			<input type="range" min="0" max="300" step="10" bind:value={darkLength} />
 		</label>
 		<label class="slider-label">
-			{@html t('fal_slider_saturate')}: <strong>{saturatingPulse}</strong>
+			{@html m.fal_slider_saturate()}: <strong>{saturatingPulse}</strong>
 			<input type="range" min="0" max="10000" step="500" bind:value={saturatingPulse} />
 		</label>
 	</div>
 
 	<div class="slider-row three">
 		<label class="slider-label">
-			{@html t('mem_slider_training')}: <strong>{trainingLength} s</strong>
+			{@html m.mem_slider_training()}: <strong>{trainingLength} s</strong>
 			<input type="range" min="0" max="600" step="30" bind:value={trainingLength} />
 		</label>
 		<label class="slider-label">
-			{@html t('mem_slider_relaxation')}: <strong>{relaxationLength} s</strong>
+			{@html m.mem_slider_relaxation()}: <strong>{relaxationLength} s</strong>
 			<input type="range" min="0" max="600" step="30" bind:value={relaxationLength} />
 		</label>
 		<label class="slider-label">
-			{@html t('mem_slider_memory')}: <strong>{memoryLength} s</strong>
+			{@html m.mem_slider_memory()}: <strong>{memoryLength} s</strong>
 			<input type="range" min="0" max="600" step="30" bind:value={memoryLength} />
 		</label>
 	</div>
@@ -280,11 +281,11 @@
 	{#if audienceStore.audience === '4bio'}
 		<div class="slider-row">
 			<label class="slider-label">
-				{@html t('slider_activation')}: <strong>{activationMultiplier}</strong>
+				{@html m.slider_activation()}: <strong>{activationMultiplier}</strong>
 				<input type="range" min="0" max="20" step="1" bind:value={activationIdx} />
 			</label>
 			<label class="slider-label">
-				{@html t('slider_deactivation')}: <strong>{deactivationMultiplier}</strong>
+				{@html m.slider_deactivation()}: <strong>{deactivationMultiplier}</strong>
 				<input type="range" min="0" max="20" step="1" bind:value={deactivationIdx} />
 			</label>
 		</div>
@@ -308,14 +309,14 @@
 	<div class="charts-section">
 		<div class="charts-grid" class:three-cols={audienceStore.audience === '4bio'}>
 			<div class="chart-card">
-				<p class="chart-label">{t('fluo')}</p>
+				<p class="chart-label">{ta(m.bio_fluo(), m.math_fluo())}</p>
 				<SimChart
 					xNew={currentResult.time}
 					yNew={currentResult.fluo}
 					xOld={showOld && previousResult ? previousResult.time : []}
 					yOld={showOld && previousResult ? previousResult.fluo : []}
 					{phases}
-					yLabel={t('fluo')}
+					yLabel={ta(m.bio_fluo(), m.math_fluo())}
 					showLine={true}
 					{totalTime}
 				/>
@@ -323,28 +324,28 @@
 
 			{#if audienceStore.audience === '4bio'}
 				<div class="chart-card">
-					<p class="chart-label">{t('axis_npq')}</p>
+					<p class="chart-label">{m.axis_npq()}</p>
 					<SimChart
 						xNew={currentResult.npqTime}
 						yNew={currentResult.npq}
 						xOld={showOld && previousResult ? previousResult.npqTime : []}
 						yOld={showOld && previousResult ? previousResult.npq : []}
 						{phases}
-						yLabel={t('axis_npq')}
+						yLabel={m.axis_npq()}
 						showLine={false}
 						{totalTime}
 					/>
 				</div>
 
 				<div class="chart-card">
-					<p class="chart-label">{t('axis_phipsii')}</p>
+					<p class="chart-label">{m.axis_phipsii()}</p>
 					<SimChart
 						xNew={currentResult.phiTime}
 						yNew={currentResult.phiPSII}
 						xOld={showOld && previousResult ? previousResult.phiTime : []}
 						yOld={showOld && previousResult ? previousResult.phiPSII : []}
 						{phases}
-						yLabel={t('axis_phipsii')}
+						yLabel={m.axis_phipsii()}
 						showLine={false}
 						{totalTime}
 					/>
@@ -357,8 +358,8 @@
 				<ParameterTable
 					rows={paramRows}
 					showOld={showOld && previousParams !== null}
-					newLabel={t('new_label')}
-					oldLabel={t('old_label')}
+					newLabel={m.new_label()}
+					oldLabel={m.old_label()}
 				/>
 			</div>
 		{/if}
@@ -366,8 +367,8 @@
 {/if}
 
 <!-- ── Literature ── -->
-<Expander title={t('literature')}>
-	<p>{@html marked(t('literature_onpage'))}</p>
+<Expander title={m.literature()}>
+	<p>{@html marked(m.literature_onpage())}</p>
 	<ul>
 		<li>
 			Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A mathematical model of

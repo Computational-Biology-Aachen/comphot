@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { marked } from 'marked';
 	import { resolve } from '$app/paths';
-	import { t } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
 	import PageNav from '$lib/components/PageNav.svelte';
 	import Expander from '$lib/components/Expander.svelte';
 
@@ -66,35 +66,35 @@ ER  -`;
 </script>
 
 <svelte:head>
-	<title>{t('cont_header')} | ComPhot</title>
+	<title>{m.cont_header()} | ComPhot</title>
 </svelte:head>
 
 <article class="page-content">
 	<h1 class="contact-header">
 		<span class="mailbox-icon" aria-hidden="true">📬</span>
-		{t('cont_header')}
+		{m.cont_header()}
 	</h1>
 
-	<PageNav prev={{ href: '/conclusion', label: t('sde_pagenames_conclusion') }} />
+	<PageNav prev={{ href: '/conclusion', label: m.sde_pagenames_conclusion() }} />
 
-	<p class="subheader">{t('cont_subheader')}</p>
+	<p class="subheader">{m.cont_subheader()}</p>
 
 	<section class="team-section">
 		<div class="team-card">
 			<h3>Sarah Philipps</h3>
 			<ul>
-				<li><strong>{t('cont_email')}</strong> <a href="mailto:sarah.philipps@rwth-aachen.de">sarah.philipps@rwth-aachen.de</a></li>
-				<li><strong>{t('cont_topics')}</strong> {t('cont_topics_sarah')}</li>
+				<li><strong>{m.cont_email()}</strong> <a href="mailto:sarah.philipps@rwth-aachen.de">sarah.philipps@rwth-aachen.de</a></li>
+				<li><strong>{m.cont_topics()}</strong> {m.cont_topics_sarah()}</li>
 			</ul>
 		</div>
 
 		<div class="team-card">
 			<h3>Tobias Pfennig</h3>
 			<ul>
-				<li><strong>{t('cont_email')}</strong> <a href="mailto:tobias.pfennig@rwth-aachen.de">tobias.pfennig@rwth-aachen.de</a></li>
-				<li><strong>{t('cont_topics')}</strong> {t('cont_topics_tobias')}</li>
+				<li><strong>{m.cont_email()}</strong> <a href="mailto:tobias.pfennig@rwth-aachen.de">tobias.pfennig@rwth-aachen.de</a></li>
+				<li><strong>{m.cont_topics()}</strong> {m.cont_topics_tobias()}</li>
 				<li>
-					<strong>{t('cont_website')}</strong>
+					<strong>{m.cont_website()}</strong>
 					<a href="https://www.cpbl.rwth-aachen.de/cms/CPBL/Die-Juniorprofessur/Unser/~wljpm/Tobias-Pfennig/" target="_blank" rel="noopener">RWTH Aachen</a>
 				</li>
 			</ul>
@@ -103,10 +103,10 @@ ER  -`;
 		<div class="team-card">
 			<h3>Elouen Corvest</h3>
 			<ul>
-				<li><strong>{t('cont_email')}</strong> <a href="mailto:elouen.corvest@rwth-aachen.de">elouen.corvest@rwth-aachen.de</a></li>
-				<li><strong>{t('cont_topics')}</strong> {t('cont_topics_elouen')}</li>
+				<li><strong>{m.cont_email()}</strong> <a href="mailto:elouen.corvest@rwth-aachen.de">elouen.corvest@rwth-aachen.de</a></li>
+				<li><strong>{m.cont_topics()}</strong> {m.cont_topics_elouen()}</li>
 				<li>
-					<strong>{t('cont_website')}</strong>
+					<strong>{m.cont_website()}</strong>
 					<a href="https://www.cpbl.rwth-aachen.de/cms/CPBL/Die-Juniorprofessur/Unser/~wljuk/Elouen-Corvest/lidx/1/" target="_blank" rel="noopener">RWTH Aachen</a>
 				</li>
 			</ul>
@@ -115,10 +115,10 @@ ER  -`;
 		<div class="team-card">
 			<h3>Marvin van Aalst</h3>
 			<ul>
-				<li><strong>{t('cont_email')}</strong> <a href="mailto:marvin.van.aalst@hhu.de">marvin.van.aalst@hhu.de</a></li>
-				<li><strong>{t('cont_topics')}</strong> {t('cont_topics_marvin')}</li>
+				<li><strong>{m.cont_email()}</strong> <a href="mailto:marvin.van.aalst@hhu.de">marvin.van.aalst@hhu.de</a></li>
+				<li><strong>{m.cont_topics()}</strong> {m.cont_topics_marvin()}</li>
 				<li>
-					<strong>{t('cont_website')}</strong>
+					<strong>{m.cont_website()}</strong>
 					<a href="https://www.qtb.hhu.de/" target="_blank" rel="noopener">Heinrich Heine University Duesseldorf</a>
 				</li>
 			</ul>
@@ -127,10 +127,10 @@ ER  -`;
 		<div class="team-card">
 			<h3>Lisa Fürtauer</h3>
 			<ul>
-				<li><strong>{t('cont_email')}</strong> <a href="mailto:lisa.fuertauer@bio3.rwth-aachen.de">lisa.fuertauer@bio3.rwth-aachen.de</a></li>
-				<li><strong>{t('cont_topics')}</strong> {t('cont_topics_lisa')}</li>
+				<li><strong>{m.cont_email()}</strong> <a href="mailto:lisa.fuertauer@bio3.rwth-aachen.de">lisa.fuertauer@bio3.rwth-aachen.de</a></li>
+				<li><strong>{m.cont_topics()}</strong> {m.cont_topics_lisa()}</li>
 				<li>
-					<strong>{t('cont_website')}</strong>
+					<strong>{m.cont_website()}</strong>
 					<a href="https://www.bio3.rwth-aachen.de/cms/BIO3/Das-Institut/~tcejj/Juniorprofessur-Molekulare-Systembiologi/" target="_blank" rel="noopener">RWTH Aachen</a>
 				</li>
 			</ul>
@@ -139,27 +139,27 @@ ER  -`;
 		<div class="team-card">
 			<h3>Anna Matuszyńska</h3>
 			<ul>
-				<li><strong>{t('cont_email')}</strong> <a href="mailto:anna.matuszynska@rwth-aachen.de">anna.matuszynska@rwth-aachen.de</a></li>
-				<li><strong>{t('cont_topics')}</strong> {t('cont_topics_anna')}</li>
+				<li><strong>{m.cont_email()}</strong> <a href="mailto:anna.matuszynska@rwth-aachen.de">anna.matuszynska@rwth-aachen.de</a></li>
+				<li><strong>{m.cont_topics()}</strong> {m.cont_topics_anna()}</li>
 				<li>
-					<strong>{t('cont_website')}</strong>
+					<strong>{m.cont_website()}</strong>
 					<a href="https://www.cpbl.rwth-aachen.de/cms/CPBL/Die-Juniorprofessur/Unser/~ywkwc/Anna-Matuszy-324-ska/" target="_blank" rel="noopener">RWTH Aachen</a>
 				</li>
 			</ul>
 		</div>
 	</section>
 
-	<p class="note">{t('cont_hours')}</p>
-	<p class="thanks">{t('cont_thanks')}</p>
+	<p class="note">{m.cont_hours()}</p>
+	<p class="thanks">{m.cont_thanks()}</p>
 
-	<Expander title={t('cont_cite')}>
+	<Expander title={m.cont_cite()}>
 		<p class="cite-intro">
 			Computational Photosynthesis (ComPhot): Simulation-Based Learning Platform to Study
 			Photosynthesis, The Plant Cell, 2024
 		</p>
 
 		<div class="cite-format-selector">
-			<label for="cite-format"><strong>{t('cont_style')}</strong></label>
+			<label for="cite-format"><strong>{m.cont_style()}</strong></label>
 			<select
 				id="cite-format"
 				onchange={(e) =>
@@ -187,11 +187,11 @@ ER  -`;
 	</Expander>
 
 	<div class="prose">
-		{@html marked(t('cont_resources'))}
-		{@html marked(t('programs_used'))}
+		{@html marked(m.cont_resources())}
+		{@html marked(m.programs_used())}
 	</div>
 
-	<PageNav prev={{ href: '/conclusion', label: t('sde_pagenames_conclusion') }} />
+	<PageNav prev={{ href: '/conclusion', label: m.sde_pagenames_conclusion() }} />
 </article>
 
 <style>

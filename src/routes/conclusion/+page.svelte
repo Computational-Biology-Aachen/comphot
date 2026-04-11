@@ -1,26 +1,27 @@
 <script lang="ts">
 	import { marked } from 'marked';
 	import { base } from '$app/paths';
-	import { t } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
+	import { ta } from '$lib/i18n';
 	import PageNav from '$lib/components/PageNav.svelte';
 </script>
 
 <svelte:head>
-	<title>{t('con_headline_conclusion')} | ComPhot</title>
+	<title>{m.con_headline_conclusion()} | ComPhot</title>
 </svelte:head>
 
 <article class="page-content">
 	<div class="prose">
-		{@html marked(t('con_headline_conclusion'))}
+		{@html marked(m.con_headline_conclusion())}
 	</div>
 
 	<PageNav
-		prev={{ href: '/plant-memory', label: t('sde_pagenames_plantlightmemory') }}
-		next={{ href: '/contact', label: t('sde_pagenames_contact') }}
+		prev={{ href: '/plant-memory', label: m.sde_pagenames_plantlightmemory() }}
+		next={{ href: '/contact', label: m.sde_pagenames_contact() }}
 	/>
 
 	<div class="prose">
-		{@html marked(t('con_conclusion_text_one'))}
+		{@html marked(ta(m.bio_con_conclusion_text_one(), m.math_con_conclusion_text_one()))}
 	</div>
 
 	<figure class="page-figure">
@@ -32,12 +33,12 @@
 	</figure>
 
 	<div class="prose">
-		{@html marked(t('con_conclusion_text_two'))}
+		{@html marked(m.con_conclusion_text_two())}
 	</div>
 
 	<PageNav
-		prev={{ href: '/plant-memory', label: t('sde_pagenames_plantlightmemory') }}
-		next={{ href: '/contact', label: t('sde_pagenames_contact') }}
+		prev={{ href: '/plant-memory', label: m.sde_pagenames_plantlightmemory() }}
+		next={{ href: '/contact', label: m.sde_pagenames_contact() }}
 	/>
 </article>
 

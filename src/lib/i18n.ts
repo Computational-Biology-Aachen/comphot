@@ -1,35 +1,12 @@
-import * as m from '$lib/paraglide/messages';
 import { audienceStore } from '$lib/stores/audience.svelte';
 
-type MessageFn = () => string;
-type MessageModule = typeof m;
-
-function callMessage(mod: MessageModule, key: string): string | null {
-	if (key in mod) {
-		const fn = mod[key as keyof MessageModule];
-		if (typeof fn === 'function') {
-			return (fn as unknown as MessageFn)();
-		}
-	}
-	return null;
-}
-
 /**
- * Resolves a message key with audience-aware fallback.
+ * Selects the bio or math message variant based on the current audience.
+ * Use this when a key has both a `bio_` and `math_` variant.
  *
- * If a `bio_<key>` or `math_<key>` variant exists for the current audience,
- * that variant is returned. Otherwise the plain unprefixed key is used.
+ * @example
+ * ta(m.bio_fal_learning_objectives(), m.math_fal_learning_objectives())
  */
-export function t(key: string): string {
-	const audience = audienceStore.audience;
-	// Map '4bio' → 'bio', '4math' → 'math' for message key prefixes
-	const prefix = audience === '4math' ? 'math' : 'bio';
-	// Try audience-prefixed variant first (e.g. "bio_fal_headline_experiments")
-	const audienceResult = callMessage(m, `${prefix}_${key}`);
-	if (audienceResult !== null) return audienceResult;
-	// Fall back to unprefixed key
-	const baseResult = callMessage(m, key);
-	if (baseResult !== null) return baseResult;
-	// Last resort: return the key itself
-	return key;
+export function ta<T>(bio: T, math: T): T {
+	return audienceStore.audience === '4math' ? math : bio;
 }
