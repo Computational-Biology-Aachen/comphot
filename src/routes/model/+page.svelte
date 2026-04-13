@@ -5,8 +5,8 @@
 	import PageNav from '$lib/components/PageNav.svelte';
 	import VideoTranscriptToggle from '$lib/components/VideoTranscriptToggle.svelte';
 	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
-	import * as m from '$lib/paraglide/messages';
 	import { ta } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
 	import { audienceStore } from '$lib/stores/audience.svelte';
 	import { marked } from 'marked';
 	import Katex from 'svelte-katex';
@@ -387,29 +387,29 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 			<ol>
 				<li>
 					van Aalst, M., Ebenhöh, O., &amp; Matuszyńska, A. (2021). Constructing and analysing
-					dynamic models with modelbase v1.2.3. BMC Bioinformatics, 22(1), 1–15.
+					dynamic models with modelbase v1.2.3. BMC Bioinformatics, 22(1), 1-15.
 					<a href="https://doi.org/10.1186/s12859-021-04122-7">
 						https://doi.org/10.1186/s12859-021-04122-7
 					</a>
 				</li>
 				<li>
 					Farquhar, G. D., von Caemmerer, S., &amp; Berry, J. A. (1980). A biochemical model of
-					photosynthetic CO₂ assimilation in leaves of C3 species. Planta, 149(1), 78–90.
+					photosynthetic CO₂ assimilation in leaves of C3 species. Planta, 149(1), 78-90.
 					<a href="https://doi.org/10.1007/BF00386231">https://doi.org/10.1007/BF00386231</a>
 				</li>
 				<li>
 					Von Caemmerer, S. (2013). Steady-state models of photosynthesis. Plant, Cell &amp;
-					Environment, 36(9), 1617–1630.
+					Environment, 36(9), 1617-1630.
 					<a href="https://doi.org/10.1111/pce.12098">https://doi.org/10.1111/pce.12098</a>
 				</li>
 				<li>
 					Zhu, X.-G., Wang, Y., Ort, D. R., &amp; Long, S. P. (2013). e-photosynthesis. Plant, Cell
-					&amp; Environment, 36(9), 1711–1727.
+					&amp; Environment, 36(9), 1711-1727.
 					<a href="https://doi.org/10.1111/pce.12025">https://doi.org/10.1111/pce.12025</a>
 				</li>
 				<li>
 					Bellasio, C. (2019). A generalised dynamic model of leaf-level C3 photosynthesis.
-					Photosynthesis Research, 141(1), 99–118.
+					Photosynthesis Research, 141(1), 99-118.
 					<a href="https://doi.org/10.1007/s11120-018-0601-1">
 						https://doi.org/10.1007/s11120-018-0601-1
 					</a>

@@ -1,29 +1,29 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { marked } from 'marked';
 	import { base } from '$app/paths';
-	import * as m from '$lib/paraglide/messages';
-	import { ta } from '$lib/i18n';
-	import { audienceStore } from '$lib/stores/audience.svelte';
-	import { WorkerManager, simWorker } from '$lib/stores/workerStore';
-	import { buildMemoryProtocol } from '$lib/simulations/pam';
-	import { processResults } from '$lib/simulations/processResults';
-	import { NPQ_Y0 } from '$lib/simulations/initialValues';
-	import PageNav from '$lib/components/PageNav.svelte';
 	import Expander from '$lib/components/Expander.svelte';
 	import InfoBox from '$lib/components/InfoBox.svelte';
-	import SimChart from '$lib/components/simulation/SimChart.svelte';
-	import RunButton from '$lib/components/simulation/RunButton.svelte';
+	import PageNav from '$lib/components/PageNav.svelte';
 	import CompareCheckbox from '$lib/components/simulation/CompareCheckbox.svelte';
 	import ParameterTable from '$lib/components/simulation/ParameterTable.svelte';
+	import RunButton from '$lib/components/simulation/RunButton.svelte';
 	import type { PhaseRegion } from '$lib/components/simulation/SimChart.svelte';
+	import SimChart from '$lib/components/simulation/SimChart.svelte';
+	import { ta } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
+	import { NPQ_Y0 } from '$lib/simulations/initialValues';
+	import { buildMemoryProtocol } from '$lib/simulations/pam';
+	import { processResults } from '$lib/simulations/processResults';
+	import { audienceStore } from '$lib/stores/audience.svelte';
+	import { WorkerManager, simWorker } from '$lib/stores/workerStore';
+	import { marked } from 'marked';
+	import { onDestroy, onMount } from 'svelte';
 
-	// ── Logspace steps (same as experiments page)
+	// Logspace steps (same as experiments page)
 	const LOG_STEPS = [
 		1, 2, 3, 4, 6, 10, 16, 25, 40, 63, 100, 158, 251, 398, 631, 1000, 1585, 2512, 3981, 6310, 10000
 	];
 
-	// ── Slider state
+	// Slider state
 	let lightIntensity = $state(100);
 	let pulseInterval = $state(85);
 	let darkLength = $state(30);
@@ -39,12 +39,12 @@
 	let compareWithLast = $state(true);
 	let showAnswers = $state(false);
 
-	// ── Derived
+	// Derived
 	const activationMultiplier = $derived(LOG_STEPS[activationIdx]);
 	const deactivationMultiplier = $derived(LOG_STEPS[deactivationIdx]);
 	const totalTime = $derived(darkLength + trainingLength + relaxationLength + memoryLength);
 
-	// ── Simulation types
+	// Simulation types
 	type SimResult = ReturnType<typeof processResults>;
 	interface SimParams {
 		AL: number;
@@ -53,7 +53,7 @@
 		CtV: number;
 	}
 
-	// ── Simulation state
+	// Simulation state
 	let currentResult = $state<SimResult | null>(null);
 	let previousResult = $state<SimResult | null>(null);
 	let currentParams = $state<SimParams | null>(null);
@@ -63,7 +63,7 @@
 	let errorMsg = $state('');
 	let pendingRequestId: string | null = null;
 
-	// ── Worker subscriptions
+	// Worker subscriptions
 	let unsubMessage: (() => void) | null = null;
 	let unsubError: (() => void) | null = null;
 
@@ -98,7 +98,7 @@
 		unsubError?.();
 	});
 
-	// ── Run simulation
+	// Run simulation
 	function runSimulation() {
 		if (loading) return;
 		const isMath = audienceStore.audience === '4math';
@@ -129,7 +129,7 @@
 		});
 	}
 
-	// ── Phase regions for 4-phase memory protocol
+	// Phase regions for 4-phase memory protocol
 	const phases = $derived.by<PhaseRegion[]>(() => {
 		const trainStart = darkLength;
 		const relaxStart = trainStart + trainingLength;
@@ -208,7 +208,7 @@
 	next={{ href: '/conclusion', label: 'Conclusion' }}
 />
 
-<!-- ── Explanation ──────────────────────────────────── -->
+<!-- Explanation ------------------------------------ -->
 <div class="intro-content">
 	{@html marked(ta(m.bio_mem_introduction_brain(), m.math_mem_introduction_brain()))}
 </div>
@@ -222,7 +222,7 @@
 	<figcaption>Memory protocol overview</figcaption>
 </figure>
 
-<!-- ── Guiding questions ─────────────────────────────── -->
+<!-- Guiding questions ------------------------------- -->
 <Expander title={m.mem_guiding_expander()} open>
 	<div class="prose">{@html marked(m.mem_guiding_header())}</div>
 	<label class="toggle-label">
@@ -240,7 +240,7 @@
 	{/if}
 </Expander>
 
-<!-- ── Sliders ──────────────────────────────────────── -->
+<!-- Sliders ---------------------------------------- -->
 <div class="slider-section">
 	<!-- Common sliders -->
 	<div class="slider-row">
@@ -295,7 +295,7 @@
 	{/if}
 </div>
 
-<!-- ── Run controls ── -->
+<!-- Run controls-->
 <div class="run-controls">
 	<div class="run-btn-wrap">
 		<RunButton {loading} onclick={runSimulation} />
@@ -307,7 +307,7 @@
 	<p class="error-msg">{errorMsg}</p>
 {/if}
 
-<!-- ── Results ──────────────────────────────────────── -->
+<!-- Results ---------------------------------------- -->
 {#if currentResult}
 	<div class="charts-section">
 		<div class="charts-grid" class:three-cols={audienceStore.audience === '4bio'}>
@@ -369,14 +369,14 @@
 	</div>
 {/if}
 
-<!-- ── Literature ── -->
+<!-- Literature-->
 <Expander title={m.literature()}>
 	<p>{@html marked(m.literature_onpage())}</p>
 	<ul>
 		<li>
 			Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A mathematical model of
 			non-photochemical quenching to study short-term light memory in plants.
-			<em>Biochimica et Biophysica Acta (BBA) - Bioenergetics</em>, 1857(12), 1860–1869.
+			<em>Biochimica et Biophysica Acta (BBA) - Bioenergetics</em>, 1857(12), 1860-1869.
 			<a href="https://doi.org/10.1016/j.bbabio.2016.09.003" target="_blank" rel="noopener"
 				>https://doi.org/10.1016/j.bbabio.2016.09.003</a
 			>

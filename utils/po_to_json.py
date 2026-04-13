@@ -30,7 +30,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-import polib
+import polib  # type: ignore[import-untyped]
 
 REPO_ROOT = Path(__file__).parent.parent
 LOCALES_DIR = REPO_ROOT / "reference" / "comphot" / "locales"
@@ -42,7 +42,7 @@ SECONDARY_LOCALES: list[str] = []
 ALL_LOCALES = PRIMARY_LOCALES + SECONDARY_LOCALES
 
 
-# ── Helpers ────────────────────────────────────────────────────────────────────
+# -- Helpers --------------------------------------------------------------------
 
 
 def strip_heading_markers(text: str) -> str:
@@ -89,11 +89,7 @@ def parse_po(path: Path) -> dict[str, str]:
         po = polib.pofile(tmp_path)
     finally:
         Path(tmp_path).unlink(missing_ok=True)
-    return {
-        entry.msgid: entry.msgstr
-        for entry in po
-        if entry.msgid and entry.msgstr
-    }
+    return {entry.msgid: entry.msgstr for entry in po if entry.msgid and entry.msgstr}
 
 
 def load_audience_translations(locale: str) -> tuple[dict[str, str], dict[str, str]]:
@@ -105,7 +101,7 @@ def load_audience_translations(locale: str) -> tuple[dict[str, str], dict[str, s
     return bio, math
 
 
-# ── Core logic ─────────────────────────────────────────────────────────────────
+# -- Core logic -----------------------------------------------------------------
 
 
 def compute_split_schema(
@@ -194,7 +190,7 @@ def build_secondary_locale_json(
     return result
 
 
-# ── Main ───────────────────────────────────────────────────────────────────────
+# -- Main -----------------------------------------------------------------------
 
 
 def main() -> int:
@@ -223,7 +219,7 @@ def main() -> int:
         )
         print(f"{len(results[locale])} keys (partial)")
 
-    # ── Validate ───────────────────────────────────────────────────────────────
+    # -- Validate ---------------------------------------------------------------
     print()
     ok = True
     ref_keys = set(results["en"])
@@ -258,7 +254,7 @@ def main() -> int:
         print("\n✗ Primary locale key mismatch — aborting without writing files.")
         return 1
 
-    # ── Write JSON ─────────────────────────────────────────────────────────────
+    # -- Write JSON -------------------------------------------------------------
     print()
     for locale, data in results.items():
         out_path = MESSAGES_DIR / f"{locale}.json"

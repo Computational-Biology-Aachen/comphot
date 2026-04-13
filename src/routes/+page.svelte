@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { marked } from 'marked';
 	import { base } from '$app/paths';
-	import * as m from '$lib/paraglide/messages';
-	import { ta } from '$lib/i18n';
-	import { audienceStore } from '$lib/stores/audience.svelte';
-	import PageNav from '$lib/components/PageNav.svelte';
 	import Expander from '$lib/components/Expander.svelte';
-	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
 	import InfoBox from '$lib/components/InfoBox.svelte';
+	import PageNav from '$lib/components/PageNav.svelte';
 	import VideoTranscriptToggle from '$lib/components/VideoTranscriptToggle.svelte';
+	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
+	import { ta } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
+	import { audienceStore } from '$lib/stores/audience.svelte';
+	import { marked } from 'marked';
 </script>
 
 <svelte:head>
@@ -115,7 +115,7 @@
 				<li>
 					Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A mathematical model of
 					non-photochemical quenching to study short-term light memory in plants. Biochimica et
-					Biophysica Acta (BBA) - Bioenergetics, 1857(12), 1860–1869.
+					Biophysica Acta (BBA) - Bioenergetics, 1857(12), 1860-1869.
 					<a href="https://doi.org/10.1016/j.bbabio.2016.09.003">
 						https://doi.org/10.1016/j.bbabio.2016.09.003
 					</a>

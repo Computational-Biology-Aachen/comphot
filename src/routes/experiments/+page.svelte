@@ -1,30 +1,30 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { marked } from 'marked';
 	import { base } from '$app/paths';
-	import * as m from '$lib/paraglide/messages';
-	import { ta } from '$lib/i18n';
-	import { audienceStore } from '$lib/stores/audience.svelte';
-	import { WorkerManager, simWorker } from '$lib/stores/workerStore';
-	import { buildPamProtocol } from '$lib/simulations/pam';
-	import { processResults } from '$lib/simulations/processResults';
-	import { NPQ_Y0 } from '$lib/simulations/initialValues';
-	import PageNav from '$lib/components/PageNav.svelte';
 	import Expander from '$lib/components/Expander.svelte';
 	import InfoBox from '$lib/components/InfoBox.svelte';
-	import Katex from 'svelte-katex';
-	import SimChart from '$lib/components/simulation/SimChart.svelte';
-	import RunButton from '$lib/components/simulation/RunButton.svelte';
+	import PageNav from '$lib/components/PageNav.svelte';
 	import CompareCheckbox from '$lib/components/simulation/CompareCheckbox.svelte';
 	import ParameterTable from '$lib/components/simulation/ParameterTable.svelte';
+	import RunButton from '$lib/components/simulation/RunButton.svelte';
 	import type { PhaseRegion } from '$lib/components/simulation/SimChart.svelte';
+	import SimChart from '$lib/components/simulation/SimChart.svelte';
+	import { ta } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
+	import { NPQ_Y0 } from '$lib/simulations/initialValues';
+	import { buildPamProtocol } from '$lib/simulations/pam';
+	import { processResults } from '$lib/simulations/processResults';
+	import { audienceStore } from '$lib/stores/audience.svelte';
+	import { WorkerManager, simWorker } from '$lib/stores/workerStore';
+	import { marked } from 'marked';
+	import { onDestroy, onMount } from 'svelte';
+	import Katex from 'svelte-katex';
 
-	// ── Logspace steps: np.round(np.logspace(0, 4, 21))
+	// Logspace steps: np.round(np.logspace(0, 4, 21))
 	const LOG_STEPS = [
 		1, 2, 3, 4, 6, 10, 16, 25, 40, 63, 100, 158, 251, 398, 631, 1000, 1585, 2512, 3981, 6310, 10000
 	];
 
-	// ── Slider state
+	// Slider state
 	let lightIntensity = $state(100);
 	let totalMinutes = $state(5);
 	let pulseInterval = $state(85);
@@ -36,12 +36,12 @@
 	let compareWithLast = $state(true);
 	let showAnswers = $state(false);
 
-	// ── Derived slider values
+	// Derived slider values
 	const activationMultiplier = $derived(LOG_STEPS[activationIdx]);
 	const deactivationMultiplier = $derived(LOG_STEPS[deactivationIdx]);
 	const totalTime = $derived(totalMinutes * 60);
 
-	// ── Simulation types
+	// Simulation types
 	type SimResult = ReturnType<typeof processResults>;
 	interface SimParams {
 		AL: number;
@@ -50,7 +50,7 @@
 		CtV: number;
 	}
 
-	// ── Simulation state
+	// Simulation state
 	let currentResult = $state<SimResult | null>(null);
 	let previousResult = $state<SimResult | null>(null);
 	let currentParams = $state<SimParams | null>(null);
@@ -60,7 +60,7 @@
 	let errorMsg = $state('');
 	let pendingRequestId: string | null = null;
 
-	// ── Worker subscriptions
+	// Worker subscriptions
 	let unsubMessage: (() => void) | null = null;
 	let unsubError: (() => void) | null = null;
 
@@ -96,7 +96,7 @@
 		unsubError?.();
 	});
 
-	// ── Run simulation
+	// Run simulation
 	function runSimulation() {
 		if (loading) return;
 		const isMath = audienceStore.audience === '4math';
@@ -127,7 +127,7 @@
 		});
 	}
 
-	// ── Phase background regions
+	// Phase background regions
 	const phases = $derived.by<PhaseRegion[]>(() => {
 		const isMath = audienceStore.audience === '4math';
 		const dl = isMath ? 30 : darkLength;
@@ -138,7 +138,7 @@
 		];
 	});
 
-	// ── Derived display
+	// Derived display
 	const showOld = $derived(compareWithLast && previousResult !== null);
 
 	const paramRows = $derived.by(() => {
@@ -159,7 +159,7 @@
 		];
 	});
 
-	// ── Model code constants (4math walkthrough)
+	// Model code constants (4math walkthrough)
 	const CODE = {
 		define: `import numpy as np\nfrom modelbase.ode import Model\n\nmodel = Model()`,
 		params: `pars = {\n    "PSIItot": 2.5, "PQtot": 20, "APtot": 50, ...\n    "kDeepoxV": 0.0024,   # Activation of quenching\n    "kEpoxZ":   0.00024,  # Deactivation\n    # ... (see full parameter list on GitHub)\n}`,
@@ -185,7 +185,7 @@
 	next={{ href: '/plant-memory', label: 'Plant Memory' }}
 />
 
-<!-- ── Model Construction ───────────────────────────── -->
+<!-- Model Construction ----------------------------- -->
 <div class="prose">{@html marked(m.fal_headline_model_construction())}</div>
 
 <p>{@html marked(m.fal_construction_explanation_1())}</p>
@@ -266,7 +266,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 	</Expander>
 {/if}
 
-<!-- ── Implementation ── -->
+<!-- Implementation -->
 <div class="prose">{@html marked(m.fal_headline_implementation())}</div>
 <p>
 	{@html marked(
@@ -277,7 +277,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 	<p>{@html m.bio_fal_implementation_to_expert()}</p>
 {/if}
 
-<!-- ── Analysis ─────────────────────────────────────── -->
+<!-- Analysis --------------------------------------- -->
 <div class="prose">{@html marked(m.fal_headline_analyse())}</div>
 <p>{@html marked(ta(m.bio_fal_introduktion(), m.math_fal_introduktion()))}</p>
 
@@ -314,7 +314,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 	{/if}
 </Expander>
 
-<!-- ── Slider controls ──────────────────────────────── -->
+<!-- Slider controls -------------------------------- -->
 <div class="slider-section">
 	<label class="slider-label">
 		{@html m.slider_light()}: <strong>{lightIntensity}</strong>
@@ -358,7 +358,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 	{/if}
 </div>
 
-<!-- ── Run controls ── -->
+<!-- Run controls -->
 <div class="run-controls">
 	<div class="run-btn-wrap">
 		<RunButton {loading} onclick={runSimulation} />
@@ -370,7 +370,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 	<p class="error-msg">{errorMsg}</p>
 {/if}
 
-<!-- ── Results ──────────────────────────────────────── -->
+<!-- Results ---------------------------------------- -->
 {#if currentResult}
 	<div class="charts-section">
 		<div class="charts-grid" class:three-cols={audienceStore.audience === '4bio'}>
@@ -432,14 +432,14 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 	</div>
 {/if}
 
-<!-- ── Literature ── -->
+<!-- Literature -->
 <Expander title={m.literature()}>
 	<p>{@html marked(m.literature_onpage())}</p>
 	<ul>
 		<li>
 			Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A mathematical model of
 			non-photochemical quenching to study short-term light memory in plants.
-			<em>Biochimica et Biophysica Acta (BBA) - Bioenergetics</em>, 1857(12), 1860–1869.
+			<em>Biochimica et Biophysica Acta (BBA) - Bioenergetics</em>, 1857(12), 1860-1869.
 			<a href="https://doi.org/10.1016/j.bbabio.2016.09.003" target="_blank" rel="noopener"
 				>https://doi.org/10.1016/j.bbabio.2016.09.003</a
 			>

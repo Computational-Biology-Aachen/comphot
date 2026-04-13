@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { marked } from 'marked';
 	import { base } from '$app/paths';
-	import * as m from '$lib/paraglide/messages';
-	import { ta } from '$lib/i18n';
-	import PageNav from '$lib/components/PageNav.svelte';
 	import Expander from '$lib/components/Expander.svelte';
-	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
 	import InfoBox from '$lib/components/InfoBox.svelte';
+	import PageNav from '$lib/components/PageNav.svelte';
 	import VideoTranscriptToggle from '$lib/components/VideoTranscriptToggle.svelte';
+	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
+	import { ta } from '$lib/i18n';
+	import * as m from '$lib/paraglide/messages';
+	import { marked } from 'marked';
 </script>
 
 <svelte:head>
@@ -123,7 +123,7 @@
 				<li>
 					Brooks, M. D., &amp; Niyogi, K. K. (2011). Use of a pulse-amplitude modulated chlorophyll
 					fluorometer to study the efficiency of photosynthesis in Arabidopsis plants. Chloroplast
-					Research in Arabidopsis: Methods and Protocols, Volume II, 299–310.
+					Research in Arabidopsis: Methods and Protocols, Volume II, 299-310.
 					<a href="https://link.springer.com/protocol/10.1007/978-1-61779-237-3_16">
 						https://link.springer.com/protocol/10.1007/978-1-61779-237-3_16
 					</a>
