@@ -13,7 +13,7 @@ So we only ever need to get the fluorescence from our components readout
 """
 
 import math
-from collections.abc import Hashable, Iterable
+from collections.abc import Iterable
 from typing import Any, Literal
 
 import numpy as np
@@ -432,7 +432,7 @@ def integrate_ppfd_protocol(
     n: int = 100,
     method: Literal["RK45", "LSODA", "BDF"] = "LSODA",
     # Return structure given by pyWorker.ts
-) -> tuple[dict[Hashable, Any], str | None]:
+) -> tuple[dict[str, Any], str | None]:
     traces: list[pd.DataFrame] = []
 
     kDeepoxV, kEpoxZ = pars
@@ -499,7 +499,9 @@ def integrate_ppfd_protocol(
     npq: pd.Series = rel_fluo.iloc[peaks[0]] - rel_fluo.iloc[peaks]
     phi_psii: pd.Series = rel_fluo.iloc[peaks] - Fo
 
-    final = results.to_dict() | {
+    final = {
+        "time": results.index.to_numpy(),
+        "fluo": rel_fluo.to_numpy(),
         "npqTime": npq_time,
         "npq": npq.to_numpy(),
         "phiPSII": phi_psii.to_numpy(),

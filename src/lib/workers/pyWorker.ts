@@ -13,7 +13,12 @@ async function setupPyodide() {
 	try {
 		const pyodide = await loadPyodide({
 			indexURL,
-			packages: ['numpy', 'scipy', 'pandas']
+			packages: [
+				'numpy',
+				'scipy',
+				'pandas'
+				//
+			]
 		});
 
 		const response = await fetch(`${basePath}/main.py`);

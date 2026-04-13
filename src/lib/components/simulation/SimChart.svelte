@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
 	import {
 		Chart,
+		Filler,
+		Legend,
+		LinearScale,
 		LineController,
 		LineElement,
 		PointElement,
-		LinearScale,
 		Title,
-		Tooltip,
-		Legend,
-		Filler
+		Tooltip
 	} from 'chart.js';
+	import { onDestroy, onMount } from 'svelte';
 
 	Chart.register(
 		LineController,
