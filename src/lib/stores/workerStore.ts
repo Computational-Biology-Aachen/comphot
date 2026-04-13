@@ -1,20 +1,36 @@
 import { browser } from '$app/environment';
 import { base } from '$app/paths';
 
-export interface WorkerMessage {
-	requestId: string;
-	time: number[];
-	values: number[][]; // [n_points x 7]: P, H, E, A, Pr, V, Fluo
-	message?: string; // error string if failed
-}
-
 export interface SimRequest {
 	type?: '__INIT__';
 	basePath?: string;
 	requestId: string;
 	protocol: { t_end: number; PFD: number }[];
-	y0: number[]; // [P, H, E, A, Pr, V]
-	parsOverride: Record<string, number>;
+	pars: number[];
+}
+
+export interface Res {
+	time: number[];
+	atp: number[];
+	pqOx: number[];
+	pcOx: number[];
+	fdOx: number[];
+	hLumen: number[];
+	lhc: number[];
+	psbsDe: number[];
+	vX: number[];
+	// Derived
+	fluo: number[];
+	// With their own time
+	npqTime: number[];
+	npq: number[];
+	phiPsii: number[];
+}
+
+export interface WorkerMessage {
+	requestId: string;
+	res: Res;
+	message?: string; // error string if failed
 }
 
 type MessageHandler = (data: WorkerMessage) => void;

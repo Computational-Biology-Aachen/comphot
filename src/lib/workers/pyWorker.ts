@@ -1,4 +1,4 @@
-import type { WorkerMessage } from '$lib/stores/workerStore';
+import type { Res, SimRequest, WorkerMessage } from '$lib/stores/workerStore';
 import { loadPyodide, version } from 'pyodide';
 export {}; // make it a module
 
@@ -13,7 +13,7 @@ async function setupPyodide() {
 	try {
 		const pyodide = await loadPyodide({
 			indexURL,
-			packages: ['numpy', 'scipy']
+			packages: ['numpy', 'scipy', 'pandas']
 		});
 
 		const response = await fetch(`${basePath}/main.py`);
@@ -43,31 +43,38 @@ onmessage = async function (event: MessageEvent) {
 		return;
 	}
 
-	const { requestId, protocol, y0, parsOverride } = event.data;
+	const { requestId, protocol, pars }: SimRequest = event.data;
 
 	try {
-		const [tPy, yPy, errPy] = pyFuncs.integrate(
-			pyodide.toPy(protocol),
-			pyodide.toPy(y0),
-			pyodide.toPy(parsOverride ?? {})
-		);
+		const [resPy, errPy] = pyFuncs.integrate(pyodide.toPy(protocol), pyodide.toPy(pars));
 
-		const time: number[] = tPy.toJs();
-		const values: number[][] = yPy.toJs();
+		const res: Res = resPy.toJs();
 		const errStr: string | undefined = errPy ?? undefined;
 
 		const message: WorkerMessage = {
 			requestId,
-			time,
-			values,
+			res,
 			message: errStr
 		};
 		postMessage(message);
 	} catch (e) {
 		const message: WorkerMessage = {
 			requestId,
-			time: [],
-			values: [],
+			res: {
+				time: [],
+				atp: [],
+				pqOx: [],
+				pcOx: [],
+				fdOx: [],
+				hLumen: [],
+				psbsDe: [],
+				lhc: [],
+				vX: [],
+				fluo: [],
+				npqTime: [],
+				npq: [],
+				phiPsii: []
+			},
 			message: String(e)
 		};
 		postMessage(message);

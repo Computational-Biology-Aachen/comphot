@@ -10,15 +10,20 @@
 	import SimChart from '$lib/components/simulation/SimChart.svelte';
 	import { ta } from '$lib/i18n';
 	import * as m from '$lib/paraglide/messages';
-	import { NPQ_Y0 } from '$lib/simulations/initialValues';
 	import { buildMemoryProtocol } from '$lib/simulations/pam';
-	import { processResults } from '$lib/simulations/processResults';
 	import { audienceStore } from '$lib/stores/audience.svelte';
-	import { WorkerManager, simWorker } from '$lib/stores/workerStore';
+	import { WorkerManager, simWorker, type Res } from '$lib/stores/workerStore';
 	import { marked } from 'marked';
 	import { onDestroy, onMount } from 'svelte';
 
-	// Logspace steps (same as experiments page)
+	interface SimParams {
+		AL: number;
+		SP: number;
+		CtZ: number;
+		CtV: number;
+	}
+
+	// Logspace steps: np.round(np.logspace(0, 4, 21))
 	const LOG_STEPS = [
 		1, 2, 3, 4, 6, 10, 16, 25, 40, 63, 100, 158, 251, 398, 631, 1000, 1585, 2512, 3981, 6310, 10000
 	];
@@ -32,30 +37,19 @@
 	let relaxationLength = $state(300);
 	let memoryLength = $state(300);
 
-	// 4bio only
-	let activationIdx = $state(10); // LOG_STEPS[10] = 100
-	let deactivationIdx = $state(10);
-
 	let compareWithLast = $state(true);
 	let showAnswers = $state(false);
 
-	// Derived
+	// Derived slider values
+	let activationIdx = $state(10); // LOG_STEPS[10] = 100
+	let deactivationIdx = $state(10);
 	const activationMultiplier = $derived(LOG_STEPS[activationIdx]);
 	const deactivationMultiplier = $derived(LOG_STEPS[deactivationIdx]);
 	const totalTime = $derived(darkLength + trainingLength + relaxationLength + memoryLength);
 
-	// Simulation types
-	type SimResult = ReturnType<typeof processResults>;
-	interface SimParams {
-		AL: number;
-		SP: number;
-		CtZ: number;
-		CtV: number;
-	}
-
 	// Simulation state
-	let currentResult = $state<SimResult | null>(null);
-	let previousResult = $state<SimResult | null>(null);
+	let currentResult = $state<Res | null>(null);
+	let previousResult = $state<Res | null>(null);
 	let currentParams = $state<SimParams | null>(null);
 	let previousParams = $state<SimParams | null>(null);
 	let pendingParams = $state<SimParams | null>(null);
@@ -73,15 +67,15 @@
 			loading = false;
 			pendingRequestId = null;
 
-			if (!data.time.length) {
+			if (data.message) {
 				errorMsg = data.message ? `Simulation error: ${data.message}` : 'Empty result.';
 				return;
 			}
 			errorMsg = '';
-			const processed = processResults(data.time, data.values);
+			// Shift current → previous, apply new
 			previousResult = currentResult;
 			previousParams = currentParams;
-			currentResult = processed;
+			currentResult = data.res;
 			currentParams = pendingParams;
 			pendingParams = null;
 		});
@@ -101,9 +95,6 @@
 	// Run simulation
 	function runSimulation() {
 		if (loading) return;
-		const isMath = audienceStore.audience === '4math';
-		const kDeepoxV = isMath ? 0.0024 : 0.0024 * (activationMultiplier / 100);
-		const kEpoxZ = isMath ? 0.00024 : 0.00024 * (deactivationMultiplier / 100);
 
 		const protocol = buildMemoryProtocol({
 			lightIntensity,
@@ -115,17 +106,18 @@
 			memoryLength
 		});
 
-		pendingParams = { AL: lightIntensity, SP: saturatingPulse, CtZ: kDeepoxV, CtV: kEpoxZ };
 		const requestId = WorkerManager.generateRequestId();
 		pendingRequestId = requestId;
 		loading = true;
 		errorMsg = '';
 
+		const kDeepoxV = 0.0024 * (activationMultiplier / 100);
+		const kEpoxZ = 0.00024 * (deactivationMultiplier / 100);
+
 		simWorker.postMessage({
 			requestId,
 			protocol,
-			y0: NPQ_Y0,
-			parsOverride: { kDeepoxV, kEpoxZ }
+			pars: [kDeepoxV, kEpoxZ]
 		});
 	}
 
@@ -343,10 +335,10 @@
 				<div class="chart-card">
 					<p class="chart-label">{m.axis_phipsii()}</p>
 					<SimChart
-						xNew={currentResult.phiTime}
-						yNew={currentResult.phiPSII}
-						xOld={showOld && previousResult ? previousResult.phiTime : []}
-						yOld={showOld && previousResult ? previousResult.phiPSII : []}
+						xNew={currentResult.npqTime}
+						yNew={currentResult.phiPsii}
+						xOld={showOld && previousResult ? previousResult.npqTime : []}
+						yOld={showOld && previousResult ? previousResult.phiPsii : []}
 						{phases}
 						yLabel={m.axis_phipsii()}
 						showLine={false}

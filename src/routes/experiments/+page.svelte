@@ -10,14 +10,19 @@
 	import SimChart from '$lib/components/simulation/SimChart.svelte';
 	import { ta } from '$lib/i18n';
 	import * as m from '$lib/paraglide/messages';
-	import { NPQ_Y0 } from '$lib/simulations/initialValues';
 	import { buildPamProtocol } from '$lib/simulations/pam';
-	import { processResults } from '$lib/simulations/processResults';
 	import { audienceStore } from '$lib/stores/audience.svelte';
-	import { WorkerManager, simWorker } from '$lib/stores/workerStore';
+	import { WorkerManager, simWorker, type Res } from '$lib/stores/workerStore';
 	import { marked } from 'marked';
 	import { onDestroy, onMount } from 'svelte';
 	import Katex from 'svelte-katex';
+
+	interface SimParams {
+		AL: number;
+		SP: number;
+		CtZ: number;
+		CtV: number;
+	}
 
 	// Logspace steps: np.round(np.logspace(0, 4, 21))
 	const LOG_STEPS = [
@@ -28,8 +33,6 @@
 	let lightIntensity = $state(100);
 	let totalMinutes = $state(5);
 	let pulseInterval = $state(85);
-	let activationIdx = $state(10); // LOG_STEPS[10] = 100
-	let deactivationIdx = $state(10);
 	let darkLength = $state(30);
 	let saturatingPulse = $state(5000);
 
@@ -37,22 +40,15 @@
 	let showAnswers = $state(false);
 
 	// Derived slider values
+	let activationIdx = $state(10); // LOG_STEPS[10] = 100
+	let deactivationIdx = $state(10);
 	const activationMultiplier = $derived(LOG_STEPS[activationIdx]);
 	const deactivationMultiplier = $derived(LOG_STEPS[deactivationIdx]);
 	const totalTime = $derived(totalMinutes * 60);
 
-	// Simulation types
-	type SimResult = ReturnType<typeof processResults>;
-	interface SimParams {
-		AL: number;
-		SP: number;
-		CtZ: number;
-		CtV: number;
-	}
-
 	// Simulation state
-	let currentResult = $state<SimResult | null>(null);
-	let previousResult = $state<SimResult | null>(null);
+	let currentResult = $state<Res | null>(null);
+	let previousResult = $state<Res | null>(null);
 	let currentParams = $state<SimParams | null>(null);
 	let previousParams = $state<SimParams | null>(null);
 	let pendingParams = $state<SimParams | null>(null);
@@ -70,16 +66,15 @@
 			loading = false;
 			pendingRequestId = null;
 
-			if (!data.time.length) {
+			if (data.message) {
 				errorMsg = data.message ? `Simulation error: ${data.message}` : 'Empty result.';
 				return;
 			}
 			errorMsg = '';
-			const processed = processResults(data.time, data.values);
 			// Shift current → previous, apply new
 			previousResult = currentResult;
 			previousParams = currentParams;
-			currentResult = processed;
+			currentResult = data.res;
 			currentParams = pendingParams;
 			pendingParams = null;
 		});
@@ -99,38 +94,35 @@
 	// Run simulation
 	function runSimulation() {
 		if (loading) return;
-		const isMath = audienceStore.audience === '4math';
-		const kDeepoxV = isMath ? 0.0024 : 0.0024 * (activationMultiplier / 100);
-		const kEpoxZ = isMath ? 0.00024 : 0.00024 * (deactivationMultiplier / 100);
-		const dl = isMath ? 30 : darkLength;
-		const sp = isMath ? 5000 : saturatingPulse;
 
 		const protocol = buildPamProtocol({
 			lightIntensity,
-			saturatingPulse: sp,
+			saturatingPulse: saturatingPulse,
 			totalMinutes,
-			darkLength: dl,
+			darkLength: darkLength,
 			pulseInterval
 		});
 
-		pendingParams = { AL: lightIntensity, SP: sp, CtZ: kDeepoxV, CtV: kEpoxZ };
 		const requestId = WorkerManager.generateRequestId();
 		pendingRequestId = requestId;
 		loading = true;
 		errorMsg = '';
 
+		const kDeepoxV = 0.0024 * (activationMultiplier / 100);
+		const kEpoxZ = 0.00024 * (deactivationMultiplier / 100);
+
+		pendingParams = { AL: lightIntensity, SP: saturatingPulse, CtZ: kDeepoxV, CtV: kEpoxZ };
+
 		simWorker.postMessage({
 			requestId,
 			protocol,
-			y0: NPQ_Y0,
-			parsOverride: { kDeepoxV, kEpoxZ }
+			pars: [kDeepoxV, kEpoxZ]
 		});
 	}
 
 	// Phase background regions
 	const phases = $derived.by<PhaseRegion[]>(() => {
-		const isMath = audienceStore.audience === '4math';
-		const dl = isMath ? 30 : darkLength;
+		const dl = darkLength;
 		const maxT = totalMinutes * 60;
 		return [
 			{ start: 0, end: dl, color: 'rgba(28, 91, 199, 0.18)' },
@@ -406,10 +398,10 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 				<div class="chart-card">
 					<p class="chart-label">{m.axis_phipsii()}</p>
 					<SimChart
-						xNew={currentResult.phiTime}
-						yNew={currentResult.phiPSII}
-						xOld={showOld && previousResult ? previousResult.phiTime : []}
-						yOld={showOld && previousResult ? previousResult.phiPSII : []}
+						xNew={currentResult.npqTime}
+						yNew={currentResult.phiPsii}
+						xOld={showOld && previousResult ? previousResult.npqTime : []}
+						yOld={showOld && previousResult ? previousResult.phiPsii : []}
 						{phases}
 						yLabel={m.axis_phipsii()}
 						showLine={false}
