@@ -23,6 +23,17 @@ from scipy.signal import find_peaks, peak_prominences  # type: ignore
 
 # Order: P, H, E, A, Pr, V
 
+# _y0_ref = {
+#     "atp": 1.6999999999999997,
+#     "pq_ox": 4.706348349506148,
+#     "pc_ox": 3.9414515288091567,
+#     "fd_ox": 3.7761613271207324,
+#     "protons_lumen": 7.737821100836988,
+#     "lhc": 0.5105293511676007,
+#     "psbs_de": 0.5000000001374878,
+#     "vx": 0.09090909090907397,
+# }
+
 _y0_ref = {
     "atp": 1.6999999999999997,
     "pq_ox": 4.706348349506148,
@@ -486,25 +497,29 @@ def integrate_ppfd_protocol(
 
     results = pd.concat(traces)
     print("Results", results.shape)
+    time = results.index.to_numpy()
 
+    abs_fluo: pd.Series = results["fluo"]
     rel_fluo: pd.Series = results["fluo"] / results["fluo"].max()
     peaks = find_peaks(rel_fluo, height=0)[0]
+    print("peals", time[peaks])
+    npq: pd.Series = (abs_fluo.iloc[peaks[0]] - abs_fluo.iloc[peaks]) / abs_fluo.iloc[
+        peaks
+    ]
+
     prominences_left = peak_prominences((rel_fluo), peaks)[1]
-
-    print("Prominences", prominences_left)
-    print("Rel_fluo", rel_fluo.shape)
     Fo = np.array([rel_fluo.iloc[i] for i in prominences_left])
+    phi_psii: pd.Series = (abs_fluo.iloc[peaks] - Fo) / abs_fluo.iloc[peaks]
 
-    npq_time = peaks
-    npq: pd.Series = rel_fluo.iloc[peaks[0]] - rel_fluo.iloc[peaks]
-    phi_psii: pd.Series = rel_fluo.iloc[peaks] - Fo
+    print("npq", npq.to_numpy())
+    print("phiPSII", phi_psii.to_numpy())
 
     final = {
-        "time": results.index.to_numpy(),
+        "time": time,
         "fluo": rel_fluo.to_numpy(),
-        "npqTime": npq_time,
+        "npqTime": time[peaks],
         "npq": npq.to_numpy(),
-        "phiPSII": phi_psii.to_numpy(),
+        "phiPsii": phi_psii.to_numpy(),
     }
     return final, None
 

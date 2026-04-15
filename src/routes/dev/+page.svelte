@@ -4,7 +4,6 @@
 	import ParameterTable from '$lib/components/simulation/ParameterTable.svelte';
 	import RunButton from '$lib/components/simulation/RunButton.svelte';
 	import type { PhaseRegion } from '$lib/components/simulation/SimChart.svelte';
-	import SimChart from '$lib/components/simulation/SimChart.svelte';
 	import { ta } from '$lib/i18n';
 	import * as m from '$lib/paraglide/messages';
 	import { buildPamProtocol } from '$lib/simulations/pam';
@@ -26,7 +25,7 @@
 
 	// Slider state
 	let lightIntensity = $state(100);
-	let totalMinutes = $state(5);
+	let totalMinutes = $state(1);
 	let pulseInterval = $state(85);
 	let darkLength = $state(30);
 	let saturatingPulse = $state(5000);
@@ -181,6 +180,74 @@
 			]
 		};
 	});
+	let npqData = $derived.by(() => {
+		if (previousResult !== null) {
+			return {
+				labels: currentResult?.npqTime,
+				datasets: [
+					{
+						label: 'new',
+						data: currentResult?.npq,
+						borderColor: '#FF4B4B',
+						backgroundColor: '#FF4B4B'
+					},
+					{
+						label: 'old',
+						data: previousResult?.npq,
+						borderColor: '#FF4B4B',
+						backgroundColor: '#FF4B4B',
+						borderDash: [6, 3]
+					}
+				]
+			};
+		}
+		return {
+			labels: currentResult?.npqTime,
+			datasets: [
+				{
+					label: 'NPQ',
+					data: currentResult?.npq,
+					borderColor: '#FF4B4B',
+					backgroundColor: '#FF4B4B'
+				}
+			]
+		};
+	});
+	let psiiData = $derived.by(() => {
+		console.log('Updated');
+		console.log($state.snapshot(currentResult?.phiPsii));
+		if (previousResult !== null) {
+			return {
+				labels: currentResult?.npqTime,
+				datasets: [
+					{
+						label: 'new',
+						data: currentResult?.phiPsii,
+						borderColor: '#FF4B4B',
+						backgroundColor: '#FF4B4B'
+					},
+					{
+						label: 'old',
+						data: previousResult?.phiPsii,
+						borderColor: '#FF4B4B',
+						backgroundColor: '#FF4B4B',
+						borderDash: [6, 3]
+					}
+				]
+			};
+		}
+		return {
+			labels: currentResult?.npqTime,
+			datasets: [
+				{
+					label: 'phi(PSII)',
+					data: currentResult?.phiPsii,
+					borderColor: '#FF4B4B',
+					backgroundColor: '#FF4B4B'
+				}
+			]
+		};
+	});
 </script>
 
 <svelte:head>
@@ -246,52 +313,21 @@
 <!-- Results ---------------------------------------- -->
 {#if currentResult}
 	<div class="charts-section">
-		<div class="charts-grid" class:three-cols={audienceStore.audience === '4bio'}>
+		<div class="charts-grid">
 			<div class="chart-card">
 				<p class="chart-label">{ta(m.bio_fluo(), m.math_fluo())}</p>
 				<LineChart data={lineData} loading={false} {phases} yMax={1.2} />
-
-				<SimChart
-					xNew={currentResult.time}
-					yNew={currentResult.fluo}
-					xOld={showOld && previousResult ? previousResult.time : []}
-					yOld={showOld && previousResult ? previousResult.fluo : []}
-					{phases}
-					yLabel={ta(m.bio_fluo(), m.math_fluo())}
-					showLine={true}
-					{totalTime}
-				/>
 			</div>
 
-			{#if audienceStore.audience === '4bio'}
-				<div class="chart-card">
-					<p class="chart-label">{m.axis_npq()}</p>
-					<SimChart
-						xNew={currentResult.npqTime}
-						yNew={currentResult.npq}
-						xOld={showOld && previousResult ? previousResult.npqTime : []}
-						yOld={showOld && previousResult ? previousResult.npq : []}
-						{phases}
-						yLabel={m.axis_npq()}
-						showLine={false}
-						{totalTime}
-					/>
-				</div>
+			<div class="chart-card">
+				<p class="chart-label">{m.axis_npq()}</p>
+				<LineChart data={npqData} loading={false} />
+			</div>
 
-				<div class="chart-card">
-					<p class="chart-label">{m.axis_phipsii()}</p>
-					<SimChart
-						xNew={currentResult.npqTime}
-						yNew={currentResult.phiPsii}
-						xOld={showOld && previousResult ? previousResult.npqTime : []}
-						yOld={showOld && previousResult ? previousResult.phiPsii : []}
-						{phases}
-						yLabel={m.axis_phipsii()}
-						showLine={false}
-						{totalTime}
-					/>
-				</div>
-			{/if}
+			<div class="chart-card">
+				<p class="chart-label">{m.axis_phipsii()}</p>
+				<LineChart data={psiiData} loading={false} />
+			</div>
 		</div>
 
 		{#if paramRows.length > 0}

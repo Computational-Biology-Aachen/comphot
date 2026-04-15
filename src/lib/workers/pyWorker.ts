@@ -52,13 +52,18 @@ onmessage = async function (event: MessageEvent) {
 
 	try {
 		const [resPy, errPy] = pyFuncs.integrate(pyodide.toPy(protocol), pyodide.toPy(pars));
-
 		const res: Res = resPy.toJs();
 		const errStr: string | undefined = errPy ?? undefined;
 
 		const message: WorkerMessage = {
 			requestId,
-			res,
+			res: {
+				time: res.time,
+				fluo: res.fluo,
+				npqTime: res.npqTime,
+				npq: res.npq,
+				phiPsii: res.phiPsii
+			},
 			message: errStr
 		};
 		postMessage(message);
@@ -67,14 +72,6 @@ onmessage = async function (event: MessageEvent) {
 			requestId,
 			res: {
 				time: [],
-				atp: [],
-				pqOx: [],
-				pcOx: [],
-				fdOx: [],
-				hLumen: [],
-				psbsDe: [],
-				lhc: [],
-				vX: [],
 				fluo: [],
 				npqTime: [],
 				npq: [],

@@ -11,14 +11,6 @@ export interface SimRequest {
 
 export interface Res {
 	time: number[];
-	atp: number[];
-	pqOx: number[];
-	pcOx: number[];
-	fdOx: number[];
-	hLumen: number[];
-	lhc: number[];
-	psbsDe: number[];
-	vX: number[];
 	// Derived
 	fluo: number[];
 	// With their own time
