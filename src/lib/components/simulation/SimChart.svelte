@@ -225,13 +225,10 @@
 	});
 
 	$effect(() => {
-		// Re-read reactive props to establish dependency
-		void xNew;
-		void yNew;
-		void xOld;
-		void yOld;
+		// phases is read inside phaseShadingPlugin.beforeDraw which runs outside
+		// any reactive context — explicitly track it here so chart.update() fires
+		// when phases change. All other props are tracked through buildDatasets/getXMax.
 		void phases;
-		void totalTime;
 		if (chart) {
 			updateChart();
 		} else {

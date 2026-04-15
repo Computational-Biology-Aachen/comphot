@@ -20,8 +20,7 @@
 		yScale = 'linear',
 		xLabel = 'Time / unit',
 		yLabel = 'Amount / unit',
-		loading = true,
-		loadingDelay = 500
+		loading = true
 	}: {
 		data: ChartData;
 		yMax: number | undefined;
@@ -34,25 +33,9 @@
 		xLabel?: string;
 		yLabel?: string;
 		loading?: boolean;
-		loadingDelay?: number;
 	} = $props();
 
-	// svelte-ignore state_referenced_locally
-	let showLoadingSpinner = $state(loading);
-	let loadingTimeout: ReturnType<typeof setTimeout> | null = null;
-
-	$effect(() => {
-		if (loading) {
-			loadingTimeout = setTimeout(() => {
-				showLoadingSpinner = true;
-			}, loadingDelay);
-		} else {
-			if (loadingTimeout !== null) {
-				clearTimeout(loadingTimeout);
-			}
-			showLoadingSpinner = false;
-		}
-	});
+	const showLoadingSpinner = $derived(loading);
 
 	// Custom plugin for background phase shading + labels
 	const phaseShadingPlugin = {

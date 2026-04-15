@@ -60,3 +60,147 @@ code,
 pre {
 	font-family: var(--font-mono);
 }
+
+/* ── Shared simulation-page styles ───────────────────── */
+
+.fig {
+	margin: var(--space-6) auto;
+	text-align: center;
+	max-width: 80%;
+}
+
+.fig img {
+	max-width: 100%;
+	border-radius: 6px;
+}
+
+.fig figcaption {
+	font-size: 0.85rem;
+	color: var(--color-text-muted);
+	margin-top: var(--space-2);
+}
+
+.toggle-label {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	cursor: pointer;
+	margin-bottom: var(--space-3);
+	font-size: 0.95rem;
+}
+
+.toggle-label input {
+	accent-color: var(--color-primary);
+	width: 1.1em;
+	height: 1.1em;
+}
+
+.qa-text ul {
+	padding-left: 1.5rem;
+}
+
+.slider-section {
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: 8px;
+	padding: var(--space-4);
+	margin: var(--space-4) 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+}
+
+.slider-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-4);
+}
+
+.slider-label {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-1);
+	font-size: 0.88rem;
+}
+
+.slider-label input[type='range'] {
+	width: 100%;
+	accent-color: var(--color-primary);
+	cursor: pointer;
+	margin-top: 2px;
+}
+
+.run-controls {
+	display: flex;
+	align-items: center;
+	gap: var(--space-4);
+	margin: var(--space-4) 0;
+}
+
+.run-btn-wrap {
+	width: 220px;
+	flex-shrink: 0;
+}
+
+.error-msg {
+	color: #c0392b;
+	background: #fdf0f0;
+	border: 1px solid #f5c6cb;
+	border-radius: 6px;
+	padding: var(--space-3);
+	margin: var(--space-3) 0;
+}
+
+.charts-section {
+	margin: var(--space-6) 0;
+}
+
+.charts-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--space-4);
+	max-width: 600px;
+}
+
+.charts-grid.three-cols {
+	grid-template-columns: repeat(3, 1fr);
+	max-width: unset;
+}
+
+.chart-card {
+	border: 1px solid var(--color-border);
+	border-radius: 8px;
+	padding: var(--space-3);
+	background: var(--color-bg);
+}
+
+.chart-label {
+	margin: 0 0 var(--space-2) 0;
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: var(--color-text-muted);
+}
+
+.param-table-wrap {
+	margin-top: var(--space-4);
+	max-width: 440px;
+}
+
+@media (max-width: 750px) {
+	.charts-grid.three-cols {
+		grid-template-columns: 1fr;
+	}
+
+	.slider-row {
+		grid-template-columns: 1fr;
+	}
+
+	.run-controls {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.run-btn-wrap {
+		width: 100%;
+	}
+}

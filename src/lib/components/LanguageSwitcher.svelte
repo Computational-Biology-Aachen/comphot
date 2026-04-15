@@ -16,7 +16,7 @@
 </script>
 
 <div class="lang-switcher">
-	{#each LOCALES as { code, label }}
+	{#each LOCALES as { code, label } (code)}
 		<button
 			class="lang-btn"
 			class:active={currentLocale === code}
