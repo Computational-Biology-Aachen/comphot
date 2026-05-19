@@ -12,6 +12,7 @@
     Button,
     CompareCheckbox,
     Accordion as Expander,
+    H1,
     H2,
     InfoBox,
     LiteratureExpander,
@@ -104,10 +105,11 @@
 
 <Main>
   <Narrow>
-    <h1>{@html marked(m.fal_headline_experiments())}</h1>
+    <H1>{@html marked.parseInline(m.fal_headline_experiments())}</H1>
 
     <InfoBox>
-      {@html marked(
+      <!-- FIXME: break message into smaller pieces -->
+      {@html marked.parse(
         ta(m.bio_fal_learning_objectives(), m.math_fal_learning_objectives()),
       )}
     </InfoBox>
@@ -120,11 +122,11 @@
 
     <!-- Model Construction ----------------------------- -->
     <H2>
-      {@html marked(m.fal_headline_model_construction())}
+      {@html marked.parseInline(m.fal_headline_model_construction())}
     </H2>
 
     <Text>
-      {@html marked(m.fal_construction_explanation_1())}
+      {@html marked.parseInline(m.fal_construction_explanation_1())}
     </Text>
 
     <figure class="fig">
@@ -135,25 +137,27 @@
       <figcaption>{m.fal_caption_model_npq()}</figcaption>
     </figure>
 
-    <p>{@html marked(m.fal_construction_explanation_2())}</p>
-    <p>{@html m.fal_rates_1()}</p>
-    <p>{@html marked(m.fal_rates_2())}</p>
-    <p>{@html marked(m.fal_rates_3())}</p>
-    <p>{@html marked(m.fal_rates_4())}</p>
-    <p>{@html marked(m.fal_rates_5())}</p>
-    <p>{@html m.fal_rates_6()}</p>
+    <Text>{@html marked.parseInline(m.fal_construction_explanation_2())}</Text>
+    <Text>{@html marked.parseInline(m.fal_rates_1())}</Text>
+    <Text>{@html marked.parseInline(m.fal_rates_2())}</Text>
+    <Text>{@html marked.parseInline(m.fal_rates_3())}</Text>
+    <Text>{@html marked.parseInline(m.fal_rates_4())}</Text>
+    <Text>{@html marked.parseInline(m.fal_rates_5())}</Text>
+    <Text>{@html marked.parseInline(m.fal_rates_6())}</Text>
 
     <Expander title={m.fal_components_explanation_header()}>
-      <div>{@html marked(m.fal_molecules_explanation_table())}</div>
-      <div>{@html marked(m.fal_enzymes_explanation_table())}</div>
+      <div>{@html marked.parseInline(m.fal_molecules_explanation_table())}</div>
+      <div>{@html marked.parseInline(m.fal_enzymes_explanation_table())}</div>
     </Expander>
 
     <!-- 4math: ODE equations + code walkthrough -->
     {#if audienceStore.audience === "4math"}
       <H2>
-        {@html marked(m.math_fal_headline_model_equations())}
+        {@html marked.parseInline(m.math_fal_headline_model_equations())}
       </H2>
-      <p>{@html marked(m.math_fal_model_equations_introduction())}</p>
+      <Text>
+        {@html marked.parseInline(m.math_fal_model_equations_introduction())}
+      </Text>
 
       <div class="math-block">
         <Katex displayMode
@@ -169,7 +173,7 @@ b_\mathrm{H} \cdot \frac{\mathrm{dH}}{\mathrm{d}t} &= 2 v_\mathrm{PSII} + 4 v_\m
       </div>
 
       <Expander title={m.math_fal_reaction_rates()}>
-        <p>{@html marked(m.math_fal_rates_dynamic())}</p>
+        <Text>{@html marked.parseInline(m.math_fal_rates_dynamic())}</Text>
         <div class="math-block">
           <Katex displayMode
             >{String.raw`\begin{aligned}
@@ -183,12 +187,12 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 
       <Expander title={m.math_fal_model_code_expander()}>
         <Text>
-          {@html marked(m.math_fal_construction_header())}
+          {@html marked.parseInline(m.math_fal_construction_header())}
         </Text>
-        <p>{@html marked(m.math_fal_construction_1())}</p>
+        <Text>{@html marked.parseInline(m.math_fal_construction_1())}</Text>
         <pre><code>{CODE.define}</code></pre>
 
-        <p>{@html marked(m.math_fal_construction_2())}</p>
+        <Text>{@html marked.parseInline(m.math_fal_construction_2())}</Text>
         <details>
           <summary>Parameters</summary>
           <pre><code>{CODE.params}</code></pre>
@@ -198,69 +202,72 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
           <pre><code>{CODE.comps}</code></pre>
         </details>
 
-        <p>{@html marked(m.math_fal_construction_3())}</p>
+        <Text>{@html marked.parseInline(m.math_fal_construction_3())}</Text>
         <pre><code>{CODE.addCompsPars}</code></pre>
 
-        <Text>{@html marked(m.math_fal_simulation_header())}</Text>
-        <p>{@html marked(m.math_fal_simulation_1())}</p>
+        <Text>{@html marked.parseInline(m.math_fal_simulation_header())}</Text>
+        <Text>{@html marked.parseInline(m.math_fal_simulation_1())}</Text>
         <pre><code>{CODE.definesim}</code></pre>
 
-        <p>{@html marked(m.math_fal_simulation_2())}</p>
+        <Text>{@html marked.parseInline(m.math_fal_simulation_2())}</Text>
         <pre><code>{CODE.initialisesim}</code></pre>
       </Expander>
     {/if}
 
     <!-- Implementation -->
-    <H2>{@html marked(m.fal_headline_implementation())}</H2>
-    <p>
-      {@html marked(
+    <H2>{@html marked.parseInline(m.fal_headline_implementation())}</H2>
+    <Text>
+      {@html marked.parseInline(
         ta(
           m.bio_fal_implementation_description(),
           m.math_fal_implementation_description(),
         ),
       )}
-    </p>
+    </Text>
     {#if audienceStore.audience === "4bio"}
-      <p>{@html m.bio_fal_implementation_to_expert()}</p>
+      <Text>{@html m.bio_fal_implementation_to_expert()}</Text>
     {/if}
 
     <!-- Analysis --------------------------------------- -->
-    <H2>{@html marked(m.fal_headline_analyse())}</H2>
-    <p>
-      {@html marked(ta(m.bio_fal_introduktion(), m.math_fal_introduktion()))}
-    </p>
+    <H2>{@html marked.parseInline(m.fal_headline_analyse())}</H2>
+    <Text>
+      {@html marked.parseInline(
+        ta(m.bio_fal_introduktion(), m.math_fal_introduktion()),
+      )}
+    </Text>
 
-    <Text>{@html marked(m.fal_headline_slider())}</Text>
-    <p>{@html marked(m.fal_explanatnion())}</p>
+    <Text>{@html marked.parseInline(m.fal_headline_slider())}</Text>
+    <Text>{@html marked.parseInline(m.fal_explanatnion())}</Text>
 
     <Expander
       title={m.fal_graph_explanation_expander()}
       open={false}
     >
       <Text>
-        {@html marked(m.fal_graph_explanation_header_single())}
+        {@html marked.parseInline(m.fal_graph_explanation_header_single())}
       </Text>
-      <p>{@html marked(m.fal_graph_explanation_1())}</p>
+      <Text>{@html marked.parseInline(m.fal_graph_explanation_1())}</Text>
       <div class="math-inline">
         <Katex displayMode>{"NPQ = \\dfrac{F_m - F_m'}{F_m'}"}</Katex>
       </div>
-      <p>
+      <Text>
         {@html ta(
           m.bio_fal_graph_explanation_2(),
           m.math_fal_graph_explanation_2(),
         )}
-      </p>
-      <Text>
-        {@html marked(m.fal_graph_explanation_header_duo())}
       </Text>
-      <p>{@html marked(m.fal_graph_explanation_duo())}</p>
+      <Text>
+        {@html marked.parseInline(m.fal_graph_explanation_header_duo())}
+      </Text>
+      <Text>{@html marked.parseInline(m.fal_graph_explanation_duo())}</Text>
     </Expander>
 
+    <!-- Having trouble connecting -->
     <Expander
       title={m.fal_guiding_expander()}
       open={false}
     >
-      <Text>{@html marked(m.fal_guiding_header())}</Text>
+      <Text>{@html marked.parseInline(m.fal_guiding_header())}</Text>
       <label class="toggle-label">
         <input
           type="checkbox"
@@ -269,18 +276,16 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
         {@html marked.parseInline(m.fal_guiding_toggle())}
       </label>
       {#if !showAnswers}
-        <div class="qa-text">{@html marked(m.fal_guiding_questions())}</div>
+        <!-- FIXME: break message into smaller pieces -->
+        {@html marked.parse(m.fal_guiding_questions())}
+
         {#if audienceStore.audience === "4bio"}
-          <div class="qa-text">
-            {@html marked(m.bio_fal_guiding_questions_extend())}
-          </div>
+          {@html marked.parseInline(m.bio_fal_guiding_questions_extend())}
         {/if}
       {:else}
-        <div class="qa-text">{@html marked(m.fal_guiding_answers())}</div>
+        {@html marked.parseInline(m.fal_guiding_answers())}
         {#if audienceStore.audience === "4bio"}
-          <div class="qa-text">
-            {@html marked(m.bio_fal_guiding_answers_extend())}
-          </div>
+          {@html marked.parseInline(m.bio_fal_guiding_answers_extend())}
         {/if}
       {/if}
     </Expander>
@@ -374,7 +379,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     </div>
 
     {#if sim.errorMsg}
-      <p class="error-msg">{sim.errorMsg}</p>
+      <Text>{sim.errorMsg}</Text>
     {/if}
 
     <!-- Results ---------------------------------------- -->

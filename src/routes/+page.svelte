@@ -24,17 +24,17 @@
 <Main>
   <Narrow>
     <H1>
-      {@html marked(m.str_headline_main())}
+      {@html marked.parseInline(m.str_headline_main())}
     </H1>
     <Text>
-      {@html marked(m.str_intro())}
+      {@html marked.parseInline(m.str_intro())}
     </Text>
 
     <section class="usage-section">
-      <H2>{@html marked(m.str_headline_usage())}</H2>
+      <H2>{@html marked.parseInline(m.str_headline_usage())}</H2>
       <div class="two-col">
         <div class="col-text prose">
-          {@html marked(ta(m.bio_str_usage(), m.math_str_usage()))}
+          {@html marked.parseInline(ta(m.bio_str_usage(), m.math_str_usage()))}
         </div>
         <div class="col-video">
           <YouTubeEmbed
@@ -46,12 +46,14 @@
     </section>
 
     <Text>
-      {@html marked(ta(m.bio_str_specific_use(), m.math_str_specific_use()))}
+      {@html marked.parseInline(
+        ta(m.bio_str_specific_use(), m.math_str_specific_use()),
+      )}
     </Text>
 
     <section class="learning-objectives">
       <H2>
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_str_learning_objectives_header(),
             m.math_str_learning_objectives_header(),
@@ -59,47 +61,45 @@
         )}
       </H2>
       <InfoBox>
-        <Text>
-          {@html marked(
-            ta(
-              m.bio_str_learning_objectives(),
-              m.math_str_learning_objectives(),
-            ),
-          )}
-        </Text>
+        <!-- FIXME: break message into smaller pieces -->
+        {@html marked.parse(
+          ta(m.bio_str_learning_objectives(), m.math_str_learning_objectives()),
+        )}
       </InfoBox>
     </section>
 
     <Text>
-      {@html marked(m.str_link_plants_and_python())}
+      {@html marked.parseInline(m.str_link_plants_and_python())}
     </Text>
 
     <section class="chapters">
-      <H2>{@html marked(m.str_headline_pages())}</H2>
+      <H2>{@html marked.parseInline(m.str_headline_pages())}</H2>
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(m.bio_str_introduction_pages(), m.math_str_introduction_pages()),
         )}
-        {@html marked(
+        {@html marked.parseInline(
           ta(m.bio_str_photosynthesis(), m.math_str_photosynthesis()),
         )}
-        {@html marked(ta(m.bio_str_method(), m.math_str_method()))}
-        {@html marked(ta(m.bio_str_model(), m.math_str_model()))}
-        {@html marked(ta(m.bio_str_experiment(), m.math_str_experiment()))}
-        {@html marked(ta(m.bio_str_memory(), m.math_str_memory()))}
+        {@html marked.parseInline(ta(m.bio_str_method(), m.math_str_method()))}
+        {@html marked.parseInline(ta(m.bio_str_model(), m.math_str_model()))}
+        {@html marked.parseInline(
+          ta(m.bio_str_experiment(), m.math_str_experiment()),
+        )}
+        {@html marked.parseInline(ta(m.bio_str_memory(), m.math_str_memory()))}
       </Text>
     </section>
 
     {#if audienceStore.audience === "4math"}
       <hr />
       <Text>
-        {@html marked(m.str_drop_box_intro())}
+        {@html marked.parseInline(m.str_drop_box_intro())}
       </Text>
       <Expander title={m.str_expander_in()}>
         <Text>
-          {@html marked(m.str_explanation_in_vitro())}
-          {@html marked(m.str_explanation_in_vivo())}
-          {@html marked(m.str_explanation_in_silico())}
+          {@html marked.parseInline(m.str_explanation_in_vitro())}
+          {@html marked.parseInline(m.str_explanation_in_vivo())}
+          {@html marked.parseInline(m.str_explanation_in_silico())}
         </Text>
       </Expander>
       <hr />
@@ -107,14 +107,14 @@
 
     <Expander title={m.str_expander_about()}>
       <Text>
-        {@html marked(m.str_explanation_about())}
+        {@html marked.parseInline(m.str_explanation_about())}
       </Text>
     </Expander>
 
     <Expander title={m.appearances()}>
       <Text>
-        {@html marked(m.appearance_explanation())}
-        {@html marked(m.eps2_conference_title())}
+        {@html marked.parseInline(m.appearance_explanation())}
+        {@html marked.parseInline(m.eps2_conference_title())}
         <div>{@html m.eps2_conference_1()}</div>
         <div>{@html m.eps2_conference_2()}</div>
         <div>{@html m.eps2_conference_3()}</div>
@@ -147,7 +147,7 @@
             </a>
           </li>
         </ul>
-        <p>{@html marked(m.literature_plants_and_python())}</p>
+        <p>{@html marked.parseInline(m.literature_plants_and_python())}</p>
       </Text>
     </Expander>
 

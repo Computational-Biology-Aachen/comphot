@@ -8,16 +8,18 @@
   import { audienceStore } from "$lib/stores/audience.svelte";
   import { LOG_STEPS, SimState } from "$lib/stores/simState.svelte";
   import {
+    Bold,
     Button,
     CompareCheckbox,
     Accordion as Expander,
+    H1,
     InfoBox,
     LiteratureExpander,
     Main,
     Narrow,
     PageNav,
-    type PhaseRegion,
     Text,
+    type PhaseRegion,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
   import ActivationSliders from "../../../../../packages/design/src/lib/SliderActivation.svelte";
@@ -136,10 +138,13 @@
 
 <Main>
   <Narrow>
-    <h1>{@html marked(m.mem_headline_brain())}</h1>
+    <H1>
+      {@html marked.parseInline(m.mem_headline_brain())}
+    </H1>
 
     <InfoBox>
-      {@html marked(
+      <!-- FIXME: break message into smaller pieces -->
+      {@html marked.parse(
         ta(m.bio_mem_learning_objectives(), m.math_mem_learning_objectives()),
       )}
     </InfoBox>
@@ -152,7 +157,7 @@
 
     <!-- Explanation ------------------------------------ -->
     <div class="intro-content">
-      {@html marked(
+      {@html marked.parseInline(
         ta(m.bio_mem_introduction_brain(), m.math_mem_introduction_brain()),
       )}
     </div>
@@ -171,7 +176,9 @@
       title={m.mem_guiding_expander()}
       open={false}
     >
-      <Text>{@html marked(m.mem_guiding_header())}</Text>
+      <Text>
+        <Bold>{@html marked.parseInline(m.mem_guiding_header())}</Bold>
+      </Text>
       <label class="toggle-label">
         <input
           type="checkbox"
@@ -180,17 +187,15 @@
         {@html marked.parseInline(m.mem_guiding_toggle())}
       </label>
       {#if !showAnswers}
-        <div class="qa-text">
-          {@html marked(
-            ta(m.bio_mem_guiding_questions(), m.math_mem_guiding_questions()),
-          )}
-        </div>
+        <!-- FIXME: break message into smaller pieces -->
+        {@html marked.parse(
+          ta(m.bio_mem_guiding_questions(), m.math_mem_guiding_questions()),
+        )}
       {:else}
-        <div class="qa-text">
-          {@html marked(
-            ta(m.bio_mem_guiding_answers(), m.math_mem_guiding_answers()),
-          )}
-        </div>
+        <!-- FIXME: break message into smaller pieces -->
+        {@html marked.parse(
+          ta(m.bio_mem_guiding_answers(), m.math_mem_guiding_answers()),
+        )}
       {/if}
     </Expander>
 

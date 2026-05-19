@@ -24,12 +24,12 @@
 <Main>
   <Narrow>
     <H1>
-      {@html marked(m.pho_headline_photosynthesis_page())}
+      {@html marked.parseInline(m.pho_headline_photosynthesis_page())}
     </H1>
 
     <InfoBox variant="info">
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(m.bio_pho_learning_objectives(), m.math_pho_learning_objectives()),
         )}
       </Text>
@@ -43,10 +43,10 @@
 
     <section>
       <H2>
-        {@html marked(m.pho_headline_climate())}
+        {@html marked.parseInline(m.pho_headline_climate())}
       </H2>
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_pho_introduction_climate_change(),
             m.math_pho_introduction_climate_change(),
@@ -69,26 +69,26 @@
         </div>
       {:else}
         <Text>
-          {@html marked(m.bio_pho_point_1())}
-          {@html marked(m.bio_pho_point_2())}
-          {@html marked(m.bio_pho_point_3())}
-          {@html marked(m.bio_pho_end_of_introduction())}
+          {@html marked.parseInline(m.bio_pho_point_1())}
+          {@html marked.parseInline(m.bio_pho_point_2())}
+          {@html marked.parseInline(m.bio_pho_point_3())}
+          {@html marked.parseInline(m.bio_pho_end_of_introduction())}
         </Text>
       {/if}
     </section>
 
     <section>
       <H2>
-        {@html marked(m.pho_headline_photosynthesis())}
+        {@html marked.parseInline(m.pho_headline_photosynthesis())}
       </H2>
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_pho_photosynthesis_explanation_1(),
             m.math_pho_photosynthesis_explanation_1(),
           ),
         )}
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_pho_photosynthesis_explanation_2(),
             m.math_pho_photosynthesis_explanation_2(),
@@ -113,10 +113,10 @@
 
     <section>
       <H2>
-        {@html marked(m.pho_headline_photosynthesis_location())}
+        {@html marked.parseInline(m.pho_headline_photosynthesis_location())}
       </H2>
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_pho_photosynthesis_location_explanation(),
             m.math_pho_photosynthesis_location_explanation(),
@@ -150,7 +150,7 @@
       </figure>
 
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_pho_photosynthesis_location_continue(),
             m.math_pho_photosynthesis_location_continue(),
@@ -169,22 +169,22 @@
     <!-- SECTION -->
     <section>
       <H2>
-        {@html marked(m.pho_headline_npq())}
+        {@html marked.parseInline(m.pho_headline_npq())}
       </H2>
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(m.bio_pho_npq_explanation(), m.math_pho_npq_explanation()),
         )}
       </Text>
 
       <InfoBox>
         <Text>
-          {@html marked(m.pho_npq_explanation_detailed())}
+          {@html marked.parseInline(m.pho_npq_explanation_detailed())}
         </Text>
       </InfoBox>
 
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_pho_npq_explanation_continued(),
             m.math_pho_npq_explanation_continued(),
@@ -207,10 +207,10 @@
     <!-- SECTION -->
     <section>
       <H2>
-        {@html marked(m.pho_header_model_organismen())}
+        {@html marked.parseInline(m.pho_header_model_organismen())}
       </H2>
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_pho_model_organismen_explanation(),
             m.math_pho_model_organismen_explanation(),

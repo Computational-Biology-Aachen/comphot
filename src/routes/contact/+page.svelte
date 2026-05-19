@@ -4,6 +4,7 @@
   import {
     Accordion as Expander,
     H1,
+    H2,
     Main,
     Narrow,
     PageNav,
@@ -247,9 +248,12 @@ ER  -`;
       {/if}
     </Expander>
 
+    <H2>
+      {@html marked.parseInline(m.cont_resources())}
+    </H2>
     <Text>
-      {@html marked(m.cont_resources())}
-      {@html marked(m.programs_used())}
+      <!-- FIXME: break message into smaller pieces -->
+      {@html marked.parse(m.programs_used())}
     </Text>
 
     <PageNav

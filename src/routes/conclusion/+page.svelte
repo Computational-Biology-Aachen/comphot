@@ -18,7 +18,7 @@
 
 <Main>
   <Narrow>
-    <H1>{@html marked(m.con_headline_conclusion())}</H1>
+    <H1>{@html marked.parseInline(m.con_headline_conclusion())}</H1>
     <PageNav
       base={base}
       prev={{
@@ -29,7 +29,8 @@
     />
 
     <Text>
-      {@html marked(
+      <!-- FIXME: break message into smaller pieces -->
+      {@html marked.parse(
         ta(m.bio_con_conclusion_text_one(), m.math_con_conclusion_text_one()),
       )}
     </Text>
@@ -43,7 +44,8 @@
     </figure>
 
     <Text>
-      {@html marked(m.con_conclusion_text_two())}
+      <!-- FIXME: break message into smaller pieces -->
+      {@html marked.parse(m.con_conclusion_text_two())}
     </Text>
 
     <PageNav

@@ -23,12 +23,12 @@
 <Main>
   <Narrow>
     <H1>
-      {@html marked(m.mth_headline_one())}
+      {@html marked.parseInline(m.mth_headline_one())}
     </H1>
 
     <InfoBox>
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(m.bio_mth_learning_objectives(), m.math_mth_learning_objectives()),
         )}
       </Text>
@@ -54,7 +54,7 @@
     </section>
 
     <Text>
-      {@html marked(
+      {@html marked.parseInline(
         ta(
           m.bio_mth_introduction_measurement(),
           m.math_mth_introduction_measurement(),
@@ -76,19 +76,19 @@
       open={false}
     >
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_mth_introduction_glowing(),
             m.math_mth_introduction_glowing(),
           ),
         )}
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_mth_plant_are_shining_red(),
             m.math_mth_plant_are_shining_red(),
           ),
         )}
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_mth_introduction_experiment(),
             m.math_mth_introduction_experiment(),
@@ -100,7 +100,7 @@
         title="Chlorophyll fluorescence experiment"
       />
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(m.bio_mth_explanation_video(), m.math_mth_explanation_video()),
         )}
       </Text>
@@ -111,13 +111,13 @@
       open={false}
     >
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_mth_explanation_measurement_1(),
             m.math_mth_explanation_measurement_1(),
           ),
         )}
-        {@html marked(
+        {@html marked.parseInline(
           ta(m.bio_mth_introduction_phi(), m.math_mth_introduction_phi()),
         )}
       </Text>
@@ -128,10 +128,10 @@
     </Expander>
 
     <H2>
-      {@html marked(m.mth_headline_pam_measurement())}
+      {@html marked.parseInline(m.mth_headline_pam_measurement())}
     </H2>
     <Text>
-      {@html marked(
+      {@html marked.parseInline(
         ta(
           m.bio_mth_introduction_pam_measurement(),
           m.math_mth_introduction_pam_measurement(),
@@ -144,7 +144,7 @@
       open={false}
     >
       <Text>
-        {@html marked(
+        {@html marked.parseInline(
           ta(
             m.bio_mth_explanation_introduction_attempts(),
             m.math_mth_explanation_introduction_attempts(),
@@ -163,11 +163,11 @@
 
     <section>
       <H2>
-        {@html marked(m.mth_headline_illustration())}
+        {@html marked.parseInline(m.mth_headline_illustration())}
       </H2>
       <Text>
-        {@html marked(m.mth_explanation_illustration_units())}
-        {@html marked(m.mth_explanation_illustration())}
+        {@html marked.parseInline(m.mth_explanation_illustration_units())}
+        {@html marked.parseInline(m.mth_explanation_illustration())}
       </Text>
 
       <figure class="page-figure">
@@ -182,7 +182,7 @@
 
     <Expander title={m.literature()}>
       <Text>
-        {@html marked(m.mth_literature_declaration())}
+        {@html marked.parseInline(m.mth_literature_declaration())}
         <ul>
           <li>
             Brooks, M. D., &amp; Niyogi, K. K. (2011). Use of a pulse-amplitude

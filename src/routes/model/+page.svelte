@@ -4,6 +4,7 @@
   import * as m from "$lib/paraglide/messages";
   import { audienceStore } from "$lib/stores/audience.svelte";
   import {
+    Bold,
     Accordion as Expander,
     H1,
     H2,
@@ -99,12 +100,14 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 <Main>
   <Narrow>
     <H1>
-      {@html marked(m.mdl_headline_computational_models())}
+      {@html marked.parseInline(m.mdl_headline_computational_models())}
     </H1>
 
+    <!-- section: learning objectives -->
     <InfoBox>
       <Text>
-        {@html marked(
+        <!-- FIXME: break message into smaller pieces -->
+        {@html marked.parse(
           ta(m.bio_mdl_learning_objectives(), m.math_mdl_learning_objectives()),
         )}
       </Text>
@@ -121,10 +124,10 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 
     <section>
       <H2>
-        {@html marked(m.mdl_headline_model())}
+        {@html marked.parseInline(m.mdl_headline_model())}
       </H2>
       <Text>
-        {@html marked(m.mdl_mathematical_modelling_explanation_1())}
+        {@html marked.parseInline(m.mdl_mathematical_modelling_explanation_1())}
       </Text>
 
       <figure class="page-figure">
@@ -139,7 +142,9 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
       </figure>
 
       <Text>
-        {@html marked(m.mdl_mathematical_modelling_explanation_1b())}
+        {@html marked.parseInline(
+          m.mdl_mathematical_modelling_explanation_1b(),
+        )}
       </Text>
 
       <YouTubeEmbed
@@ -150,7 +155,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 
     <section>
       <H2>
-        {@html marked(m.mdl_example_mathematical_model())}
+        {@html marked.parseInline(m.mdl_example_mathematical_model())}
       </H2>
 
       <!-- Tabbed SIR section -->
@@ -190,8 +195,8 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
         <div class="tab-panel">
           {#if activeTab === "sir"}
             <Text>
-              {@html marked(m.mdl_headline_sir())}
-              {@html marked(
+              {@html marked.parseInline(m.mdl_headline_sir())}
+              {@html marked.parseInline(
                 ta(
                   m.bio_mdl_mathematical_modelling_example(),
                   m.math_mdl_mathematical_modelling_example(),
@@ -219,7 +224,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
             {/if}
 
             <Text>
-              {@html marked(
+              {@html marked.parseInline(
                 ta(
                   m.bio_mdl_mathematical_modelling_example_1(),
                   m.math_mdl_mathematical_modelling_example_1(),
@@ -247,7 +252,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
             {/if}
 
             <Text>
-              {@html marked(
+              {@html marked.parseInline(
                 ta(
                   m.bio_mdl_mathematical_modelling_example_2(),
                   m.math_mdl_mathematical_modelling_example_2(),
@@ -262,7 +267,9 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
                 >
               </div>
               <Text>
-                {@html marked(m.bio_mdl_mathematical_modelling_example_3())}
+                {@html marked.parseInline(
+                  m.bio_mdl_mathematical_modelling_example_3(),
+                )}
               </Text>
               <div class="katex-block">
                 <Katex displayMode
@@ -270,12 +277,14 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
                 >
               </div>
               <Text>
-                {@html marked(m.bio_mdl_mathematical_modelling_example_4())}
+                {@html marked.parseInline(
+                  m.bio_mdl_mathematical_modelling_example_4(),
+                )}
               </Text>
             {/if}
 
             <Text>
-              {@html marked(
+              {@html marked.parseInline(
                 ta(
                   m.bio_mdl_mathematical_modelling_example_simple(),
                   m.math_mdl_mathematical_modelling_example_simple(),
@@ -284,11 +293,13 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
             </Text>
           {:else if activeTab === "manual"}
             <Text>
-              {@html marked(m.math_mdl_headline_manual())}
+              {@html marked.parseInline(m.math_mdl_headline_manual())}
             </Text>
             <pre class="code-block"><code>{sirV1Integ}</code></pre>
             <Text>
-              {@html marked(m.math_mdl_sir_implementation_manual_1())}
+              {@html marked.parseInline(
+                m.math_mdl_sir_implementation_manual_1(),
+              )}
             </Text>
             <figure class="page-figure">
               <img
@@ -299,24 +310,34 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
             </figure>
             <pre class="code-block"><code>{sirV1Plot}</code></pre>
             <Text>
-              {@html marked(m.math_mdl_sir_implementation_manual_2())}
+              {@html marked.parseInline(
+                m.math_mdl_sir_implementation_manual_2(),
+              )}
             </Text>
           {:else if activeTab === "modelbase"}
             <Text>
-              {@html marked(m.math_mdl_headline_modelbase())}
-              {@html marked(m.math_mdl_sir_implementation_modelbase_1())}
+              {@html marked.parseInline(m.math_mdl_headline_modelbase())}
+              {@html marked.parseInline(
+                m.math_mdl_sir_implementation_modelbase_1(),
+              )}
             </Text>
             <pre class="code-block"><code>{sirV2RateFns}</code></pre>
             <Text>
-              {@html marked(m.math_mdl_sir_implementation_modelbase_2())}
+              {@html marked.parseInline(
+                m.math_mdl_sir_implementation_modelbase_2(),
+              )}
             </Text>
             <pre class="code-block"><code>{sirV2Model}</code></pre>
             <Text>
-              {@html marked(m.math_mdl_sir_implementation_modelbase_3())}
+              {@html marked.parseInline(
+                m.math_mdl_sir_implementation_modelbase_3(),
+              )}
             </Text>
             <pre class="code-block"><code>{sirV2Reactions}</code></pre>
             <Text>
-              {@html marked(m.math_mdl_sir_implementation_modelbase_4())}
+              {@html marked.parseInline(
+                m.math_mdl_sir_implementation_modelbase_4(),
+              )}
             </Text>
             <figure class="page-figure">
               <img
@@ -327,11 +348,15 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
             </figure>
             <pre class="code-block"><code>{sirV2Simulation}</code></pre>
             <Text>
-              {@html marked(m.math_mdl_sir_implementation_modelbase_5())}
+              {@html marked.parseInline(
+                m.math_mdl_sir_implementation_modelbase_5(),
+              )}
             </Text>
             <pre class="code-block"><code>{sird}</code></pre>
             <Text>
-              {@html marked(m.math_mdl_sir_implementation_modelbase_6())}
+              {@html marked.parseInline(
+                m.math_mdl_sir_implementation_modelbase_6(),
+              )}
             </Text>
           {/if}
         </div>
@@ -339,86 +364,89 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
     </section>
 
     <Text>
-      {@html marked(m.mdl_link_plants_and_python())}
+      {@html marked.parseInline(m.mdl_link_plants_and_python())}
     </Text>
 
     <section>
       <H2>
-        {@html marked(m.mdl_headline_model_photosynthesis())}
+        {@html marked.parseInline(m.mdl_headline_model_photosynthesis())}
       </H2>
       <Text>
-        {@html marked(m.mdl_models_overview())}
+        {@html marked.parseInline(m.mdl_models_overview())}
       </Text>
 
-      <!-- Photosynthesis model tabs -->
-      <div class="accordion">
-        <Expander title={m.mdl_headline_fvcb()}>
+      <!-- The Farquhar, von Caemmerer and Berry model -->
+      <Expander title={m.mdl_headline_fvcb()}>
+        <Text>
+          {@html marked.parseInline(
+            ta(m.bio_mdl_fvcb_1(), m.math_mdl_fvcb_1()),
+          )}
+          {@html marked.parseInline(
+            ta(m.bio_mdl_fvcb_2(), m.math_mdl_fvcb_2()),
+          )}
+        </Text>
+        {#if audienceStore.audience === "4math"}
+          <div class="katex-block">
+            <Katex displayMode
+              >{"\\newcommand{\\indexni}[2]{#1 _{\\mathrm{#2}}} \\newcommand{\\indexnig}[2]{\\mathit{#1} _{\\mathrm{#2}}} \\begin{aligned} \\indexni{A}{c} &= \\frac{(\\indexni{C}{c} - \\indexnig{\\Gamma}{*}) \\cdot \\indexni{V}{cmax}}{\\indexni{C}{c} + \\indexni{K}{c} \\cdot \\left(1+ \\dfrac{O}{\\indexni{K}{o}}\\right)} - \\indexni{R}{d}\\\\ \\indexni{A}{j} &= \\dfrac{\\left(\\indexni{C}{c} - \\indexnig{\\Gamma}{*}\\right)\\cdot J}{4 \\cdot \\indexni{C}{c} + 8\\cdot\\indexnig{\\Gamma}{*}} - \\indexni{R}{d}\\\\ \\indexni{A}{p} &= 3\\cdot \\indexni{T}{p} - \\indexni{R}{d}\\\\ A &= \\mathrm{min}\\left(\\indexni{A}{c},\\ \\indexni{A}{j},\\ \\indexni{A}{p}\\right) \\end{aligned}"}</Katex
+            >
+          </div>
+        {/if}
+        <Text>
+          {@html marked.parseInline(
+            ta(m.bio_mdl_fvcb_3(), m.math_mdl_fvcb_3()),
+          )}
+          {@html marked.parseInline(
+            ta(m.bio_mdl_fvcb_4(), m.math_mdl_fvcb_4()),
+          )}
+        </Text>
+        {#if audienceStore.audience === "4math"}
           <Text>
-            {@html marked(ta(m.bio_mdl_fvcb_1(), m.math_mdl_fvcb_1()))}
-            {@html marked(ta(m.bio_mdl_fvcb_2(), m.math_mdl_fvcb_2()))}
+            {@html marked.parseInline(m.math_mdl_fvcb_5())}
           </Text>
-          {#if audienceStore.audience === "4math"}
-            <div class="katex-block">
-              <Katex displayMode
-                >{"\\newcommand{\\indexni}[2]{#1 _{\\mathrm{#2}}} \\newcommand{\\indexnig}[2]{\\mathit{#1} _{\\mathrm{#2}}} \\begin{aligned} \\indexni{A}{c} &= \\frac{(\\indexni{C}{c} - \\indexnig{\\Gamma}{*}) \\cdot \\indexni{V}{cmax}}{\\indexni{C}{c} + \\indexni{K}{c} \\cdot \\left(1+ \\dfrac{O}{\\indexni{K}{o}}\\right)} - \\indexni{R}{d}\\\\ \\indexni{A}{j} &= \\dfrac{\\left(\\indexni{C}{c} - \\indexnig{\\Gamma}{*}\\right)\\cdot J}{4 \\cdot \\indexni{C}{c} + 8\\cdot\\indexnig{\\Gamma}{*}} - \\indexni{R}{d}\\\\ \\indexni{A}{p} &= 3\\cdot \\indexni{T}{p} - \\indexni{R}{d}\\\\ A &= \\mathrm{min}\\left(\\indexni{A}{c},\\ \\indexni{A}{j},\\ \\indexni{A}{p}\\right) \\end{aligned}"}</Katex
-              >
-            </div>
-          {/if}
-          <Text>
-            {@html marked(ta(m.bio_mdl_fvcb_3(), m.math_mdl_fvcb_3()))}
-            {@html marked(ta(m.bio_mdl_fvcb_4(), m.math_mdl_fvcb_4()))}
-          </Text>
-          {#if audienceStore.audience === "4math"}
-            <Text>
-              {@html marked(m.math_mdl_fvcb_5())}
-            </Text>
-          {/if}
-        </Expander>
+        {/if}
+      </Expander>
 
-        <Expander title={m.mdl_headline_e_photosynthesis()}>
-          <Text>
-            {@html marked(
-              ta(
-                m.bio_mdl_e_photosynthesis_1(),
-                m.math_mdl_e_photosynthesis_1(),
-              ),
-            )}
-            {@html marked(
-              ta(
-                m.bio_mdl_e_photosynthesis_2(),
-                m.math_mdl_e_photosynthesis_2(),
-              ),
-            )}
-            {@html marked(
-              ta(
-                m.bio_mdl_e_photosynthesis_3(),
-                m.math_mdl_e_photosynthesis_3(),
-              ),
-            )}
-          </Text>
-        </Expander>
+      <Expander title={m.mdl_headline_e_photosynthesis()}>
+        <Text>
+          {@html marked.parseInline(
+            ta(m.bio_mdl_e_photosynthesis_1(), m.math_mdl_e_photosynthesis_1()),
+          )}
+          {@html marked.parseInline(
+            ta(m.bio_mdl_e_photosynthesis_2(), m.math_mdl_e_photosynthesis_2()),
+          )}
+          {@html marked.parseInline(
+            ta(m.bio_mdl_e_photosynthesis_3(), m.math_mdl_e_photosynthesis_3()),
+          )}
+        </Text>
+      </Expander>
 
-        <Expander title={m.mdl_headline_bellasio()}>
-          <Text>
-            {@html marked(ta(m.bio_mdl_bellasio_1(), m.math_mdl_bellasio_1()))}
-            {@html marked(ta(m.bio_mdl_bellasio_2(), m.math_mdl_bellasio_2()))}
-            {@html marked(ta(m.bio_mdl_bellasio_3(), m.math_mdl_bellasio_3()))}
-            {@html marked(ta(m.bio_mdl_bellasio_4(), m.math_mdl_bellasio_4()))}
-          </Text>
-        </Expander>
-      </div>
+      <Expander title={m.mdl_headline_bellasio()}>
+        <Text>
+          {@html marked.parseInline(
+            ta(m.bio_mdl_bellasio_1(), m.math_mdl_bellasio_1()),
+          )}
+          {@html marked.parseInline(
+            ta(m.bio_mdl_bellasio_2(), m.math_mdl_bellasio_2()),
+          )}
+          {@html marked.parseInline(
+            ta(m.bio_mdl_bellasio_3(), m.math_mdl_bellasio_3()),
+          )}
+          {@html marked.parseInline(
+            ta(m.bio_mdl_bellasio_4(), m.math_mdl_bellasio_4()),
+          )}
+        </Text>
+      </Expander>
 
       <Expander
         title={ta(m.bio_mdl_expander_c3c4cam(), m.math_mdl_expander_c3c4cam())}
       >
-        <Text>
-          <div>{@html m.mdl_headline_c3()}</div>
-          <div>{@html m.mdl_c3_1()}</div>
-          <div>{@html m.mdl_headline_c4()}</div>
-          <div>{@html m.mdl_c4_1()}</div>
-          <div>{@html m.mdl_headline_cam()}</div>
-          <div>{@html ta(m.bio_mdl_cam_1(), m.math_mdl_cam_1())}</div>
-        </Text>
+        <Bold>{@html m.mdl_headline_c3()}</Bold>
+        <Text>{@html m.mdl_c3_1()}</Text>
+        <Bold>{@html m.mdl_headline_c4()}</Bold>
+        <Text>{@html m.mdl_c4_1()}</Text>
+        <Bold>{@html m.mdl_headline_cam()}</Bold>
+        <Text>{@html ta(m.bio_mdl_cam_1(), m.math_mdl_cam_1())}</Text>
       </Expander>
     </section>
 
@@ -464,7 +492,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
             </a>
           </li>
         </ol>
-        <p>{@html marked(m.literature_plants_and_python())}</p>
+        <p>{@html marked.parseInline(m.literature_plants_and_python())}</p>
       </Text>
     </Expander>
 
