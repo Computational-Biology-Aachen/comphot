@@ -1,8 +1,8 @@
 <script lang="ts">
 	import CompareCheckbox from '$lib/components/simulation/CompareCheckbox.svelte';
-	import LineChart from '$lib/components/simulation/LineChart.svelte';
+	import { LineChart } from '@computational-biology-aachen/design';
 	import ParameterTable from '$lib/components/simulation/ParameterTable.svelte';
-	import RunButton from '$lib/components/simulation/RunButton.svelte';
+	import { Button } from '@computational-biology-aachen/design';
 	import type { PhaseRegion } from '$lib/components/simulation/SimChart.svelte';
 	import { ta } from '$lib/i18n';
 	import * as m from '$lib/paraglide/messages';
@@ -76,13 +76,13 @@
 				datasets: [
 					{
 						label: 'new',
-						data: sim.currentResult?.fluo,
+						data: sim.currentResult?.fluo ?? [],
 						borderColor: '#FF4B4B',
 						backgroundColor: '#FF4B4B'
 					},
 					{
 						label: 'old',
-						data: sim.previousResult?.fluo,
+						data: sim.previousResult?.fluo ?? [],
 						borderColor: '#FF4B4B',
 						backgroundColor: '#FF4B4B',
 						borderDash: [6, 3]
@@ -95,7 +95,7 @@
 			datasets: [
 				{
 					label: 'fluo',
-					data: sim.currentResult?.fluo,
+					data: sim.currentResult?.fluo ?? [],
 					borderColor: '#FF4B4B',
 					backgroundColor: '#FF4B4B'
 				}
@@ -109,13 +109,13 @@
 				datasets: [
 					{
 						label: 'new',
-						data: sim.currentResult?.npq,
+						data: sim.currentResult?.npq ?? [],
 						borderColor: '#FF4B4B',
 						backgroundColor: '#FF4B4B'
 					},
 					{
 						label: 'old',
-						data: sim.previousResult?.npq,
+						data: sim.previousResult?.npq ?? [],
 						borderColor: '#FF4B4B',
 						backgroundColor: '#FF4B4B',
 						borderDash: [6, 3]
@@ -128,7 +128,7 @@
 			datasets: [
 				{
 					label: 'NPQ',
-					data: sim.currentResult?.npq,
+					data: sim.currentResult?.npq ?? [],
 					borderColor: '#FF4B4B',
 					backgroundColor: '#FF4B4B'
 				}
@@ -144,13 +144,13 @@
 				datasets: [
 					{
 						label: 'new',
-						data: sim.currentResult?.phiPsii,
+						data: sim.currentResult?.phiPsii ?? [],
 						borderColor: '#FF4B4B',
 						backgroundColor: '#FF4B4B'
 					},
 					{
 						label: 'old',
-						data: sim.previousResult?.phiPsii,
+						data: sim.previousResult?.phiPsii ?? [],
 						borderColor: '#FF4B4B',
 						backgroundColor: '#FF4B4B',
 						borderDash: [6, 3]
@@ -163,7 +163,7 @@
 			datasets: [
 				{
 					label: 'phi(PSII)',
-					data: sim.currentResult?.phiPsii,
+					data: sim.currentResult?.phiPsii ?? [],
 					borderColor: '#FF4B4B',
 					backgroundColor: '#FF4B4B'
 				}
@@ -223,7 +223,7 @@
 <!-- Run controls -->
 <div class="run-controls">
 	<div class="run-btn-wrap">
-		<RunButton loading={sim.loading} onclick={runSimulation} />
+		<Button loading={sim.loading} fullWidth onclick={runSimulation}>{sim.loading ? 'Running…' : 'Run simulation'}</Button>
 	</div>
 	<CompareCheckbox bind:checked={compareWithLast} />
 </div>

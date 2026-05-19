@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import Expander from '$lib/components/Expander.svelte';
-	import InfoBox from '$lib/components/InfoBox.svelte';
-	import PageNav from '$lib/components/PageNav.svelte';
+	import { Accordion as Expander } from '@computational-biology-aachen/design';
+	import { InfoBox } from '@computational-biology-aachen/design';
+	import { PageNav } from '@computational-biology-aachen/design';
 	import VideoTranscriptToggle from '$lib/components/VideoTranscriptToggle.svelte';
-	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
+	import { YouTubeEmbed } from '@computational-biology-aachen/design';
 	import { ta } from '$lib/i18n';
 	import * as m from '$lib/paraglide/messages';
 	import { audienceStore } from '$lib/stores/audience.svelte';
@@ -101,7 +101,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 		</div>
 	</InfoBox>
 
-	<PageNav
+	<PageNav {base}
 		prev={{ href: '/method', label: m.sde_pagenames_measuringmethod() }}
 		next={{ href: '/experiments', label: m.sde_pagenames_experimentsinsilico() }}
 	/>
@@ -419,59 +419,15 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 		</div>
 	</Expander>
 
-	<PageNav
+	<PageNav {base}
 		prev={{ href: '/method', label: m.sde_pagenames_measuringmethod() }}
 		next={{ href: '/experiments', label: m.sde_pagenames_experimentsinsilico() }}
 	/>
 </article>
 
 <style>
-	.page-content {
-		max-width: var(--content-max-width);
-	}
-
-	.prose :global(h1),
-	.prose :global(h2),
-	.prose :global(h3),
-	.prose :global(h4) {
-		margin-top: var(--space-6);
-		margin-bottom: var(--space-3);
-		line-height: 1.3;
-	}
-
-	.prose :global(p) {
-		margin-bottom: var(--space-4);
-	}
-
-	.prose :global(ul),
-	.prose :global(ol) {
-		padding-left: var(--space-6);
-		margin-bottom: var(--space-4);
-	}
-
-	.prose :global(a) {
-		color: var(--color-primary);
-	}
-
 	section {
 		margin: var(--space-8) 0;
-	}
-
-	.page-figure {
-		margin: var(--space-4) 0;
-		text-align: center;
-	}
-
-	.page-img {
-		max-width: 100%;
-		height: auto;
-		border-radius: 4px;
-	}
-
-	.page-img.centered {
-		display: block;
-		margin: 0 auto;
-		max-width: 80%;
 	}
 
 	.page-img.half-width {

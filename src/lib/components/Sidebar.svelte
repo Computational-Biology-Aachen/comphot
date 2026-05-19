@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { page } from '$app/state';
+	import AudienceToggle from './AudienceToggle.svelte';
+	import LanguageSwitcher from './LanguageSwitcher.svelte';
 
 	const navLinks = [
 		{ href: '/', label: 'Home' },
@@ -27,6 +29,8 @@
 		<span></span>
 	</button>
 	<nav class="sidebar-nav" aria-label="Main navigation">
+		<AudienceToggle />
+		<LanguageSwitcher />
 		{#each navLinks as link (link.href)}
 			{@const href = `${base}${link.href}`}
 			{@const isActive =
@@ -52,8 +56,10 @@
 		min-height: calc(100vh - var(--nav-height));
 		background-color: var(--color-surface);
 		border-right: 1px solid var(--color-border);
-		padding: var(--space-6) 0;
+		padding: var(--space-6) 0 var(--space-4);
 		flex-shrink: 0;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.hamburger {
@@ -102,7 +108,7 @@
 		color: var(--color-primary);
 		border-left-color: var(--color-primary);
 		font-weight: 500;
-		background-color: rgba(28, 91, 199, 0.07);
+		background-color: color-mix(in srgb, var(--color-primary) 7%, transparent);
 	}
 
 	@media (max-width: 768px) {

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { marked } from 'marked';
-	import { resolve } from '$app/paths';
+	import { base, resolve } from '$app/paths';
 	import * as m from '$lib/paraglide/messages';
-	import PageNav from '$lib/components/PageNav.svelte';
-	import Expander from '$lib/components/Expander.svelte';
+	import { PageNav } from '@computational-biology-aachen/design';
+	import { Accordion as Expander } from '@computational-biology-aachen/design';
 
 	const bibTexContent = `@article{,
  author = {Phillips, Sarah and Pfennig, Tobias and Corvest, Elouen and van Aalst, Marvin and Fürtauer, Lisa and Matuszyńska, Anna},
@@ -75,7 +75,7 @@ ER  -`;
 		{m.cont_header()}
 	</h1>
 
-	<PageNav prev={{ href: '/conclusion', label: m.sde_pagenames_conclusion() }} />
+	<PageNav {base} prev={{ href: '/conclusion', label: m.sde_pagenames_conclusion() }} />
 
 	<p class="subheader">{m.cont_subheader()}</p>
 
@@ -227,14 +227,10 @@ ER  -`;
 		{@html marked(m.programs_used())}
 	</div>
 
-	<PageNav prev={{ href: '/conclusion', label: m.sde_pagenames_conclusion() }} />
+	<PageNav {base} prev={{ href: '/conclusion', label: m.sde_pagenames_conclusion() }} />
 </article>
 
 <style>
-	.page-content {
-		max-width: var(--content-max-width);
-	}
-
 	.contact-header {
 		display: flex;
 		align-items: center;
@@ -361,16 +357,4 @@ ER  -`;
 		white-space: pre;
 	}
 
-	.prose :global(h3) {
-		margin-top: var(--space-6);
-		margin-bottom: var(--space-3);
-	}
-
-	.prose :global(p) {
-		margin-bottom: var(--space-4);
-	}
-
-	.prose :global(a) {
-		color: var(--color-primary);
-	}
 </style>

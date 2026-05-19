@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Expander from '$lib/components/Expander.svelte';
+	import { Accordion as Expander } from '@computational-biology-aachen/design';
 	import * as m from '$lib/paraglide/messages';
 	import { marked } from 'marked';
 </script>

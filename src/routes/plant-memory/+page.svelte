@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import Expander from '$lib/components/Expander.svelte';
-	import InfoBox from '$lib/components/InfoBox.svelte';
-	import PageNav from '$lib/components/PageNav.svelte';
+	import { Accordion as Expander } from '@computational-biology-aachen/design';
+	import { InfoBox } from '@computational-biology-aachen/design';
+	import { PageNav } from '@computational-biology-aachen/design';
 	import ActivationSliders from '$lib/components/simulation/ActivationSliders.svelte';
 	import CompareCheckbox from '$lib/components/simulation/CompareCheckbox.svelte';
 	import LiteratureExpander from '$lib/components/simulation/LiteratureExpander.svelte';
-	import RunButton from '$lib/components/simulation/RunButton.svelte';
+	import { Button } from '@computational-biology-aachen/design';
 	import type { PhaseRegion } from '$lib/components/simulation/SimChart.svelte';
 	import SimResultsGrid from '$lib/components/simulation/SimResultsGrid.svelte';
 	import { ta } from '$lib/i18n';
@@ -123,7 +123,7 @@
 	{@html marked(ta(m.bio_mem_learning_objectives(), m.math_mem_learning_objectives()))}
 </InfoBox>
 
-<PageNav
+<PageNav {base}
 	prev={{ href: '/experiments', label: 'Experiments in Silico' }}
 	next={{ href: '/conclusion', label: 'Conclusion' }}
 />
@@ -216,7 +216,7 @@
 <!-- Run controls-->
 <div class="run-controls">
 	<div class="run-btn-wrap">
-		<RunButton loading={sim.loading} onclick={runSimulation} />
+		<Button loading={sim.loading} fullWidth onclick={runSimulation}>{sim.loading ? 'Running…' : 'Run simulation'}</Button>
 	</div>
 	<CompareCheckbox bind:checked={compareWithLast} />
 </div>
@@ -240,7 +240,7 @@
 
 <LiteratureExpander />
 
-<PageNav
+<PageNav {base}
 	prev={{ href: '/experiments', label: 'Experiments in Silico' }}
 	next={{ href: '/conclusion', label: 'Conclusion' }}
 />
