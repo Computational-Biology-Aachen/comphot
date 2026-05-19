@@ -5,13 +5,12 @@
   import * as config from "$lib/config";
   import * as m from "$lib/paraglide/messages";
   import { locales, localizeHref } from "$lib/paraglide/runtime";
-  import { audienceStore } from "$lib/stores/audience.svelte";
   import {
+    ButtonMenu,
+    ButtonMenuItem,
     Navbar,
     NavGH,
     NavItem,
-    Sidebar2 as Sidebar,
-    LanguageSwitcher as ToggleLanguage,
   } from "@computational-biology-aachen/design";
   import "../app.css";
 
@@ -94,38 +93,18 @@
   <NavItem href="{base}/plant-memory">Plant Memory</NavItem>
   <NavItem href="{base}/conclusion">Conclusion</NavItem>
   <NavItem href="{base}/contact">Contact</NavItem>
+  <ButtonMenu label="">
+    <ButtonMenuItem>4bio</ButtonMenuItem>
+    <ButtonMenuItem>4math</ButtonMenuItem>
+    <ButtonMenuItem>en</ButtonMenuItem>
+    <ButtonMenuItem>de</ButtonMenuItem>
+    <ButtonMenuItem>fr</ButtonMenuItem>
+  </ButtonMenu>
 
   <NavGH href="https://github.com/Computational-Biology-Aachen/comphot" />
 </Navbar>
 
-<div class="two-col">
-  <Sidebar
-    navLinks={[
-      { href: "/", label: "Home" },
-      { href: "{base}/photosynthesis", label: "Photosynthesis" },
-      { href: "{base}/method", label: "Method" },
-      { href: "{base}/model", label: "Model" },
-      { href: "{base}/experiments", label: "Experiments" },
-      { href: "{base}/plant-memory", label: "Plant Memory" },
-      { href: "{base}/conclusion", label: "Conclusion" },
-      { href: "{base}/contact", label: "Contact" },
-    ]}
-    audienceOptions={[
-      { value: "4bio", label: "4bio" },
-      { value: "4math", label: "4math" },
-    ]}
-    audienceStore={audienceStore}
-  >
-    <ToggleLanguage
-      locales={[
-        { code: "en", label: "EN" },
-        { code: "de", label: "DE" },
-        { code: "fr", label: "FR" },
-      ]}
-    />
-  </Sidebar>
-  {@render children()}
-</div>
+{@render children()}
 
 <style>
   .brand {
@@ -134,10 +113,5 @@
     gap: var(--space-2);
     color: var(--color-primary);
     font-weight: 600;
-  }
-
-  .two-col {
-    display: grid;
-    grid-template-columns: 15rem auto;
   }
 </style>
