@@ -1,19 +1,23 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import CompareCheckbox from "$lib/components/simulation/CompareCheckbox.svelte";
-  import LiteratureExpander from "$lib/components/simulation/LiteratureExpander.svelte";
-  import type { PhaseRegion } from "$lib/components/simulation/SimChart.svelte";
-  import SimResultsGrid from "$lib/components/simulation/SimResultsGrid.svelte";
+
   import { ta } from "$lib/i18n";
   import * as m from "$lib/paraglide/messages";
+  import SimResultsGrid from "$lib/SimResultsGrid.svelte";
   import { buildMemoryProtocol } from "$lib/simulations/pam";
   import { audienceStore } from "$lib/stores/audience.svelte";
   import { LOG_STEPS, SimState } from "$lib/stores/simState.svelte";
   import {
     Button,
+    CompareCheckbox,
     Accordion as Expander,
     InfoBox,
+    LiteratureExpander,
+    Main,
+    Narrow,
     PageNav,
+    type PhaseRegion,
+    Text,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
   import ActivationSliders from "../../../../../packages/design/src/lib/SliderActivation.svelte";
@@ -130,228 +134,200 @@
   <title>Plant Light Memory</title>
 </svelte:head>
 
-<h1>{@html marked(m.mem_headline_brain())}</h1>
+<Main>
+  <Narrow>
+    <h1>{@html marked(m.mem_headline_brain())}</h1>
 
-<InfoBox>
-  {@html marked(
-    ta(m.bio_mem_learning_objectives(), m.math_mem_learning_objectives()),
-  )}
-</InfoBox>
+    <InfoBox>
+      {@html marked(
+        ta(m.bio_mem_learning_objectives(), m.math_mem_learning_objectives()),
+      )}
+    </InfoBox>
 
-<PageNav
-  base={base}
-  prev={{ href: "/experiments", label: "Experiments in Silico" }}
-  next={{ href: "/conclusion", label: "Conclusion" }}
-/>
-
-<!-- Explanation ------------------------------------ -->
-<div class="intro-content">
-  {@html marked(
-    ta(m.bio_mem_introduction_brain(), m.math_mem_introduction_brain()),
-  )}
-</div>
-
-<figure class="fig">
-  <img
-    src="{base}/pictures/NPQphotosynthesis.png"
-    alt="Memory protocol diagram"
-    class="protocol-img"
-  />
-  <figcaption>Memory protocol overview</figcaption>
-</figure>
-
-<!-- Guiding questions ------------------------------- -->
-<Expander
-  title={m.mem_guiding_expander()}
-  open
->
-  <div class="prose">{@html marked(m.mem_guiding_header())}</div>
-  <label class="toggle-label">
-    <input
-      type="checkbox"
-      bind:checked={showAnswers}
+    <PageNav
+      base={base}
+      prev={{ href: "/experiments", label: "Experiments in Silico" }}
+      next={{ href: "/conclusion", label: "Conclusion" }}
     />
-    {@html marked.parseInline(m.mem_guiding_toggle())}
-  </label>
-  {#if !showAnswers}
-    <div class="qa-text">
+
+    <!-- Explanation ------------------------------------ -->
+    <div class="intro-content">
       {@html marked(
-        ta(m.bio_mem_guiding_questions(), m.math_mem_guiding_questions()),
+        ta(m.bio_mem_introduction_brain(), m.math_mem_introduction_brain()),
       )}
     </div>
-  {:else}
-    <div class="qa-text">
-      {@html marked(
-        ta(m.bio_mem_guiding_answers(), m.math_mem_guiding_answers()),
-      )}
-    </div>
-  {/if}
-</Expander>
 
-<!-- Sliders ---------------------------------------- -->
-<div class="slider-section">
-  <!-- Common sliders -->
-  <div class="slider-row">
-    <label class="slider-label">
-      {@html m.slider_light()}: <strong>{lightIntensity}</strong>
-      <input
-        type="range"
-        min="50"
-        max="900"
-        step="50"
-        bind:value={lightIntensity}
+    <figure class="fig">
+      <img
+        src="{base}/pictures/NPQphotosynthesis.png"
+        alt="Memory protocol diagram"
+        class="protocol-img"
       />
-    </label>
-    <label class="slider-label">
-      {@html m.slider_pulses()}: <strong>{pulseInterval} s</strong>
-      <input
-        type="range"
-        min="5"
-        max="150"
-        step="5"
-        bind:value={pulseInterval}
-      />
-    </label>
-  </div>
+      <figcaption>Memory protocol overview</figcaption>
+    </figure>
 
-  <div class="slider-row">
-    <label class="slider-label">
-      {@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
-      <input
-        type="range"
-        min="0"
-        max="300"
-        step="10"
-        bind:value={darkLength}
-      />
-    </label>
-    <label class="slider-label">
-      {@html m.fal_slider_saturate()}: <strong>{saturatingPulse}</strong>
-      <input
-        type="range"
-        min="0"
-        max="10000"
-        step="500"
-        bind:value={saturatingPulse}
-      />
-    </label>
-  </div>
-
-  <div class="slider-row three">
-    <label class="slider-label">
-      {@html m.mem_slider_training()}: <strong>{trainingLength} s</strong>
-      <input
-        type="range"
-        min="0"
-        max="600"
-        step="30"
-        bind:value={trainingLength}
-      />
-    </label>
-    <label class="slider-label">
-      {@html m.mem_slider_relaxation()}: <strong>{relaxationLength} s</strong>
-      <input
-        type="range"
-        min="0"
-        max="600"
-        step="30"
-        bind:value={relaxationLength}
-      />
-    </label>
-    <label class="slider-label">
-      {@html m.mem_slider_memory()}: <strong>{memoryLength} s</strong>
-      <input
-        type="range"
-        min="0"
-        max="600"
-        step="30"
-        bind:value={memoryLength}
-      />
-    </label>
-  </div>
-
-  <!-- 4bio: activation/deactivation sliders -->
-  {#if audienceStore.audience === "4bio"}
-    <div class="slider-row">
-      <ActivationSliders
-        bind:activationIdx={activationIdx}
-        bind:deactivationIdx={deactivationIdx}
-        activationLabel={m.slider_activation()}
-        deactivationLabel={m.slider_deactivation()}
-        activationMultiplier={activationMultiplier}
-        deactivationMultiplier={deactivationMultiplier}
-      />
-    </div>
-  {/if}
-</div>
-
-<!-- Run controls-->
-<div class="run-controls">
-  <div class="run-btn-wrap">
-    <Button
-      loading={sim.loading}
-      fullWidth
-      onclick={runSimulation}
-      >{sim.loading ? "Running…" : "Run simulation"}</Button
+    <!-- Guiding questions ------------------------------- -->
+    <Expander
+      title={m.mem_guiding_expander()}
+      open={false}
     >
-  </div>
-  <CompareCheckbox bind:checked={compareWithLast} />
-</div>
+      <Text>{@html marked(m.mem_guiding_header())}</Text>
+      <label class="toggle-label">
+        <input
+          type="checkbox"
+          bind:checked={showAnswers}
+        />
+        {@html marked.parseInline(m.mem_guiding_toggle())}
+      </label>
+      {#if !showAnswers}
+        <div class="qa-text">
+          {@html marked(
+            ta(m.bio_mem_guiding_questions(), m.math_mem_guiding_questions()),
+          )}
+        </div>
+      {:else}
+        <div class="qa-text">
+          {@html marked(
+            ta(m.bio_mem_guiding_answers(), m.math_mem_guiding_answers()),
+          )}
+        </div>
+      {/if}
+    </Expander>
 
-{#if sim.errorMsg}
-  <p class="error-msg">{sim.errorMsg}</p>
-{/if}
+    <!-- Sliders ---------------------------------------- -->
+    <div class="slider-section">
+      <!-- Common sliders -->
+      <div class="slider-row">
+        <label class="slider-label">
+          {@html m.slider_light()}: <strong>{lightIntensity}</strong>
+          <input
+            type="range"
+            min="50"
+            max="900"
+            step="50"
+            bind:value={lightIntensity}
+          />
+        </label>
+        <label class="slider-label">
+          {@html m.slider_pulses()}: <strong>{pulseInterval} s</strong>
+          <input
+            type="range"
+            min="5"
+            max="150"
+            step="5"
+            bind:value={pulseInterval}
+          />
+        </label>
+      </div>
 
-<!-- Results ---------------------------------------- -->
-{#if sim.currentResult}
-  <SimResultsGrid
-    currentResult={sim.currentResult}
-    previousResult={sim.previousResult}
-    showOld={showOld}
-    phases={phases}
-    totalTime={totalTime}
-    paramRows={paramRows}
-    showOldParams={showOld && sim.previousParams !== null}
-  />
-{/if}
+      <div class="slider-row">
+        <label class="slider-label">
+          {@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
+          <input
+            type="range"
+            min="0"
+            max="300"
+            step="10"
+            bind:value={darkLength}
+          />
+        </label>
+        <label class="slider-label">
+          {@html m.fal_slider_saturate()}: <strong>{saturatingPulse}</strong>
+          <input
+            type="range"
+            min="0"
+            max="10000"
+            step="500"
+            bind:value={saturatingPulse}
+          />
+        </label>
+      </div>
 
-<LiteratureExpander />
+      <div class="slider-row three">
+        <label class="slider-label">
+          {@html m.mem_slider_training()}: <strong>{trainingLength} s</strong>
+          <input
+            type="range"
+            min="0"
+            max="600"
+            step="30"
+            bind:value={trainingLength}
+          />
+        </label>
+        <label class="slider-label">
+          {@html m.mem_slider_relaxation()}:
+          <strong>{relaxationLength} s</strong>
+          <input
+            type="range"
+            min="0"
+            max="600"
+            step="30"
+            bind:value={relaxationLength}
+          />
+        </label>
+        <label class="slider-label">
+          {@html m.mem_slider_memory()}: <strong>{memoryLength} s</strong>
+          <input
+            type="range"
+            min="0"
+            max="600"
+            step="30"
+            bind:value={memoryLength}
+          />
+        </label>
+      </div>
 
-<PageNav
-  base={base}
-  prev={{ href: "/experiments", label: "Experiments in Silico" }}
-  next={{ href: "/conclusion", label: "Conclusion" }}
-/>
+      <!-- 4bio: activation/deactivation sliders -->
+      {#if audienceStore.audience === "4bio"}
+        <div class="slider-row">
+          <ActivationSliders
+            bind:activationIdx={activationIdx}
+            bind:deactivationIdx={deactivationIdx}
+            activationLabel={m.slider_activation()}
+            deactivationLabel={m.slider_deactivation()}
+            activationMultiplier={activationMultiplier}
+            deactivationMultiplier={deactivationMultiplier}
+          />
+        </div>
+      {/if}
+    </div>
 
-<style>
-  .prose :global(h1),
-  .prose :global(h2),
-  .prose :global(h3),
-  .prose :global(h4) {
-    margin-top: var(--space-5);
-    margin-bottom: var(--space-2);
-    line-height: 1.3;
-  }
+    <!-- Run controls-->
+    <div class="run-controls">
+      <div class="run-btn-wrap">
+        <Button
+          loading={sim.loading}
+          fullWidth
+          onclick={runSimulation}
+          >{sim.loading ? "Running…" : "Run simulation"}</Button
+        >
+      </div>
+      <CompareCheckbox bind:checked={compareWithLast} />
+    </div>
 
-  .intro-content {
-    margin: var(--space-4) 0;
-  }
+    {#if sim.errorMsg}
+      <p class="error-msg">{sim.errorMsg}</p>
+    {/if}
 
-  .intro-content :global(a) {
-    color: var(--color-primary);
-  }
+    <!-- Results ---------------------------------------- -->
+    {#if sim.currentResult}
+      <SimResultsGrid
+        currentResult={sim.currentResult}
+        previousResult={sim.previousResult}
+        showOld={showOld}
+        phases={phases}
+        totalTime={totalTime}
+        paramRows={paramRows}
+        showOldParams={showOld && sim.previousParams !== null}
+      />
+    {/if}
 
-  .fig {
-    max-width: 60%;
-  }
+    <LiteratureExpander />
 
-  .slider-row.three {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: 750px) {
-    .slider-row.three {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
+    <PageNav
+      base={base}
+      prev={{ href: "/experiments", label: "Experiments in Silico" }}
+      next={{ href: "/conclusion", label: "Conclusion" }}
+    />
+  </Narrow>
+</Main>

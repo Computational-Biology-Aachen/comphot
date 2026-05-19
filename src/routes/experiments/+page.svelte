@@ -1,23 +1,28 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import CompareCheckbox from "$lib/components/simulation/CompareCheckbox.svelte";
-  import LiteratureExpander from "$lib/components/simulation/LiteratureExpander.svelte";
-  import type { PhaseRegion } from "$lib/components/simulation/SimChart.svelte";
-  import SimResultsGrid from "$lib/components/simulation/SimResultsGrid.svelte";
+
   import { ta } from "$lib/i18n";
   import * as m from "$lib/paraglide/messages";
+  import SimResultsGrid from "$lib/SimResultsGrid.svelte";
   import { buildPamProtocol } from "$lib/simulations/pam";
   import { audienceStore } from "$lib/stores/audience.svelte";
   import { LOG_STEPS, SimState } from "$lib/stores/simState.svelte";
   import {
+    ActivationSliders,
     Button,
+    CompareCheckbox,
     Accordion as Expander,
+    H2,
     InfoBox,
+    LiteratureExpander,
+    Main,
+    Narrow,
     PageNav,
+    type PhaseRegion,
+    Text,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
   import Katex from "svelte-katex";
-  import ActivationSliders from "../../../../../packages/design/src/lib/SliderActivation.svelte";
 
   const sim = new SimState();
   sim.setup();
@@ -97,54 +102,62 @@
   <title>Experiments in Silico</title>
 </svelte:head>
 
-<h1>{@html marked(m.fal_headline_experiments())}</h1>
+<Main>
+  <Narrow>
+    <h1>{@html marked(m.fal_headline_experiments())}</h1>
 
-<InfoBox>
-  {@html marked(
-    ta(m.bio_fal_learning_objectives(), m.math_fal_learning_objectives()),
-  )}
-</InfoBox>
+    <InfoBox>
+      {@html marked(
+        ta(m.bio_fal_learning_objectives(), m.math_fal_learning_objectives()),
+      )}
+    </InfoBox>
 
-<PageNav
-  base={base}
-  prev={{ href: "/model", label: "Computational Models" }}
-  next={{ href: "/plant-memory", label: "Plant Memory" }}
-/>
+    <PageNav
+      base={base}
+      prev={{ href: "/model", label: "Computational Models" }}
+      next={{ href: "/plant-memory", label: "Plant Memory" }}
+    />
 
-<!-- Model Construction ----------------------------- -->
-<div class="prose">{@html marked(m.fal_headline_model_construction())}</div>
+    <!-- Model Construction ----------------------------- -->
+    <H2>
+      {@html marked(m.fal_headline_model_construction())}
+    </H2>
 
-<p>{@html marked(m.fal_construction_explanation_1())}</p>
+    <Text>
+      {@html marked(m.fal_construction_explanation_1())}
+    </Text>
 
-<figure class="fig">
-  <img
-    src="{base}/pictures/NPQphotosynthesis.png"
-    alt={m.fal_caption_model_npq()}
-  />
-  <figcaption>{m.fal_caption_model_npq()}</figcaption>
-</figure>
+    <figure class="fig">
+      <img
+        src="{base}/pictures/NPQphotosynthesis.png"
+        alt={m.fal_caption_model_npq()}
+      />
+      <figcaption>{m.fal_caption_model_npq()}</figcaption>
+    </figure>
 
-<p>{@html marked(m.fal_construction_explanation_2())}</p>
-<p>{@html m.fal_rates_1()}</p>
-<p>{@html marked(m.fal_rates_2())}</p>
-<p>{@html marked(m.fal_rates_3())}</p>
-<p>{@html marked(m.fal_rates_4())}</p>
-<p>{@html marked(m.fal_rates_5())}</p>
-<p>{@html m.fal_rates_6()}</p>
+    <p>{@html marked(m.fal_construction_explanation_2())}</p>
+    <p>{@html m.fal_rates_1()}</p>
+    <p>{@html marked(m.fal_rates_2())}</p>
+    <p>{@html marked(m.fal_rates_3())}</p>
+    <p>{@html marked(m.fal_rates_4())}</p>
+    <p>{@html marked(m.fal_rates_5())}</p>
+    <p>{@html m.fal_rates_6()}</p>
 
-<Expander title={m.fal_components_explanation_header()}>
-  <div>{@html marked(m.fal_molecules_explanation_table())}</div>
-  <div>{@html marked(m.fal_enzymes_explanation_table())}</div>
-</Expander>
+    <Expander title={m.fal_components_explanation_header()}>
+      <div>{@html marked(m.fal_molecules_explanation_table())}</div>
+      <div>{@html marked(m.fal_enzymes_explanation_table())}</div>
+    </Expander>
 
-<!-- 4math: ODE equations + code walkthrough -->
-{#if audienceStore.audience === "4math"}
-  <div class="prose">{@html marked(m.math_fal_headline_model_equations())}</div>
-  <p>{@html marked(m.math_fal_model_equations_introduction())}</p>
+    <!-- 4math: ODE equations + code walkthrough -->
+    {#if audienceStore.audience === "4math"}
+      <H2>
+        {@html marked(m.math_fal_headline_model_equations())}
+      </H2>
+      <p>{@html marked(m.math_fal_model_equations_introduction())}</p>
 
-  <div class="math-block">
-    <Katex displayMode
-      >{String.raw`\begin{aligned}
+      <div class="math-block">
+        <Katex displayMode
+          >{String.raw`\begin{aligned}
 \frac{\mathrm{dPQH_2}}{\mathrm{d}t} &= v_\mathrm{PSII} - v_\mathrm{PQ_{ox}} \\
 \frac{\mathrm{dATP}}{\mathrm{d}t} &= v_\mathrm{ATPsynthase} - v_\mathrm{ATPconsumption} \\
 \frac{\mathrm{dATPase^{*}}}{\mathrm{d}t} &= F k_\mathrm{actATPase} \cdot \mathrm{H(PFD)} \cdot \mathrm{ATPase} - k_\mathrm{deactATPase} \cdot (1 - \mathrm{H(PFD)}) \cdot \mathrm{ATPase^{*}} \\
@@ -152,297 +165,237 @@ b_\mathrm{H} \cdot \frac{\mathrm{dH}}{\mathrm{d}t} &= 2 v_\mathrm{PSII} + 4 v_\m
 \frac{\mathrm{dPsbS}}{\mathrm{d}t} &= -v_\mathrm{Psbs^{p}} \\
 \frac{\mathrm{dVx}}{\mathrm{d}t} &= -v_\mathrm{Xcyc}
 \end{aligned}`}</Katex
-    >
-  </div>
+        >
+      </div>
 
-  <Expander title={m.math_fal_reaction_rates()}>
-    <p>{@html marked(m.math_fal_rates_dynamic())}</p>
-    <div class="math-block">
-      <Katex displayMode
-        >{String.raw`\begin{aligned}
+      <Expander title={m.math_fal_reaction_rates()}>
+        <p>{@html marked(m.math_fal_rates_dynamic())}</p>
+        <div class="math-block">
+          <Katex displayMode
+            >{String.raw`\begin{aligned}
 v_{\mathrm{PSII}} &= k_2 \cdot 0.5 \cdot B_1 \\
 v_\mathrm{Xcyc} &= k_\mathrm{DeepoxV} \cdot \frac{H^{nH_X}}{H^{nH_X} + pH_{\mathrm{inv}}(K_\mathrm{phSat})^{nH_X}} \cdot \mathrm{Vx} - k_\mathrm{EpoxZ} \cdot (\mathrm{X^{tot}} - \mathrm{Vx}) \\
 Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS^p} + \gamma_2 \tfrac{Z}{Z+K_{ZSat}} \mathrm{PsbS^p} + \gamma_3 \tfrac{Z}{Z+K_{ZSat}} \mathrm{PsbS}
 \end{aligned}`}</Katex
-      >
-    </div>
-  </Expander>
+          >
+        </div>
+      </Expander>
 
-  <Expander title={m.math_fal_model_code_expander()}>
-    <div class="prose">{@html marked(m.math_fal_construction_header())}</div>
-    <p>{@html marked(m.math_fal_construction_1())}</p>
-    <pre><code>{CODE.define}</code></pre>
+      <Expander title={m.math_fal_model_code_expander()}>
+        <Text>
+          {@html marked(m.math_fal_construction_header())}
+        </Text>
+        <p>{@html marked(m.math_fal_construction_1())}</p>
+        <pre><code>{CODE.define}</code></pre>
 
-    <p>{@html marked(m.math_fal_construction_2())}</p>
-    <details>
-      <summary>Parameters</summary>
-      <pre><code>{CODE.params}</code></pre>
-    </details>
-    <details>
-      <summary>Compounds</summary>
-      <pre><code>{CODE.comps}</code></pre>
-    </details>
+        <p>{@html marked(m.math_fal_construction_2())}</p>
+        <details>
+          <summary>Parameters</summary>
+          <pre><code>{CODE.params}</code></pre>
+        </details>
+        <details>
+          <summary>Compounds</summary>
+          <pre><code>{CODE.comps}</code></pre>
+        </details>
 
-    <p>{@html marked(m.math_fal_construction_3())}</p>
-    <pre><code>{CODE.addCompsPars}</code></pre>
+        <p>{@html marked(m.math_fal_construction_3())}</p>
+        <pre><code>{CODE.addCompsPars}</code></pre>
 
-    <div class="prose">{@html marked(m.math_fal_simulation_header())}</div>
-    <p>{@html marked(m.math_fal_simulation_1())}</p>
-    <pre><code>{CODE.definesim}</code></pre>
+        <Text>{@html marked(m.math_fal_simulation_header())}</Text>
+        <p>{@html marked(m.math_fal_simulation_1())}</p>
+        <pre><code>{CODE.definesim}</code></pre>
 
-    <p>{@html marked(m.math_fal_simulation_2())}</p>
-    <pre><code>{CODE.initialisesim}</code></pre>
-  </Expander>
-{/if}
-
-<!-- Implementation -->
-<div class="prose">{@html marked(m.fal_headline_implementation())}</div>
-<p>
-  {@html marked(
-    ta(
-      m.bio_fal_implementation_description(),
-      m.math_fal_implementation_description(),
-    ),
-  )}
-</p>
-{#if audienceStore.audience === "4bio"}
-  <p>{@html m.bio_fal_implementation_to_expert()}</p>
-{/if}
-
-<!-- Analysis --------------------------------------- -->
-<div class="prose">{@html marked(m.fal_headline_analyse())}</div>
-<p>{@html marked(ta(m.bio_fal_introduktion(), m.math_fal_introduktion()))}</p>
-
-<div class="prose">{@html marked(m.fal_headline_slider())}</div>
-<p>{@html marked(m.fal_explanatnion())}</p>
-
-<Expander
-  title={m.fal_graph_explanation_expander()}
-  open
->
-  <div class="prose">
-    {@html marked(m.fal_graph_explanation_header_single())}
-  </div>
-  <p>{@html marked(m.fal_graph_explanation_1())}</p>
-  <div class="math-inline">
-    <Katex displayMode>{"NPQ = \\dfrac{F_m - F_m'}{F_m'}"}</Katex>
-  </div>
-  <p>
-    {@html ta(
-      m.bio_fal_graph_explanation_2(),
-      m.math_fal_graph_explanation_2(),
-    )}
-  </p>
-  <div class="prose">{@html marked(m.fal_graph_explanation_header_duo())}</div>
-  <p>{@html marked(m.fal_graph_explanation_duo())}</p>
-</Expander>
-
-<Expander
-  title={m.fal_guiding_expander()}
-  open
->
-  <div class="prose">{@html marked(m.fal_guiding_header())}</div>
-  <label class="toggle-label">
-    <input
-      type="checkbox"
-      bind:checked={showAnswers}
-    />
-    {@html marked.parseInline(m.fal_guiding_toggle())}
-  </label>
-  {#if !showAnswers}
-    <div class="qa-text">{@html marked(m.fal_guiding_questions())}</div>
-    {#if audienceStore.audience === "4bio"}
-      <div class="qa-text">
-        {@html marked(m.bio_fal_guiding_questions_extend())}
-      </div>
+        <p>{@html marked(m.math_fal_simulation_2())}</p>
+        <pre><code>{CODE.initialisesim}</code></pre>
+      </Expander>
     {/if}
-  {:else}
-    <div class="qa-text">{@html marked(m.fal_guiding_answers())}</div>
+
+    <!-- Implementation -->
+    <H2>{@html marked(m.fal_headline_implementation())}</H2>
+    <p>
+      {@html marked(
+        ta(
+          m.bio_fal_implementation_description(),
+          m.math_fal_implementation_description(),
+        ),
+      )}
+    </p>
     {#if audienceStore.audience === "4bio"}
-      <div class="qa-text">
-        {@html marked(m.bio_fal_guiding_answers_extend())}
-      </div>
+      <p>{@html m.bio_fal_implementation_to_expert()}</p>
     {/if}
-  {/if}
-</Expander>
 
-<!-- Slider controls -------------------------------- -->
-<div class="slider-section">
-  <label class="slider-label">
-    {@html m.slider_light()}: <strong>{lightIntensity}</strong>
-    <input
-      type="range"
-      min="50"
-      max="900"
-      step="50"
-      bind:value={lightIntensity}
-    />
-  </label>
+    <!-- Analysis --------------------------------------- -->
+    <H2>{@html marked(m.fal_headline_analyse())}</H2>
+    <p>
+      {@html marked(ta(m.bio_fal_introduktion(), m.math_fal_introduktion()))}
+    </p>
 
-  <div class="slider-row">
-    <label class="slider-label">
-      {@html m.fal_slider_time()}: <strong>{totalMinutes} min</strong>
-      <input
-        type="range"
-        min="1"
-        max="15"
-        step="1"
-        bind:value={totalMinutes}
-      />
-    </label>
-    <label class="slider-label">
-      {@html m.slider_pulses()}: <strong>{pulseInterval} s</strong>
-      <input
-        type="range"
-        min="5"
-        max="150"
-        step="5"
-        bind:value={pulseInterval}
-      />
-    </label>
-  </div>
+    <Text>{@html marked(m.fal_headline_slider())}</Text>
+    <p>{@html marked(m.fal_explanatnion())}</p>
 
-  {#if audienceStore.audience === "4bio"}
-    <div class="slider-row">
-      <div class="slider-col">
-        <ActivationSliders
-          bind:activationIdx={activationIdx}
-          bind:deactivationIdx={deactivationIdx}
-          activationMultiplier={activationMultiplier}
-          deactivationMultiplier={deactivationMultiplier}
-        />
-      </div>
-      <div class="slider-col">
-        <label class="slider-label">
-          {@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
-          <input
-            type="range"
-            min="0"
-            max={totalMinutes * 60}
-            step="5"
-            bind:value={darkLength}
-          />
-        </label>
-        <label class="slider-label">
-          {@html m.fal_slider_saturate()}: <strong>{saturatingPulse}</strong>
-          <input
-            type="range"
-            min="0"
-            max="10000"
-            step="500"
-            bind:value={saturatingPulse}
-          />
-        </label>
-      </div>
-    </div>
-  {/if}
-</div>
-
-<!-- Run controls -->
-<div class="run-controls">
-  <div class="run-btn-wrap">
-    <Button
-      loading={sim.loading}
-      fullWidth
-      onclick={runSimulation}
-      >{sim.loading ? "Running…" : "Run simulation"}</Button
+    <Expander
+      title={m.fal_graph_explanation_expander()}
+      open={false}
     >
-  </div>
-  <CompareCheckbox bind:checked={compareWithLast} />
-</div>
+      <Text>
+        {@html marked(m.fal_graph_explanation_header_single())}
+      </Text>
+      <p>{@html marked(m.fal_graph_explanation_1())}</p>
+      <div class="math-inline">
+        <Katex displayMode>{"NPQ = \\dfrac{F_m - F_m'}{F_m'}"}</Katex>
+      </div>
+      <p>
+        {@html ta(
+          m.bio_fal_graph_explanation_2(),
+          m.math_fal_graph_explanation_2(),
+        )}
+      </p>
+      <Text>
+        {@html marked(m.fal_graph_explanation_header_duo())}
+      </Text>
+      <p>{@html marked(m.fal_graph_explanation_duo())}</p>
+    </Expander>
 
-{#if sim.errorMsg}
-  <p class="error-msg">{sim.errorMsg}</p>
-{/if}
+    <Expander
+      title={m.fal_guiding_expander()}
+      open={false}
+    >
+      <Text>{@html marked(m.fal_guiding_header())}</Text>
+      <label class="toggle-label">
+        <input
+          type="checkbox"
+          bind:checked={showAnswers}
+        />
+        {@html marked.parseInline(m.fal_guiding_toggle())}
+      </label>
+      {#if !showAnswers}
+        <div class="qa-text">{@html marked(m.fal_guiding_questions())}</div>
+        {#if audienceStore.audience === "4bio"}
+          <div class="qa-text">
+            {@html marked(m.bio_fal_guiding_questions_extend())}
+          </div>
+        {/if}
+      {:else}
+        <div class="qa-text">{@html marked(m.fal_guiding_answers())}</div>
+        {#if audienceStore.audience === "4bio"}
+          <div class="qa-text">
+            {@html marked(m.bio_fal_guiding_answers_extend())}
+          </div>
+        {/if}
+      {/if}
+    </Expander>
 
-<!-- Results ---------------------------------------- -->
-{#if sim.currentResult}
-  <SimResultsGrid
-    currentResult={sim.currentResult}
-    previousResult={sim.previousResult}
-    showOld={showOld}
-    phases={phases}
-    totalTime={totalTime}
-    paramRows={paramRows}
-    showOldParams={showOld && sim.previousParams !== null}
-  />
-{/if}
+    <!-- Slider controls -------------------------------- -->
+    <div class="slider-section">
+      <label class="slider-label">
+        {@html m.slider_light()}: <strong>{lightIntensity}</strong>
+        <input
+          type="range"
+          min="50"
+          max="900"
+          step="50"
+          bind:value={lightIntensity}
+        />
+      </label>
 
-<LiteratureExpander />
+      <div class="slider-row">
+        <label class="slider-label">
+          {@html m.fal_slider_time()}: <strong>{totalMinutes} min</strong>
+          <input
+            type="range"
+            min="1"
+            max="15"
+            step="1"
+            bind:value={totalMinutes}
+          />
+        </label>
+        <label class="slider-label">
+          {@html m.slider_pulses()}: <strong>{pulseInterval} s</strong>
+          <input
+            type="range"
+            min="5"
+            max="150"
+            step="5"
+            bind:value={pulseInterval}
+          />
+        </label>
+      </div>
 
-<PageNav
-  base={base}
-  prev={{ href: "/model", label: "Computational Models" }}
-  next={{ href: "/plant-memory", label: "Plant Memory" }}
-/>
+      {#if audienceStore.audience === "4bio"}
+        <div class="slider-row">
+          <div class="slider-col">
+            <ActivationSliders
+              bind:activationIdx={activationIdx}
+              bind:deactivationIdx={deactivationIdx}
+              activationMultiplier={activationMultiplier}
+              deactivationMultiplier={deactivationMultiplier}
+              activationLabel={m.slider_activation()}
+              deactivationLabel={m.slider_deactivation()}
+            />
+          </div>
+          <div class="slider-col">
+            <label class="slider-label">
+              {@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
+              <input
+                type="range"
+                min="0"
+                max={totalMinutes * 60}
+                step="5"
+                bind:value={darkLength}
+              />
+            </label>
+            <label class="slider-label">
+              {@html m.fal_slider_saturate()}:
+              <strong>{saturatingPulse}</strong>
+              <input
+                type="range"
+                min="0"
+                max="10000"
+                step="500"
+                bind:value={saturatingPulse}
+              />
+            </label>
+          </div>
+        </div>
+      {/if}
+    </div>
 
-<style>
-  .prose :global(h1),
-  .prose :global(h2),
-  .prose :global(h3),
-  .prose :global(h4),
-  .prose :global(h5) {
-    margin-top: var(--space-5);
-    margin-bottom: var(--space-2);
-    line-height: 1.3;
-  }
+    <!-- Run controls -->
+    <div class="run-controls">
+      <div class="run-btn-wrap">
+        <Button
+          loading={sim.loading}
+          fullWidth
+          onclick={runSimulation}
+          >{sim.loading ? "Running…" : "Run simulation"}</Button
+        >
+      </div>
+      <CompareCheckbox bind:checked={compareWithLast} />
+    </div>
 
-  .prose :global(p) {
-    margin-bottom: var(--space-3);
-  }
+    {#if sim.errorMsg}
+      <p class="error-msg">{sim.errorMsg}</p>
+    {/if}
 
-  .math-block {
-    margin: var(--space-4) 0;
-    overflow-x: auto;
-  }
+    <!-- Results ---------------------------------------- -->
+    {#if sim.currentResult}
+      <SimResultsGrid
+        currentResult={sim.currentResult}
+        previousResult={sim.previousResult}
+        showOld={showOld}
+        phases={phases}
+        totalTime={totalTime}
+        paramRows={paramRows}
+        showOldParams={showOld && sim.previousParams !== null}
+      />
+    {/if}
 
-  .math-inline {
-    margin: var(--space-3) 0;
-  }
+    <LiteratureExpander />
 
-  pre {
-    margin: var(--space-3) 0;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    background: var(--color-surface);
-    padding: var(--space-4);
-    overflow-x: auto;
-    font-size: 0.82rem;
-    line-height: 1.5;
-  }
-
-  code {
-    font-family: var(--font-mono);
-  }
-
-  details {
-    margin: var(--space-2) 0;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-  }
-
-  details summary {
-    cursor: pointer;
-    border-radius: 6px;
-    background: var(--color-surface);
-    padding: var(--space-2) var(--space-3);
-    font-weight: 500;
-    font-size: 0.9rem;
-  }
-
-  details[open] summary {
-    border-radius: 6px 6px 0 0;
-  }
-
-  details[open] pre {
-    margin: 0;
-    border-top: 1px solid var(--color-border);
-    border-radius: 0 0 6px 6px;
-  }
-
-  .slider-col {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-</style>
+    <PageNav
+      base={base}
+      prev={{ href: "/model", label: "Computational Models" }}
+      next={{ href: "/plant-memory", label: "Plant Memory" }}
+    />
+  </Narrow>
+</Main>

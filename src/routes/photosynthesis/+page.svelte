@@ -3,10 +3,15 @@
   import { ta } from "$lib/i18n";
   import * as m from "$lib/paraglide/messages";
   import { audienceStore } from "$lib/stores/audience.svelte";
-  import VideoTranscriptToggle, {
+  import {
     Accordion as Expander,
+    H1,
+    H2,
     InfoBox,
+    Main,
+    Narrow,
     PageNav,
+    Text,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
@@ -16,218 +21,223 @@
   <title>{m.pho_headline_photosynthesis_page()} | ComPhot</title>
 </svelte:head>
 
-<article class="page-content">
-  <div class="prose">
-    {@html marked(m.pho_headline_photosynthesis_page())}
-  </div>
+<Main>
+  <Narrow>
+    <H1>
+      {@html marked(m.pho_headline_photosynthesis_page())}
+    </H1>
 
-  <InfoBox>
-    <div class="prose">
-      {@html marked(
-        ta(m.bio_pho_learning_objectives(), m.math_pho_learning_objectives()),
-      )}
-    </div>
-  </InfoBox>
-
-  <PageNav
-    base={base}
-    prev={{ href: "/", label: m.sde_pagenames_start() }}
-    next={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
-  />
-
-  <section>
-    <div class="prose">
-      {@html marked(m.pho_headline_climate())}
-      {@html marked(
-        ta(
-          m.bio_pho_introduction_climate_change(),
-          m.math_pho_introduction_climate_change(),
-        ),
-      )}
-    </div>
-
-    {#if audienceStore.audience === "4math"}
-      <div class="two-col-images">
-        <img
-          src="{base}/pictures/plants_basics.jpeg"
-          alt="Plant basics"
-          class="page-img"
-        />
-        <img
-          src="{base}/pictures/plants_stress.jpeg"
-          alt="Plants under stress"
-          class="page-img"
-        />
-      </div>
-    {:else}
-      <div class="prose">
-        {@html marked(m.bio_pho_point_1())}
-        {@html marked(m.bio_pho_point_2())}
-        {@html marked(m.bio_pho_point_3())}
-        {@html marked(m.bio_pho_end_of_introduction())}
-      </div>
-    {/if}
-  </section>
-
-  <section>
-    <div class="prose">
-      {@html marked(m.pho_headline_photosynthesis())}
-      {@html marked(
-        ta(
-          m.bio_pho_photosynthesis_explanation_1(),
-          m.math_pho_photosynthesis_explanation_1(),
-        ),
-      )}
-      {@html marked(
-        ta(
-          m.bio_pho_photosynthesis_explanation_2(),
-          m.math_pho_photosynthesis_explanation_2(),
-        ),
-      )}
-    </div>
-
-    <figure class="page-figure">
-      <img
-        src="{base}/pictures/Fotosynthese_eng.jpg"
-        alt="Photosynthesis diagram"
-        class="page-img centered"
-      />
-      <figcaption class="caption">
-        {ta(
-          m.bio_pho_caption_fotosynthese_picture(),
-          m.math_pho_caption_fotosynthese_picture(),
+    <InfoBox variant="info">
+      <Text>
+        {@html marked(
+          ta(m.bio_pho_learning_objectives(), m.math_pho_learning_objectives()),
         )}
-      </figcaption>
-    </figure>
-  </section>
-
-  <section>
-    <div class="prose">
-      {@html marked(m.pho_headline_photosynthesis_location())}
-      {@html marked(
-        ta(
-          m.bio_pho_photosynthesis_location_explanation(),
-          m.math_pho_photosynthesis_location_explanation(),
-        ),
-      )}
-    </div>
-
-    <figure class="page-figure">
-      <img
-        src="{base}/pictures/phot_place_upper.PNG"
-        alt="Leaf cross-section showing chloroplasts"
-        class="page-img centered"
-      />
-      <figcaption class="caption">
-        {ta(
-          m.bio_pho_caption_fotosynthese_leaf_zoom(),
-          m.math_pho_caption_fotosynthese_leaf_zoom(),
-        )}
-      </figcaption>
-    </figure>
-
-    <figure class="page-figure">
-      <img
-        src="{base}/pictures/NPQphotosynthesis.png"
-        alt="NPQ photosynthesis apparatus"
-        class="page-img centered"
-      />
-      <figcaption class="caption">
-        {m.pho_caption_fotosynthese_apparat_picture()}
-      </figcaption>
-    </figure>
-
-    <div class="prose">
-      {@html marked(
-        ta(
-          m.bio_pho_photosynthesis_location_continue(),
-          m.math_pho_photosynthesis_location_continue(),
-        ),
-      )}
-    </div>
-  </section>
-
-  <section>
-    <YouTubeEmbed
-      videoId="hMCA0bBVoxE"
-      title="Journey into a leaf"
-    />
-    <VideoTranscriptToggle
-      message={m.expander_video_transcript()}
-      transcript={ta(
-        m.bio_pho_video_transcript_journey(),
-        m.math_pho_video_transcript_journey(),
-      )}
-    />
-  </section>
-
-  <section>
-    <div class="prose">
-      {@html marked(m.pho_headline_npq())}
-      {@html marked(
-        ta(m.bio_pho_npq_explanation(), m.math_pho_npq_explanation()),
-      )}
-    </div>
-
-    <InfoBox>
-      <div class="prose">
-        {@html marked(m.pho_npq_explanation_detailed())}
-      </div>
+      </Text>
     </InfoBox>
 
-    <div class="prose">
-      {@html marked(
-        ta(
-          m.bio_pho_npq_explanation_continued(),
-          m.math_pho_npq_explanation_continued(),
-        ),
-      )}
-    </div>
+    <PageNav
+      base={base}
+      prev={{ href: "/", label: m.sde_pagenames_start() }}
+      next={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
+    />
 
-    <figure class="page-figure">
-      <img
-        src="{base}/pictures/Violaxanthin Scheme-4.png"
-        alt="Violaxanthin scheme - Xanthophyll cycle"
-        class="page-img centered"
-      />
-      <figcaption class="caption">
-        {ta(m.bio_pho_caption_npq(), m.math_pho_caption_npq())}
-      </figcaption>
-    </figure>
-  </section>
-
-  <section>
-    <div class="prose">
-      {@html marked(m.pho_header_model_organismen())}
-      {@html marked(
-        ta(
-          m.bio_pho_model_organismen_explanation(),
-          m.math_pho_model_organismen_explanation(),
-        ),
-      )}
-    </div>
-
-    <Expander title={m.pho_expander_model_organismen()}>
-      <div class="arabidopsis-section">
-        <img
-          src="{base}/pictures/Arabidopsis.jpg"
-          alt="Arabidopsis thaliana"
-          class="arabidopsis-img"
-        />
-        <p class="caption">{m.pho_caption_thaiana_picture()}</p>
-      </div>
-      <div class="prose">
-        {@html ta(
-          m.bio_pho_expander_model_organism_explanation(),
-          m.math_pho_expander_model_organism_explanation(),
+    <section>
+      <H2>
+        {@html marked(m.pho_headline_climate())}
+      </H2>
+      <Text>
+        {@html marked(
+          ta(
+            m.bio_pho_introduction_climate_change(),
+            m.math_pho_introduction_climate_change(),
+          ),
         )}
-      </div>
-    </Expander>
-  </section>
+      </Text>
 
-  {#if audienceStore.audience === "4bio"}
+      {#if audienceStore.audience === "4math"}
+        <div class="two-col-images">
+          <img
+            src="{base}/pictures/plants_basics.jpeg"
+            alt="Plant basics"
+            class="page-img"
+          />
+          <img
+            src="{base}/pictures/plants_stress.jpeg"
+            alt="Plants under stress"
+            class="page-img"
+          />
+        </div>
+      {:else}
+        <Text>
+          {@html marked(m.bio_pho_point_1())}
+          {@html marked(m.bio_pho_point_2())}
+          {@html marked(m.bio_pho_point_3())}
+          {@html marked(m.bio_pho_end_of_introduction())}
+        </Text>
+      {/if}
+    </section>
+
+    <section>
+      <H2>
+        {@html marked(m.pho_headline_photosynthesis())}
+      </H2>
+      <Text>
+        {@html marked(
+          ta(
+            m.bio_pho_photosynthesis_explanation_1(),
+            m.math_pho_photosynthesis_explanation_1(),
+          ),
+        )}
+        {@html marked(
+          ta(
+            m.bio_pho_photosynthesis_explanation_2(),
+            m.math_pho_photosynthesis_explanation_2(),
+          ),
+        )}
+      </Text>
+
+      <figure class="page-figure">
+        <img
+          src="{base}/pictures/Fotosynthese_eng.jpg"
+          alt="Photosynthesis diagram"
+          class="page-img centered"
+        />
+        <figcaption class="caption">
+          {ta(
+            m.bio_pho_caption_fotosynthese_picture(),
+            m.math_pho_caption_fotosynthese_picture(),
+          )}
+        </figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <H2>
+        {@html marked(m.pho_headline_photosynthesis_location())}
+      </H2>
+      <Text>
+        {@html marked(
+          ta(
+            m.bio_pho_photosynthesis_location_explanation(),
+            m.math_pho_photosynthesis_location_explanation(),
+          ),
+        )}
+      </Text>
+
+      <figure class="page-figure">
+        <img
+          src="{base}/pictures/phot_place_upper.PNG"
+          alt="Leaf cross-section showing chloroplasts"
+          class="page-img centered"
+        />
+        <figcaption class="caption">
+          {ta(
+            m.bio_pho_caption_fotosynthese_leaf_zoom(),
+            m.math_pho_caption_fotosynthese_leaf_zoom(),
+          )}
+        </figcaption>
+      </figure>
+
+      <figure class="page-figure">
+        <img
+          src="{base}/pictures/NPQphotosynthesis.png"
+          alt="NPQ photosynthesis apparatus"
+          class="page-img centered"
+        />
+        <figcaption class="caption">
+          {m.pho_caption_fotosynthese_apparat_picture()}
+        </figcaption>
+      </figure>
+
+      <Text>
+        {@html marked(
+          ta(
+            m.bio_pho_photosynthesis_location_continue(),
+            m.math_pho_photosynthesis_location_continue(),
+          ),
+        )}
+      </Text>
+    </section>
+
+    <section>
+      <YouTubeEmbed
+        videoId="hMCA0bBVoxE"
+        title="Journey into a leaf"
+      />
+    </section>
+
+    <!-- SECTION -->
+    <section>
+      <H2>
+        {@html marked(m.pho_headline_npq())}
+      </H2>
+      <Text>
+        {@html marked(
+          ta(m.bio_pho_npq_explanation(), m.math_pho_npq_explanation()),
+        )}
+      </Text>
+
+      <InfoBox>
+        <Text>
+          {@html marked(m.pho_npq_explanation_detailed())}
+        </Text>
+      </InfoBox>
+
+      <Text>
+        {@html marked(
+          ta(
+            m.bio_pho_npq_explanation_continued(),
+            m.math_pho_npq_explanation_continued(),
+          ),
+        )}
+      </Text>
+
+      <figure class="page-figure">
+        <img
+          src="{base}/pictures/Violaxanthin Scheme-4.png"
+          alt="Violaxanthin scheme - Xanthophyll cycle"
+          class="page-img centered"
+        />
+        <figcaption class="caption">
+          {ta(m.bio_pho_caption_npq(), m.math_pho_caption_npq())}
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- SECTION -->
+    <section>
+      <H2>
+        {@html marked(m.pho_header_model_organismen())}
+      </H2>
+      <Text>
+        {@html marked(
+          ta(
+            m.bio_pho_model_organismen_explanation(),
+            m.math_pho_model_organismen_explanation(),
+          ),
+        )}
+      </Text>
+
+      <Expander title={m.pho_expander_model_organismen()}>
+        <div class="arabidopsis-section">
+          <img
+            src="{base}/pictures/Arabidopsis.jpg"
+            alt="Arabidopsis thaliana"
+            class="arabidopsis-img"
+          />
+          <p class="caption">{m.pho_caption_thaiana_picture()}</p>
+        </div>
+        <Text>
+          {@html ta(
+            m.bio_pho_expander_model_organism_explanation(),
+            m.math_pho_expander_model_organism_explanation(),
+          )}
+        </Text>
+      </Expander>
+    </section>
+
     <Expander title={m.literature()}>
-      <div class="prose">
+      <Text>
         <p>{m.literature_onpage()}</p>
         <ul>
           <li>
@@ -242,43 +252,13 @@
             </a>
           </li>
         </ul>
-      </div>
+      </Text>
     </Expander>
-  {/if}
 
-  <PageNav
-    base={base}
-    prev={{ href: "/", label: m.sde_pagenames_start() }}
-    next={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
-  />
-</article>
-
-<style>
-  section {
-    margin: var(--space-8) 0;
-  }
-
-  .two-col-images {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-4);
-    margin: var(--space-4) 0;
-  }
-
-  @media (max-width: 600px) {
-    .two-col-images {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .arabidopsis-section {
-    margin-bottom: var(--space-4);
-    text-align: center;
-  }
-
-  .arabidopsis-img {
-    border-radius: 4px;
-    max-width: 300px;
-    height: auto;
-  }
-</style>
+    <PageNav
+      base={base}
+      prev={{ href: "/", label: m.sde_pagenames_start() }}
+      next={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
+    />
+  </Narrow>
+</Main>
