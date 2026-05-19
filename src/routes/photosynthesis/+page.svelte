@@ -55,18 +55,16 @@
       </Text>
 
       {#if audienceStore.audience === "4math"}
-        <div class="two-col-images">
-          <img
-            src="{base}/pictures/plants_basics.jpeg"
-            alt="Plant basics"
-            class="page-img"
-          />
-          <img
-            src="{base}/pictures/plants_stress.jpeg"
-            alt="Plants under stress"
-            class="page-img"
-          />
-        </div>
+        <img
+          src="{base}/pictures/plants_basics.jpeg"
+          alt="Plant basics"
+          class="page-img"
+        />
+        <img
+          src="{base}/pictures/plants_stress.jpeg"
+          alt="Plants under stress"
+          class="page-img"
+        />
       {:else}
         <Text>
           {@html marked.parseInline(m.bio_pho_point_1())}
@@ -219,14 +217,13 @@
       </Text>
 
       <Expander title={m.pho_expander_model_organismen()}>
-        <div class="arabidopsis-section">
-          <img
-            src="{base}/pictures/Arabidopsis.jpg"
-            alt="Arabidopsis thaliana"
-            class="arabidopsis-img"
-          />
-          <p class="caption">{m.pho_caption_thaiana_picture()}</p>
-        </div>
+        <img
+          src="{base}/pictures/Arabidopsis.jpg"
+          alt="Arabidopsis thaliana"
+          class="arabidopsis-img"
+        />
+        <p class="caption">{m.pho_caption_thaiana_picture()}</p>
+
         <Text>
           {@html ta(
             m.bio_pho_expander_model_organism_explanation(),

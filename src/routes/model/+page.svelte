@@ -159,208 +159,189 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
       </H2>
 
       <!-- Tabbed SIR section -->
-      <div class="tabs">
-        <div
-          class="tab-list"
-          role="tablist"
+      <button
+        role="tab"
+        aria-selected={activeTab === "sir"}
+        class:active={activeTab === "sir"}
+        onclick={() => (activeTab = "sir")}
+      >
+        {m.mdl_tab_sir()}
+      </button>
+      {#if audienceStore.audience === "4math"}
+        <button
+          role="tab"
+          aria-selected={activeTab === "manual"}
+          class:active={activeTab === "manual"}
+          onclick={() => (activeTab = "manual")}
         >
-          <button
-            role="tab"
-            aria-selected={activeTab === "sir"}
-            class:active={activeTab === "sir"}
-            onclick={() => (activeTab = "sir")}
-          >
-            {m.mdl_tab_sir()}
-          </button>
-          {#if audienceStore.audience === "4math"}
-            <button
-              role="tab"
-              aria-selected={activeTab === "manual"}
-              class:active={activeTab === "manual"}
-              onclick={() => (activeTab = "manual")}
-            >
-              {m.math_mdl_tab_manual()}
-            </button>
-            <button
-              role="tab"
-              aria-selected={activeTab === "modelbase"}
-              class:active={activeTab === "modelbase"}
-              onclick={() => (activeTab = "modelbase")}
-            >
-              {m.math_mdl_tab_modelbase()}
-            </button>
-          {/if}
-        </div>
+          {m.math_mdl_tab_manual()}
+        </button>
+        <button
+          role="tab"
+          aria-selected={activeTab === "modelbase"}
+          class:active={activeTab === "modelbase"}
+          onclick={() => (activeTab = "modelbase")}
+        >
+          {m.math_mdl_tab_modelbase()}
+        </button>
+      {/if}
 
-        <div class="tab-panel">
-          {#if activeTab === "sir"}
-            <Text>
-              {@html marked.parseInline(m.mdl_headline_sir())}
-              {@html marked.parseInline(
-                ta(
-                  m.bio_mdl_mathematical_modelling_example(),
-                  m.math_mdl_mathematical_modelling_example(),
-                ),
-              )}
-            </Text>
+      {#if activeTab === "sir"}
+        <Text>
+          {@html marked.parseInline(m.mdl_headline_sir())}
+          {@html marked.parseInline(
+            ta(
+              m.bio_mdl_mathematical_modelling_example(),
+              m.math_mdl_mathematical_modelling_example(),
+            ),
+          )}
+        </Text>
 
-            {#if audienceStore.audience === "4bio"}
-              <figure class="page-figure">
-                <img
-                  src="{base}/pictures/SIR_Aliens.png"
-                  alt="SIR Aliens diagram"
-                  class="page-img half-width"
-                />
-              </figure>
-            {:else}
-              <div class="katex-block">
-                <Katex displayMode
-                  >{"\\mathrm{S} \\xrightarrow{\\textit{v}_1} \\mathrm{I} \\xrightarrow{\\textit{v}_2} \\mathrm{R}"}</Katex
-                >
-                <Katex displayMode
-                  >{"\\begin{aligned} v_1 &= \\beta \\cdot \\frac{\\mathrm{S}\\cdot \\mathrm{I}}{\\mathrm{N}} \\\\ v_2 &= \\gamma \\cdot \\mathrm{I} \\\\ \\end{aligned}"}</Katex
-                >
-              </div>
-            {/if}
+        {#if audienceStore.audience === "4bio"}
+          <figure class="page-figure">
+            <img
+              src="{base}/pictures/SIR_Aliens.png"
+              alt="SIR Aliens diagram"
+              class="page-img half-width"
+            />
+          </figure>
+        {:else}
+          <Katex displayMode>
+            {"\\mathrm{S} \\xrightarrow{\\textit{v}_1} \\mathrm{I} \\xrightarrow{\\textit{v}_2} \\mathrm{R}"}
+          </Katex>
+          <Katex displayMode>
+            {"\\begin{aligned} v_1 &= \\beta \\cdot \\frac{\\mathrm{S}\\cdot \\mathrm{I}}{\\mathrm{N}} \\\\ v_2 &= \\gamma \\cdot \\mathrm{I} \\\\ \\end{aligned}"}
+          </Katex>
+        {/if}
 
-            <Text>
-              {@html marked.parseInline(
-                ta(
-                  m.bio_mdl_mathematical_modelling_example_1(),
-                  m.math_mdl_mathematical_modelling_example_1(),
-                ),
-              )}
-            </Text>
+        <Text>
+          {@html marked.parseInline(
+            ta(
+              m.bio_mdl_mathematical_modelling_example_1(),
+              m.math_mdl_mathematical_modelling_example_1(),
+            ),
+          )}
+        </Text>
 
-            {#if audienceStore.audience === "4bio"}
-              <figure class="page-figure">
-                <img
-                  src="{base}/pictures/SIR_AliensScheme.png"
-                  alt="SIR Aliens scheme"
-                  class="page-img half-width"
-                />
-              </figure>
-            {:else}
-              <div class="katex-block">
-                <Katex displayMode
-                  >{"\\mathrm{S} \\xrightarrow{\\textit{v}_1} \\mathrm{I} \\xrightarrow{\\textit{v}_2} \\mathrm{R}"}</Katex
-                >
-                <Katex displayMode
-                  >{"\\begin{aligned} \\frac{\\mathrm{d}\\mathrm{S}}{\\mathrm{d}t} &= - v_1 \\\\ \\frac{\\mathrm{d}\\mathrm{I}}{\\mathrm{d}t} &= v_1 - v_2 \\\\ \\frac{\\mathrm{d}\\mathrm{R}}{\\mathrm{d}t} &= v_2 \\end{aligned}"}</Katex
-                >
-              </div>
-            {/if}
+        {#if audienceStore.audience === "4bio"}
+          <figure class="page-figure">
+            <img
+              src="{base}/pictures/SIR_AliensScheme.png"
+              alt="SIR Aliens scheme"
+              class="page-img half-width"
+            />
+          </figure>
+        {:else}
+          <Katex displayMode>
+            {"\\mathrm{S} \\xrightarrow{\\textit{v}_1} \\mathrm{I} \\xrightarrow{\\textit{v}_2} \\mathrm{R}"}
+          </Katex>
+          <Katex displayMode>
+            {"\\begin{aligned} \\frac{\\mathrm{d}\\mathrm{S}}{\\mathrm{d}t} &= - v_1 \\\\ \\frac{\\mathrm{d}\\mathrm{I}}{\\mathrm{d}t} &= v_1 - v_2 \\\\ \\frac{\\mathrm{d}\\mathrm{R}}{\\mathrm{d}t} &= v_2 \\end{aligned}"}
+          </Katex>
+        {/if}
 
-            <Text>
-              {@html marked.parseInline(
-                ta(
-                  m.bio_mdl_mathematical_modelling_example_2(),
-                  m.math_mdl_mathematical_modelling_example_2(),
-                ),
-              )}
-            </Text>
+        <Text>
+          {@html marked.parseInline(
+            ta(
+              m.bio_mdl_mathematical_modelling_example_2(),
+              m.math_mdl_mathematical_modelling_example_2(),
+            ),
+          )}
+        </Text>
 
-            {#if audienceStore.audience === "4bio"}
-              <div class="katex-block">
-                <Katex displayMode
-                  >{"\\begin{aligned} \\mathrm{Infecting\\ rate:\\ } v_1 &= \\beta \\cdot \\frac{\\mathrm{S}\\cdot \\mathrm{I}}{\\mathrm{N}} \\\\ \\mathrm{Recovery\\ rate:\\ } v_{2} &= \\gamma \\cdot \\mathrm{I} \\\\ \\end{aligned}"}</Katex
-                >
-              </div>
-              <Text>
-                {@html marked.parseInline(
-                  m.bio_mdl_mathematical_modelling_example_3(),
-                )}
-              </Text>
-              <div class="katex-block">
-                <Katex displayMode
-                  >{"\\begin{aligned} \\mathrm{dS} &= -v_1 \\cdot \\mathrm{d}t \\\\ \\mathrm{dI} &= \\left( v_1 - v_2 \\right) \\cdot \\mathrm{d}t \\\\ \\mathrm{dR} &= v_2 \\cdot \\mathrm{d}t \\end{aligned}"}</Katex
-                >
-              </div>
-              <Text>
-                {@html marked.parseInline(
-                  m.bio_mdl_mathematical_modelling_example_4(),
-                )}
-              </Text>
-            {/if}
+        {#if audienceStore.audience === "4bio"}
+          <Katex displayMode>
+            {"\\begin{aligned} \\mathrm{Infecting\\ rate:\\ } v_1 &= \\beta \\cdot \\frac{\\mathrm{S}\\cdot \\mathrm{I}}{\\mathrm{N}} \\\\ \\mathrm{Recovery\\ rate:\\ } v_{2} &= \\gamma \\cdot \\mathrm{I} \\\\ \\end{aligned}"}
+          </Katex>
+          <Text>
+            {@html marked.parseInline(
+              m.bio_mdl_mathematical_modelling_example_3(),
+            )}
+          </Text>
+          <div class="katex-block">
+            <Katex displayMode>
+              {"\\begin{aligned} \\mathrm{dS} &= -v_1 \\cdot \\mathrm{d}t \\\\ \\mathrm{dI} &= \\left( v_1 - v_2 \\right) \\cdot \\mathrm{d}t \\\\ \\mathrm{dR} &= v_2 \\cdot \\mathrm{d}t \\end{aligned}"}
+            </Katex>
+          </div>
+          <Text>
+            {@html marked.parseInline(
+              m.bio_mdl_mathematical_modelling_example_4(),
+            )}
+          </Text>
+        {/if}
 
-            <Text>
-              {@html marked.parseInline(
-                ta(
-                  m.bio_mdl_mathematical_modelling_example_simple(),
-                  m.math_mdl_mathematical_modelling_example_simple(),
-                ),
-              )}
-            </Text>
-          {:else if activeTab === "manual"}
-            <Text>
-              {@html marked.parseInline(m.math_mdl_headline_manual())}
-            </Text>
-            <pre class="code-block"><code>{sirV1Integ}</code></pre>
-            <Text>
-              {@html marked.parseInline(
-                m.math_mdl_sir_implementation_manual_1(),
-              )}
-            </Text>
-            <figure class="page-figure">
-              <img
-                src="{base}/pictures/SIR_manual.png"
-                alt="SIR model manual plot"
-                class="page-img half-width"
-              />
-            </figure>
-            <pre class="code-block"><code>{sirV1Plot}</code></pre>
-            <Text>
-              {@html marked.parseInline(
-                m.math_mdl_sir_implementation_manual_2(),
-              )}
-            </Text>
-          {:else if activeTab === "modelbase"}
-            <Text>
-              {@html marked.parseInline(m.math_mdl_headline_modelbase())}
-              {@html marked.parseInline(
-                m.math_mdl_sir_implementation_modelbase_1(),
-              )}
-            </Text>
-            <pre class="code-block"><code>{sirV2RateFns}</code></pre>
-            <Text>
-              {@html marked.parseInline(
-                m.math_mdl_sir_implementation_modelbase_2(),
-              )}
-            </Text>
-            <pre class="code-block"><code>{sirV2Model}</code></pre>
-            <Text>
-              {@html marked.parseInline(
-                m.math_mdl_sir_implementation_modelbase_3(),
-              )}
-            </Text>
-            <pre class="code-block"><code>{sirV2Reactions}</code></pre>
-            <Text>
-              {@html marked.parseInline(
-                m.math_mdl_sir_implementation_modelbase_4(),
-              )}
-            </Text>
-            <figure class="page-figure">
-              <img
-                src="{base}/pictures/SIR_modelbase.png"
-                alt="SIR modelbase plot"
-                class="page-img half-width"
-              />
-            </figure>
-            <pre class="code-block"><code>{sirV2Simulation}</code></pre>
-            <Text>
-              {@html marked.parseInline(
-                m.math_mdl_sir_implementation_modelbase_5(),
-              )}
-            </Text>
-            <pre class="code-block"><code>{sird}</code></pre>
-            <Text>
-              {@html marked.parseInline(
-                m.math_mdl_sir_implementation_modelbase_6(),
-              )}
-            </Text>
-          {/if}
-        </div>
-      </div>
+        <Text>
+          {@html marked.parseInline(
+            ta(
+              m.bio_mdl_mathematical_modelling_example_simple(),
+              m.math_mdl_mathematical_modelling_example_simple(),
+            ),
+          )}
+        </Text>
+      {:else if activeTab === "manual"}
+        <Text>
+          {@html marked.parseInline(m.math_mdl_headline_manual())}
+        </Text>
+        <pre class="code-block"><code>{sirV1Integ}</code></pre>
+        <Text>
+          {@html marked.parseInline(m.math_mdl_sir_implementation_manual_1())}
+        </Text>
+        <figure class="page-figure">
+          <img
+            src="{base}/pictures/SIR_manual.png"
+            alt="SIR model manual plot"
+            class="page-img half-width"
+          />
+        </figure>
+        <pre class="code-block"><code>{sirV1Plot}</code></pre>
+        <Text>
+          {@html marked.parseInline(m.math_mdl_sir_implementation_manual_2())}
+        </Text>
+      {:else if activeTab === "modelbase"}
+        <Text>
+          {@html marked.parseInline(m.math_mdl_headline_modelbase())}
+          {@html marked.parseInline(
+            m.math_mdl_sir_implementation_modelbase_1(),
+          )}
+        </Text>
+        <pre class="code-block"><code>{sirV2RateFns}</code></pre>
+        <Text>
+          {@html marked.parseInline(
+            m.math_mdl_sir_implementation_modelbase_2(),
+          )}
+        </Text>
+        <pre class="code-block"><code>{sirV2Model}</code></pre>
+        <Text>
+          {@html marked.parseInline(
+            m.math_mdl_sir_implementation_modelbase_3(),
+          )}
+        </Text>
+        <pre class="code-block"><code>{sirV2Reactions}</code></pre>
+        <Text>
+          {@html marked.parseInline(
+            m.math_mdl_sir_implementation_modelbase_4(),
+          )}
+        </Text>
+        <figure class="page-figure">
+          <img
+            src="{base}/pictures/SIR_modelbase.png"
+            alt="SIR modelbase plot"
+            class="page-img half-width"
+          />
+        </figure>
+        <pre class="code-block"><code>{sirV2Simulation}</code></pre>
+        <Text>
+          {@html marked.parseInline(
+            m.math_mdl_sir_implementation_modelbase_5(),
+          )}
+        </Text>
+        <pre class="code-block"><code>{sird}</code></pre>
+        <Text>
+          {@html marked.parseInline(
+            m.math_mdl_sir_implementation_modelbase_6(),
+          )}
+        </Text>
+      {/if}
     </section>
 
     <Text>
@@ -386,11 +367,9 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
           )}
         </Text>
         {#if audienceStore.audience === "4math"}
-          <div class="katex-block">
-            <Katex displayMode
-              >{"\\newcommand{\\indexni}[2]{#1 _{\\mathrm{#2}}} \\newcommand{\\indexnig}[2]{\\mathit{#1} _{\\mathrm{#2}}} \\begin{aligned} \\indexni{A}{c} &= \\frac{(\\indexni{C}{c} - \\indexnig{\\Gamma}{*}) \\cdot \\indexni{V}{cmax}}{\\indexni{C}{c} + \\indexni{K}{c} \\cdot \\left(1+ \\dfrac{O}{\\indexni{K}{o}}\\right)} - \\indexni{R}{d}\\\\ \\indexni{A}{j} &= \\dfrac{\\left(\\indexni{C}{c} - \\indexnig{\\Gamma}{*}\\right)\\cdot J}{4 \\cdot \\indexni{C}{c} + 8\\cdot\\indexnig{\\Gamma}{*}} - \\indexni{R}{d}\\\\ \\indexni{A}{p} &= 3\\cdot \\indexni{T}{p} - \\indexni{R}{d}\\\\ A &= \\mathrm{min}\\left(\\indexni{A}{c},\\ \\indexni{A}{j},\\ \\indexni{A}{p}\\right) \\end{aligned}"}</Katex
-            >
-          </div>
+          <Katex displayMode>
+            {"\\newcommand{\\indexni}[2]{#1 _{\\mathrm{#2}}} \\newcommand{\\indexnig}[2]{\\mathit{#1} _{\\mathrm{#2}}} \\begin{aligned} \\indexni{A}{c} &= \\frac{(\\indexni{C}{c} - \\indexnig{\\Gamma}{*}) \\cdot \\indexni{V}{cmax}}{\\indexni{C}{c} + \\indexni{K}{c} \\cdot \\left(1+ \\dfrac{O}{\\indexni{K}{o}}\\right)} - \\indexni{R}{d}\\\\ \\indexni{A}{j} &= \\dfrac{\\left(\\indexni{C}{c} - \\indexnig{\\Gamma}{*}\\right)\\cdot J}{4 \\cdot \\indexni{C}{c} + 8\\cdot\\indexnig{\\Gamma}{*}} - \\indexni{R}{d}\\\\ \\indexni{A}{p} &= 3\\cdot \\indexni{T}{p} - \\indexni{R}{d}\\\\ A &= \\mathrm{min}\\left(\\indexni{A}{c},\\ \\indexni{A}{j},\\ \\indexni{A}{p}\\right) \\end{aligned}"}
+          </Katex>
         {/if}
         <Text>
           {@html marked.parseInline(

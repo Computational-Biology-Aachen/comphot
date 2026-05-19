@@ -156,11 +156,11 @@
     />
 
     <!-- Explanation ------------------------------------ -->
-    <div class="intro-content">
+    <Text>
       {@html marked.parseInline(
         ta(m.bio_mem_introduction_brain(), m.math_mem_introduction_brain()),
       )}
-    </div>
+    </Text>
 
     <figure class="fig">
       <img

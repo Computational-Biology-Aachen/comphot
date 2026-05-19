@@ -146,8 +146,10 @@
     <Text>{@html marked.parseInline(m.fal_rates_6())}</Text>
 
     <Expander title={m.fal_components_explanation_header()}>
-      <div>{@html marked.parseInline(m.fal_molecules_explanation_table())}</div>
-      <div>{@html marked.parseInline(m.fal_enzymes_explanation_table())}</div>
+      <Text
+        >{@html marked.parseInline(m.fal_molecules_explanation_table())}</Text
+      >
+      <Text>{@html marked.parseInline(m.fal_enzymes_explanation_table())}</Text>
     </Expander>
 
     <!-- 4math: ODE equations + code walkthrough -->

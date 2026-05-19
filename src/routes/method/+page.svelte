@@ -44,13 +44,11 @@
     />
 
     <section class="gif-section">
-      <div class="gif-container">
-        <img
-          src="{base}/pictures/Kurzvideo-Messmethode.gif"
-          alt="PAM measurement short video"
-          class="gif-img"
-        />
-      </div>
+      <img
+        src="{base}/pictures/Kurzvideo-Messmethode.gif"
+        alt="PAM measurement short video"
+        class="gif-img"
+      />
     </section>
 
     <Text>
