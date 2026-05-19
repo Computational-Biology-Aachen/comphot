@@ -32,17 +32,13 @@
 
     <section class="usage-section">
       <H2>{@html marked.parseInline(m.str_headline_usage())}</H2>
-      <div class="two-col">
-        <div class="col-text prose">
-          {@html marked.parseInline(ta(m.bio_str_usage(), m.math_str_usage()))}
-        </div>
-        <div class="col-video">
-          <YouTubeEmbed
-            videoId="KvyjIWLD8rU"
-            title="Introduction video"
-          />
-        </div>
-      </div>
+      <Text>
+        {@html marked.parseInline(ta(m.bio_str_usage(), m.math_str_usage()))}
+      </Text>
+      <YouTubeEmbed
+        videoId="KvyjIWLD8rU"
+        title="Introduction video"
+      />
     </section>
 
     <Text>
@@ -115,39 +111,39 @@
       <Text>
         {@html marked.parseInline(m.appearance_explanation())}
         {@html marked.parseInline(m.eps2_conference_title())}
-        <div>{@html m.eps2_conference_1()}</div>
-        <div>{@html m.eps2_conference_2()}</div>
-        <div>{@html m.eps2_conference_3()}</div>
+        {@html marked.parseInline(m.eps2_conference_1())}
+        {@html marked.parseInline(m.eps2_conference_2())}
+        {@html marked.parseInline(m.eps2_conference_3())}
       </Text>
-      <div class="poster-row">
-        <img
-          src="{base}/pictures/Poster.png"
-          alt="ComPhot Poster"
-          class="poster-img"
-        />
-        <img
-          src="{base}/pictures/Editable/Elouen_Poster.svg"
-          alt="Elouen Poster"
-          class="poster-img"
-        />
-      </div>
+      <img
+        src="{base}/pictures/Poster.png"
+        alt="ComPhot Poster"
+        class="poster-img"
+      />
+      <img
+        src="{base}/pictures/Editable/Elouen_Poster.svg"
+        alt="Elouen Poster"
+        class="poster-img"
+      />
     </Expander>
 
     <Expander title={m.literature()}>
       <Text>
-        <p>{m.literature_onpage()}</p>
-        <ul>
-          <li>
-            Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A
-            mathematical model of non-photochemical quenching to study
-            short-term light memory in plants. Biochimica et Biophysica Acta
-            (BBA) - Bioenergetics, 1857(12), 1860-1869.
-            <a href="https://doi.org/10.1016/j.bbabio.2016.09.003">
-              https://doi.org/10.1016/j.bbabio.2016.09.003
-            </a>
-          </li>
-        </ul>
-        <p>{@html marked.parseInline(m.literature_plants_and_python())}</p>
+        {m.literature_onpage()}
+      </Text>
+      <ul>
+        <li>
+          Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A
+          mathematical model of non-photochemical quenching to study short-term
+          light memory in plants. Biochimica et Biophysica Acta (BBA) -
+          Bioenergetics, 1857(12), 1860-1869.
+          <a href="https://doi.org/10.1016/j.bbabio.2016.09.003">
+            https://doi.org/10.1016/j.bbabio.2016.09.003
+          </a>
+        </li>
+      </ul>
+      <Text>
+        {@html marked.parseInline(m.literature_plants_and_python())}
       </Text>
     </Expander>
 
@@ -174,9 +170,10 @@
       Prof. Dr. Anna B. Matuszyńska <br />
       Design und Umsetzung Dr. Marvin van Aalst <Link
         color="light"
-        href="https://github.com/Computational-Biology-Aachen/mxl-web"
+        href="https://github.com/Computational-Biology-Aachen/comphot"
         ><Fa icon={faGithub} /></Link
-      ><br />
+      >
+      <br />
       (c) 2025 Prof. Dr. Anna B. Matuszyńska, Alle Rechte vorbehalten.
     </Text>
   </Narrow>
