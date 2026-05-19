@@ -10,8 +10,8 @@
     H2,
     InfoBox,
     Main,
-    Narrow,
     PageNav,
+    Section,
     Text,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
@@ -97,391 +97,367 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
   <title>{m.mdl_headline_computational_models()} | ComPhot</title>
 </svelte:head>
 
-<Main>
-  <Narrow>
-    <H1>
-      {@html marked.parseInline(m.mdl_headline_computational_models())}
-    </H1>
+<Main width="narrow">
+  <H1>
+    {@html marked.parseInline(m.mdl_headline_computational_models())}
+  </H1>
 
-    <!-- section: learning objectives -->
-    <InfoBox>
+  <!-- section: learning objectives -->
+  <InfoBox>
+    <Text>
+      <!-- FIXME: break message into smaller pieces -->
+      {@html marked.parse(
+        ta(m.bio_mdl_learning_objectives(), m.math_mdl_learning_objectives()),
+      )}
+    </Text>
+  </InfoBox>
+
+  <PageNav
+    base={base}
+    prev={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
+    next={{
+      href: "/experiments",
+      label: m.sde_pagenames_experimentsinsilico(),
+    }}
+  />
+
+  <Section>
+    <H2>
+      {@html marked.parseInline(m.mdl_headline_model())}
+    </H2>
+    <Text>
+      {@html marked.parseInline(m.mdl_mathematical_modelling_explanation_1())}
+    </Text>
+
+    <figure class="page-figure">
+      <img
+        src="{base}/pictures/Modeling_scheme_eng.png"
+        alt="Modeling cycle diagram"
+        class="page-img centered"
+      />
+      <figcaption class="caption">
+        {m.mdl_caption_modelling_picture()}
+      </figcaption>
+    </figure>
+
+    <Text>
+      {@html marked.parseInline(m.mdl_mathematical_modelling_explanation_1b())}
+    </Text>
+
+    <YouTubeEmbed
+      videoId="oVME5KIHrO8"
+      title="Building mathematical models"
+    />
+  </Section>
+
+  <Section>
+    <H2>
+      {@html marked.parseInline(m.mdl_example_mathematical_model())}
+    </H2>
+
+    <!-- Tabbed SIR section -->
+    <button
+      role="tab"
+      aria-selected={activeTab === "sir"}
+      class:active={activeTab === "sir"}
+      onclick={() => (activeTab = "sir")}
+    >
+      {m.mdl_tab_sir()}
+    </button>
+    {#if audienceStore.audience === "4math"}
+      <button
+        role="tab"
+        aria-selected={activeTab === "manual"}
+        class:active={activeTab === "manual"}
+        onclick={() => (activeTab = "manual")}
+      >
+        {m.math_mdl_tab_manual()}
+      </button>
+      <button
+        role="tab"
+        aria-selected={activeTab === "modelbase"}
+        class:active={activeTab === "modelbase"}
+        onclick={() => (activeTab = "modelbase")}
+      >
+        {m.math_mdl_tab_modelbase()}
+      </button>
+    {/if}
+
+    {#if activeTab === "sir"}
       <Text>
-        <!-- FIXME: break message into smaller pieces -->
-        {@html marked.parse(
-          ta(m.bio_mdl_learning_objectives(), m.math_mdl_learning_objectives()),
+        {@html marked.parseInline(m.mdl_headline_sir())}
+        {@html marked.parseInline(
+          ta(
+            m.bio_mdl_mathematical_modelling_example(),
+            m.math_mdl_mathematical_modelling_example(),
+          ),
         )}
       </Text>
-    </InfoBox>
 
-    <PageNav
-      base={base}
-      prev={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
-      next={{
-        href: "/experiments",
-        label: m.sde_pagenames_experimentsinsilico(),
-      }}
-    />
-
-    <section>
-      <H2>
-        {@html marked.parseInline(m.mdl_headline_model())}
-      </H2>
-      <Text>
-        {@html marked.parseInline(m.mdl_mathematical_modelling_explanation_1())}
-      </Text>
-
-      <figure class="page-figure">
-        <img
-          src="{base}/pictures/Modeling_scheme_eng.png"
-          alt="Modeling cycle diagram"
-          class="page-img centered"
-        />
-        <figcaption class="caption">
-          {m.mdl_caption_modelling_picture()}
-        </figcaption>
-      </figure>
+      {#if audienceStore.audience === "4bio"}
+        <figure class="page-figure">
+          <img
+            src="{base}/pictures/SIR_Aliens.png"
+            alt="SIR Aliens diagram"
+            class="page-img half-width"
+          />
+        </figure>
+      {:else}
+        <Katex displayMode>
+          {"\\mathrm{S} \\xrightarrow{\\textit{v}_1} \\mathrm{I} \\xrightarrow{\\textit{v}_2} \\mathrm{R}"}
+        </Katex>
+        <Katex displayMode>
+          {"\\begin{aligned} v_1 &= \\beta \\cdot \\frac{\\mathrm{S}\\cdot \\mathrm{I}}{\\mathrm{N}} \\\\ v_2 &= \\gamma \\cdot \\mathrm{I} \\\\ \\end{aligned}"}
+        </Katex>
+      {/if}
 
       <Text>
         {@html marked.parseInline(
-          m.mdl_mathematical_modelling_explanation_1b(),
+          ta(
+            m.bio_mdl_mathematical_modelling_example_1(),
+            m.math_mdl_mathematical_modelling_example_1(),
+          ),
         )}
       </Text>
 
-      <YouTubeEmbed
-        videoId="oVME5KIHrO8"
-        title="Building mathematical models"
-      />
-    </section>
-
-    <section>
-      <H2>
-        {@html marked.parseInline(m.mdl_example_mathematical_model())}
-      </H2>
-
-      <!-- Tabbed SIR section -->
-      <button
-        role="tab"
-        aria-selected={activeTab === "sir"}
-        class:active={activeTab === "sir"}
-        onclick={() => (activeTab = "sir")}
-      >
-        {m.mdl_tab_sir()}
-      </button>
-      {#if audienceStore.audience === "4math"}
-        <button
-          role="tab"
-          aria-selected={activeTab === "manual"}
-          class:active={activeTab === "manual"}
-          onclick={() => (activeTab = "manual")}
-        >
-          {m.math_mdl_tab_manual()}
-        </button>
-        <button
-          role="tab"
-          aria-selected={activeTab === "modelbase"}
-          class:active={activeTab === "modelbase"}
-          onclick={() => (activeTab = "modelbase")}
-        >
-          {m.math_mdl_tab_modelbase()}
-        </button>
-      {/if}
-
-      {#if activeTab === "sir"}
-        <Text>
-          {@html marked.parseInline(m.mdl_headline_sir())}
-          {@html marked.parseInline(
-            ta(
-              m.bio_mdl_mathematical_modelling_example(),
-              m.math_mdl_mathematical_modelling_example(),
-            ),
-          )}
-        </Text>
-
-        {#if audienceStore.audience === "4bio"}
-          <figure class="page-figure">
-            <img
-              src="{base}/pictures/SIR_Aliens.png"
-              alt="SIR Aliens diagram"
-              class="page-img half-width"
-            />
-          </figure>
-        {:else}
-          <Katex displayMode>
-            {"\\mathrm{S} \\xrightarrow{\\textit{v}_1} \\mathrm{I} \\xrightarrow{\\textit{v}_2} \\mathrm{R}"}
-          </Katex>
-          <Katex displayMode>
-            {"\\begin{aligned} v_1 &= \\beta \\cdot \\frac{\\mathrm{S}\\cdot \\mathrm{I}}{\\mathrm{N}} \\\\ v_2 &= \\gamma \\cdot \\mathrm{I} \\\\ \\end{aligned}"}
-          </Katex>
-        {/if}
-
-        <Text>
-          {@html marked.parseInline(
-            ta(
-              m.bio_mdl_mathematical_modelling_example_1(),
-              m.math_mdl_mathematical_modelling_example_1(),
-            ),
-          )}
-        </Text>
-
-        {#if audienceStore.audience === "4bio"}
-          <figure class="page-figure">
-            <img
-              src="{base}/pictures/SIR_AliensScheme.png"
-              alt="SIR Aliens scheme"
-              class="page-img half-width"
-            />
-          </figure>
-        {:else}
-          <Katex displayMode>
-            {"\\mathrm{S} \\xrightarrow{\\textit{v}_1} \\mathrm{I} \\xrightarrow{\\textit{v}_2} \\mathrm{R}"}
-          </Katex>
-          <Katex displayMode>
-            {"\\begin{aligned} \\frac{\\mathrm{d}\\mathrm{S}}{\\mathrm{d}t} &= - v_1 \\\\ \\frac{\\mathrm{d}\\mathrm{I}}{\\mathrm{d}t} &= v_1 - v_2 \\\\ \\frac{\\mathrm{d}\\mathrm{R}}{\\mathrm{d}t} &= v_2 \\end{aligned}"}
-          </Katex>
-        {/if}
-
-        <Text>
-          {@html marked.parseInline(
-            ta(
-              m.bio_mdl_mathematical_modelling_example_2(),
-              m.math_mdl_mathematical_modelling_example_2(),
-            ),
-          )}
-        </Text>
-
-        {#if audienceStore.audience === "4bio"}
-          <Katex displayMode>
-            {"\\begin{aligned} \\mathrm{Infecting\\ rate:\\ } v_1 &= \\beta \\cdot \\frac{\\mathrm{S}\\cdot \\mathrm{I}}{\\mathrm{N}} \\\\ \\mathrm{Recovery\\ rate:\\ } v_{2} &= \\gamma \\cdot \\mathrm{I} \\\\ \\end{aligned}"}
-          </Katex>
-          <Text>
-            {@html marked.parseInline(
-              m.bio_mdl_mathematical_modelling_example_3(),
-            )}
-          </Text>
-          <div class="katex-block">
-            <Katex displayMode>
-              {"\\begin{aligned} \\mathrm{dS} &= -v_1 \\cdot \\mathrm{d}t \\\\ \\mathrm{dI} &= \\left( v_1 - v_2 \\right) \\cdot \\mathrm{d}t \\\\ \\mathrm{dR} &= v_2 \\cdot \\mathrm{d}t \\end{aligned}"}
-            </Katex>
-          </div>
-          <Text>
-            {@html marked.parseInline(
-              m.bio_mdl_mathematical_modelling_example_4(),
-            )}
-          </Text>
-        {/if}
-
-        <Text>
-          {@html marked.parseInline(
-            ta(
-              m.bio_mdl_mathematical_modelling_example_simple(),
-              m.math_mdl_mathematical_modelling_example_simple(),
-            ),
-          )}
-        </Text>
-      {:else if activeTab === "manual"}
-        <Text>
-          {@html marked.parseInline(m.math_mdl_headline_manual())}
-        </Text>
-        <pre class="code-block"><code>{sirV1Integ}</code></pre>
-        <Text>
-          {@html marked.parseInline(m.math_mdl_sir_implementation_manual_1())}
-        </Text>
+      {#if audienceStore.audience === "4bio"}
         <figure class="page-figure">
           <img
-            src="{base}/pictures/SIR_manual.png"
-            alt="SIR model manual plot"
+            src="{base}/pictures/SIR_AliensScheme.png"
+            alt="SIR Aliens scheme"
             class="page-img half-width"
           />
         </figure>
-        <pre class="code-block"><code>{sirV1Plot}</code></pre>
-        <Text>
-          {@html marked.parseInline(m.math_mdl_sir_implementation_manual_2())}
-        </Text>
-      {:else if activeTab === "modelbase"}
-        <Text>
-          {@html marked.parseInline(m.math_mdl_headline_modelbase())}
-          {@html marked.parseInline(
-            m.math_mdl_sir_implementation_modelbase_1(),
-          )}
-        </Text>
-        <pre class="code-block"><code>{sirV2RateFns}</code></pre>
-        <Text>
-          {@html marked.parseInline(
-            m.math_mdl_sir_implementation_modelbase_2(),
-          )}
-        </Text>
-        <pre class="code-block"><code>{sirV2Model}</code></pre>
-        <Text>
-          {@html marked.parseInline(
-            m.math_mdl_sir_implementation_modelbase_3(),
-          )}
-        </Text>
-        <pre class="code-block"><code>{sirV2Reactions}</code></pre>
-        <Text>
-          {@html marked.parseInline(
-            m.math_mdl_sir_implementation_modelbase_4(),
-          )}
-        </Text>
-        <figure class="page-figure">
-          <img
-            src="{base}/pictures/SIR_modelbase.png"
-            alt="SIR modelbase plot"
-            class="page-img half-width"
-          />
-        </figure>
-        <pre class="code-block"><code>{sirV2Simulation}</code></pre>
-        <Text>
-          {@html marked.parseInline(
-            m.math_mdl_sir_implementation_modelbase_5(),
-          )}
-        </Text>
-        <pre class="code-block"><code>{sird}</code></pre>
-        <Text>
-          {@html marked.parseInline(
-            m.math_mdl_sir_implementation_modelbase_6(),
-          )}
-        </Text>
+      {:else}
+        <Katex displayMode>
+          {"\\mathrm{S} \\xrightarrow{\\textit{v}_1} \\mathrm{I} \\xrightarrow{\\textit{v}_2} \\mathrm{R}"}
+        </Katex>
+        <Katex displayMode>
+          {"\\begin{aligned} \\frac{\\mathrm{d}\\mathrm{S}}{\\mathrm{d}t} &= - v_1 \\\\ \\frac{\\mathrm{d}\\mathrm{I}}{\\mathrm{d}t} &= v_1 - v_2 \\\\ \\frac{\\mathrm{d}\\mathrm{R}}{\\mathrm{d}t} &= v_2 \\end{aligned}"}
+        </Katex>
       {/if}
-    </section>
 
-    <Text>
-      {@html marked.parseInline(m.mdl_link_plants_and_python())}
-    </Text>
-
-    <section>
-      <H2>
-        {@html marked.parseInline(m.mdl_headline_model_photosynthesis())}
-      </H2>
       <Text>
-        {@html marked.parseInline(m.mdl_models_overview())}
+        {@html marked.parseInline(
+          ta(
+            m.bio_mdl_mathematical_modelling_example_2(),
+            m.math_mdl_mathematical_modelling_example_2(),
+          ),
+        )}
       </Text>
 
-      <!-- The Farquhar, von Caemmerer and Berry model -->
-      <Expander title={m.mdl_headline_fvcb()}>
+      {#if audienceStore.audience === "4bio"}
+        <Katex displayMode>
+          {"\\begin{aligned} \\mathrm{Infecting\\ rate:\\ } v_1 &= \\beta \\cdot \\frac{\\mathrm{S}\\cdot \\mathrm{I}}{\\mathrm{N}} \\\\ \\mathrm{Recovery\\ rate:\\ } v_{2} &= \\gamma \\cdot \\mathrm{I} \\\\ \\end{aligned}"}
+        </Katex>
         <Text>
           {@html marked.parseInline(
-            ta(m.bio_mdl_fvcb_1(), m.math_mdl_fvcb_1()),
-          )}
-          {@html marked.parseInline(
-            ta(m.bio_mdl_fvcb_2(), m.math_mdl_fvcb_2()),
+            m.bio_mdl_mathematical_modelling_example_3(),
           )}
         </Text>
-        {#if audienceStore.audience === "4math"}
+        <div class="katex-block">
           <Katex displayMode>
-            {"\\newcommand{\\indexni}[2]{#1 _{\\mathrm{#2}}} \\newcommand{\\indexnig}[2]{\\mathit{#1} _{\\mathrm{#2}}} \\begin{aligned} \\indexni{A}{c} &= \\frac{(\\indexni{C}{c} - \\indexnig{\\Gamma}{*}) \\cdot \\indexni{V}{cmax}}{\\indexni{C}{c} + \\indexni{K}{c} \\cdot \\left(1+ \\dfrac{O}{\\indexni{K}{o}}\\right)} - \\indexni{R}{d}\\\\ \\indexni{A}{j} &= \\dfrac{\\left(\\indexni{C}{c} - \\indexnig{\\Gamma}{*}\\right)\\cdot J}{4 \\cdot \\indexni{C}{c} + 8\\cdot\\indexnig{\\Gamma}{*}} - \\indexni{R}{d}\\\\ \\indexni{A}{p} &= 3\\cdot \\indexni{T}{p} - \\indexni{R}{d}\\\\ A &= \\mathrm{min}\\left(\\indexni{A}{c},\\ \\indexni{A}{j},\\ \\indexni{A}{p}\\right) \\end{aligned}"}
+            {"\\begin{aligned} \\mathrm{dS} &= -v_1 \\cdot \\mathrm{d}t \\\\ \\mathrm{dI} &= \\left( v_1 - v_2 \\right) \\cdot \\mathrm{d}t \\\\ \\mathrm{dR} &= v_2 \\cdot \\mathrm{d}t \\end{aligned}"}
           </Katex>
-        {/if}
+        </div>
         <Text>
           {@html marked.parseInline(
-            ta(m.bio_mdl_fvcb_3(), m.math_mdl_fvcb_3()),
-          )}
-          {@html marked.parseInline(
-            ta(m.bio_mdl_fvcb_4(), m.math_mdl_fvcb_4()),
+            m.bio_mdl_mathematical_modelling_example_4(),
           )}
         </Text>
-        {#if audienceStore.audience === "4math"}
-          <Text>
-            {@html marked.parseInline(m.math_mdl_fvcb_5())}
-          </Text>
-        {/if}
-      </Expander>
+      {/if}
 
-      <Expander title={m.mdl_headline_e_photosynthesis()}>
-        <Text>
-          {@html marked.parseInline(
-            ta(m.bio_mdl_e_photosynthesis_1(), m.math_mdl_e_photosynthesis_1()),
-          )}
-          {@html marked.parseInline(
-            ta(m.bio_mdl_e_photosynthesis_2(), m.math_mdl_e_photosynthesis_2()),
-          )}
-          {@html marked.parseInline(
-            ta(m.bio_mdl_e_photosynthesis_3(), m.math_mdl_e_photosynthesis_3()),
-          )}
-        </Text>
-      </Expander>
-
-      <Expander title={m.mdl_headline_bellasio()}>
-        <Text>
-          {@html marked.parseInline(
-            ta(m.bio_mdl_bellasio_1(), m.math_mdl_bellasio_1()),
-          )}
-          {@html marked.parseInline(
-            ta(m.bio_mdl_bellasio_2(), m.math_mdl_bellasio_2()),
-          )}
-          {@html marked.parseInline(
-            ta(m.bio_mdl_bellasio_3(), m.math_mdl_bellasio_3()),
-          )}
-          {@html marked.parseInline(
-            ta(m.bio_mdl_bellasio_4(), m.math_mdl_bellasio_4()),
-          )}
-        </Text>
-      </Expander>
-
-      <Expander
-        title={ta(m.bio_mdl_expander_c3c4cam(), m.math_mdl_expander_c3c4cam())}
-      >
-        <Bold>{@html m.mdl_headline_c3()}</Bold>
-        <Text>{@html m.mdl_c3_1()}</Text>
-        <Bold>{@html m.mdl_headline_c4()}</Bold>
-        <Text>{@html m.mdl_c4_1()}</Text>
-        <Bold>{@html m.mdl_headline_cam()}</Bold>
-        <Text>{@html ta(m.bio_mdl_cam_1(), m.math_mdl_cam_1())}</Text>
-      </Expander>
-    </section>
-
-    <Expander title={m.literature()}>
       <Text>
-        <p>{m.literature_onpage()}</p>
-        <ol>
-          <li>
-            van Aalst, M., Ebenhöh, O., &amp; Matuszyńska, A. (2021).
-            Constructing and analysing dynamic models with modelbase v1.2.3. BMC
-            Bioinformatics, 22(1), 1-15.
-            <a href="https://doi.org/10.1186/s12859-021-04122-7">
-              https://doi.org/10.1186/s12859-021-04122-7
-            </a>
-          </li>
-          <li>
-            Farquhar, G. D., von Caemmerer, S., &amp; Berry, J. A. (1980). A
-            biochemical model of photosynthetic CO₂ assimilation in leaves of C3
-            species. Planta, 149(1), 78-90.
-            <a href="https://doi.org/10.1007/BF00386231"
-              >https://doi.org/10.1007/BF00386231</a
-            >
-          </li>
-          <li>
-            Von Caemmerer, S. (2013). Steady-state models of photosynthesis.
-            Plant, Cell &amp; Environment, 36(9), 1617-1630.
-            <a href="https://doi.org/10.1111/pce.12098"
-              >https://doi.org/10.1111/pce.12098</a
-            >
-          </li>
-          <li>
-            Zhu, X.-G., Wang, Y., Ort, D. R., &amp; Long, S. P. (2013).
-            e-photosynthesis. Plant, Cell &amp; Environment, 36(9), 1711-1727.
-            <a href="https://doi.org/10.1111/pce.12025"
-              >https://doi.org/10.1111/pce.12025</a
-            >
-          </li>
-          <li>
-            Bellasio, C. (2019). A generalised dynamic model of leaf-level C3
-            photosynthesis. Photosynthesis Research, 141(1), 99-118.
-            <a href="https://doi.org/10.1007/s11120-018-0601-1">
-              https://doi.org/10.1007/s11120-018-0601-1
-            </a>
-          </li>
-        </ol>
-        <p>{@html marked.parseInline(m.literature_plants_and_python())}</p>
+        {@html marked.parseInline(
+          ta(
+            m.bio_mdl_mathematical_modelling_example_simple(),
+            m.math_mdl_mathematical_modelling_example_simple(),
+          ),
+        )}
+      </Text>
+    {:else if activeTab === "manual"}
+      <Text>
+        {@html marked.parseInline(m.math_mdl_headline_manual())}
+      </Text>
+      <pre class="code-block"><code>{sirV1Integ}</code></pre>
+      <Text>
+        {@html marked.parseInline(m.math_mdl_sir_implementation_manual_1())}
+      </Text>
+      <figure class="page-figure">
+        <img
+          src="{base}/pictures/SIR_manual.png"
+          alt="SIR model manual plot"
+          class="page-img half-width"
+        />
+      </figure>
+      <pre class="code-block"><code>{sirV1Plot}</code></pre>
+      <Text>
+        {@html marked.parseInline(m.math_mdl_sir_implementation_manual_2())}
+      </Text>
+    {:else if activeTab === "modelbase"}
+      <Text>
+        {@html marked.parseInline(m.math_mdl_headline_modelbase())}
+        {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_1())}
+      </Text>
+      <pre class="code-block"><code>{sirV2RateFns}</code></pre>
+      <Text>
+        {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_2())}
+      </Text>
+      <pre class="code-block"><code>{sirV2Model}</code></pre>
+      <Text>
+        {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_3())}
+      </Text>
+      <pre class="code-block"><code>{sirV2Reactions}</code></pre>
+      <Text>
+        {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_4())}
+      </Text>
+      <figure class="page-figure">
+        <img
+          src="{base}/pictures/SIR_modelbase.png"
+          alt="SIR modelbase plot"
+          class="page-img half-width"
+        />
+      </figure>
+      <pre class="code-block"><code>{sirV2Simulation}</code></pre>
+      <Text>
+        {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_5())}
+      </Text>
+      <pre class="code-block"><code>{sird}</code></pre>
+      <Text>
+        {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_6())}
+      </Text>
+    {/if}
+  </Section>
+
+  <Text>
+    {@html marked.parseInline(m.mdl_link_plants_and_python())}
+  </Text>
+
+  <Section>
+    <H2>
+      {@html marked.parseInline(m.mdl_headline_model_photosynthesis())}
+    </H2>
+    <Text>
+      {@html marked.parseInline(m.mdl_models_overview())}
+    </Text>
+
+    <!-- The Farquhar, von Caemmerer and Berry model -->
+    <Expander title={m.mdl_headline_fvcb()}>
+      <Text>
+        {@html marked.parseInline(ta(m.bio_mdl_fvcb_1(), m.math_mdl_fvcb_1()))}
+        {@html marked.parseInline(ta(m.bio_mdl_fvcb_2(), m.math_mdl_fvcb_2()))}
+      </Text>
+      {#if audienceStore.audience === "4math"}
+        <Katex displayMode>
+          {"\\newcommand{\\indexni}[2]{#1 _{\\mathrm{#2}}} \\newcommand{\\indexnig}[2]{\\mathit{#1} _{\\mathrm{#2}}} \\begin{aligned} \\indexni{A}{c} &= \\frac{(\\indexni{C}{c} - \\indexnig{\\Gamma}{*}) \\cdot \\indexni{V}{cmax}}{\\indexni{C}{c} + \\indexni{K}{c} \\cdot \\left(1+ \\dfrac{O}{\\indexni{K}{o}}\\right)} - \\indexni{R}{d}\\\\ \\indexni{A}{j} &= \\dfrac{\\left(\\indexni{C}{c} - \\indexnig{\\Gamma}{*}\\right)\\cdot J}{4 \\cdot \\indexni{C}{c} + 8\\cdot\\indexnig{\\Gamma}{*}} - \\indexni{R}{d}\\\\ \\indexni{A}{p} &= 3\\cdot \\indexni{T}{p} - \\indexni{R}{d}\\\\ A &= \\mathrm{min}\\left(\\indexni{A}{c},\\ \\indexni{A}{j},\\ \\indexni{A}{p}\\right) \\end{aligned}"}
+        </Katex>
+      {/if}
+      <Text>
+        {@html marked.parseInline(ta(m.bio_mdl_fvcb_3(), m.math_mdl_fvcb_3()))}
+        {@html marked.parseInline(ta(m.bio_mdl_fvcb_4(), m.math_mdl_fvcb_4()))}
+      </Text>
+      {#if audienceStore.audience === "4math"}
+        <Text>
+          {@html marked.parseInline(m.math_mdl_fvcb_5())}
+        </Text>
+      {/if}
+    </Expander>
+
+    <Expander title={m.mdl_headline_e_photosynthesis()}>
+      <Text>
+        {@html marked.parseInline(
+          ta(m.bio_mdl_e_photosynthesis_1(), m.math_mdl_e_photosynthesis_1()),
+        )}
+        {@html marked.parseInline(
+          ta(m.bio_mdl_e_photosynthesis_2(), m.math_mdl_e_photosynthesis_2()),
+        )}
+        {@html marked.parseInline(
+          ta(m.bio_mdl_e_photosynthesis_3(), m.math_mdl_e_photosynthesis_3()),
+        )}
       </Text>
     </Expander>
 
-    <PageNav
-      base={base}
-      prev={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
-      next={{
-        href: "/experiments",
-        label: m.sde_pagenames_experimentsinsilico(),
-      }}
-    />
-  </Narrow>
+    <Expander title={m.mdl_headline_bellasio()}>
+      <Text>
+        {@html marked.parseInline(
+          ta(m.bio_mdl_bellasio_1(), m.math_mdl_bellasio_1()),
+        )}
+        {@html marked.parseInline(
+          ta(m.bio_mdl_bellasio_2(), m.math_mdl_bellasio_2()),
+        )}
+        {@html marked.parseInline(
+          ta(m.bio_mdl_bellasio_3(), m.math_mdl_bellasio_3()),
+        )}
+        {@html marked.parseInline(
+          ta(m.bio_mdl_bellasio_4(), m.math_mdl_bellasio_4()),
+        )}
+      </Text>
+    </Expander>
+
+    <Expander
+      title={ta(m.bio_mdl_expander_c3c4cam(), m.math_mdl_expander_c3c4cam())}
+    >
+      <Bold>{@html m.mdl_headline_c3()}</Bold>
+      <Text>{@html m.mdl_c3_1()}</Text>
+      <Bold>{@html m.mdl_headline_c4()}</Bold>
+      <Text>{@html m.mdl_c4_1()}</Text>
+      <Bold>{@html m.mdl_headline_cam()}</Bold>
+      <Text>{@html ta(m.bio_mdl_cam_1(), m.math_mdl_cam_1())}</Text>
+    </Expander>
+  </Section>
+
+  <Expander title={m.literature()}>
+    <Text>
+      <p>{m.literature_onpage()}</p>
+      <ol>
+        <li>
+          van Aalst, M., Ebenhöh, O., &amp; Matuszyńska, A. (2021). Constructing
+          and analysing dynamic models with modelbase v1.2.3. BMC
+          Bioinformatics, 22(1), 1-15.
+          <a href="https://doi.org/10.1186/s12859-021-04122-7">
+            https://doi.org/10.1186/s12859-021-04122-7
+          </a>
+        </li>
+        <li>
+          Farquhar, G. D., von Caemmerer, S., &amp; Berry, J. A. (1980). A
+          biochemical model of photosynthetic CO₂ assimilation in leaves of C3
+          species. Planta, 149(1), 78-90.
+          <a href="https://doi.org/10.1007/BF00386231"
+            >https://doi.org/10.1007/BF00386231</a
+          >
+        </li>
+        <li>
+          Von Caemmerer, S. (2013). Steady-state models of photosynthesis.
+          Plant, Cell &amp; Environment, 36(9), 1617-1630.
+          <a href="https://doi.org/10.1111/pce.12098"
+            >https://doi.org/10.1111/pce.12098</a
+          >
+        </li>
+        <li>
+          Zhu, X.-G., Wang, Y., Ort, D. R., &amp; Long, S. P. (2013).
+          e-photosynthesis. Plant, Cell &amp; Environment, 36(9), 1711-1727.
+          <a href="https://doi.org/10.1111/pce.12025"
+            >https://doi.org/10.1111/pce.12025</a
+          >
+        </li>
+        <li>
+          Bellasio, C. (2019). A generalised dynamic model of leaf-level C3
+          photosynthesis. Photosynthesis Research, 141(1), 99-118.
+          <a href="https://doi.org/10.1007/s11120-018-0601-1">
+            https://doi.org/10.1007/s11120-018-0601-1
+          </a>
+        </li>
+      </ol>
+      <p>{@html marked.parseInline(m.literature_plants_and_python())}</p>
+    </Text>
+  </Expander>
+
+  <PageNav
+    base={base}
+    prev={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
+    next={{
+      href: "/experiments",
+      label: m.sde_pagenames_experimentsinsilico(),
+    }}
+  />
 </Main>

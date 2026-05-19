@@ -10,7 +10,6 @@
     InfoBox,
     Link,
     Main,
-    Narrow,
     PageNav,
     Section,
     Text,
@@ -21,160 +20,159 @@
   import Fa from "svelte-fa";
 </script>
 
-<Main>
-  <Narrow>
-    <H1>
-      {@html marked.parseInline(m.str_headline_main())}
-    </H1>
+<Main width="narrow">
+  <H1>
+    {@html marked.parseInline(m.str_headline_main())}
+  </H1>
+  <Text>
+    {@html marked.parseInline(m.str_intro())}
+  </Text>
+
+  <Section>
+    <H2>{@html marked.parseInline(m.str_headline_usage())}</H2>
     <Text>
-      {@html marked.parseInline(m.str_intro())}
+      {@html marked.parseInline(ta(m.bio_str_usage(), m.math_str_usage()))}
     </Text>
+    <YouTubeEmbed
+      videoId="KvyjIWLD8rU"
+      title="Introduction video"
+    />
+  </Section>
 
-    <section class="usage-section">
-      <H2>{@html marked.parseInline(m.str_headline_usage())}</H2>
-      <Text>
-        {@html marked.parseInline(ta(m.bio_str_usage(), m.math_str_usage()))}
-      </Text>
-      <YouTubeEmbed
-        videoId="KvyjIWLD8rU"
-        title="Introduction video"
-      />
-    </section>
+  <Text>
+    {@html marked.parseInline(
+      ta(m.bio_str_specific_use(), m.math_str_specific_use()),
+    )}
+  </Text>
 
+  <Section>
+    <H2>
+      {@html marked.parseInline(
+        ta(
+          m.bio_str_learning_objectives_header(),
+          m.math_str_learning_objectives_header(),
+        ),
+      )}
+    </H2>
+    <InfoBox>
+      <!-- FIXME: break message into smaller pieces -->
+      {@html marked.parse(
+        ta(m.bio_str_learning_objectives(), m.math_str_learning_objectives()),
+      )}
+    </InfoBox>
+  </Section>
+
+  <Text>
+    {@html marked.parseInline(m.str_link_plants_and_python())}
+  </Text>
+
+  <Section>
+    <H2>{@html marked.parseInline(m.str_headline_pages())}</H2>
     <Text>
       {@html marked.parseInline(
-        ta(m.bio_str_specific_use(), m.math_str_specific_use()),
+        ta(m.bio_str_introduction_pages(), m.math_str_introduction_pages()),
       )}
+      {@html marked.parseInline(
+        ta(m.bio_str_photosynthesis(), m.math_str_photosynthesis()),
+      )}
+      {@html marked.parseInline(ta(m.bio_str_method(), m.math_str_method()))}
+      {@html marked.parseInline(ta(m.bio_str_model(), m.math_str_model()))}
+      {@html marked.parseInline(
+        ta(m.bio_str_experiment(), m.math_str_experiment()),
+      )}
+      {@html marked.parseInline(ta(m.bio_str_memory(), m.math_str_memory()))}
     </Text>
+  </Section>
 
-    <section class="learning-objectives">
-      <H2>
-        {@html marked.parseInline(
-          ta(
-            m.bio_str_learning_objectives_header(),
-            m.math_str_learning_objectives_header(),
-          ),
-        )}
-      </H2>
-      <InfoBox>
-        <!-- FIXME: break message into smaller pieces -->
-        {@html marked.parse(
-          ta(m.bio_str_learning_objectives(), m.math_str_learning_objectives()),
-        )}
-      </InfoBox>
-    </section>
-
+  {#if audienceStore.audience === "4math"}
+    <hr />
     <Text>
-      {@html marked.parseInline(m.str_link_plants_and_python())}
+      {@html marked.parseInline(m.str_drop_box_intro())}
     </Text>
-
-    <section class="chapters">
-      <H2>{@html marked.parseInline(m.str_headline_pages())}</H2>
+    <Expander title={m.str_expander_in()}>
       <Text>
-        {@html marked.parseInline(
-          ta(m.bio_str_introduction_pages(), m.math_str_introduction_pages()),
-        )}
-        {@html marked.parseInline(
-          ta(m.bio_str_photosynthesis(), m.math_str_photosynthesis()),
-        )}
-        {@html marked.parseInline(ta(m.bio_str_method(), m.math_str_method()))}
-        {@html marked.parseInline(ta(m.bio_str_model(), m.math_str_model()))}
-        {@html marked.parseInline(
-          ta(m.bio_str_experiment(), m.math_str_experiment()),
-        )}
-        {@html marked.parseInline(ta(m.bio_str_memory(), m.math_str_memory()))}
-      </Text>
-    </section>
-
-    {#if audienceStore.audience === "4math"}
-      <hr />
-      <Text>
-        {@html marked.parseInline(m.str_drop_box_intro())}
-      </Text>
-      <Expander title={m.str_expander_in()}>
-        <Text>
-          {@html marked.parseInline(m.str_explanation_in_vitro())}
-          {@html marked.parseInline(m.str_explanation_in_vivo())}
-          {@html marked.parseInline(m.str_explanation_in_silico())}
-        </Text>
-      </Expander>
-      <hr />
-    {/if}
-
-    <Expander title={m.str_expander_about()}>
-      <Text>
-        {@html marked.parseInline(m.str_explanation_about())}
+        {@html marked.parseInline(m.str_explanation_in_vitro())}
+        {@html marked.parseInline(m.str_explanation_in_vivo())}
+        {@html marked.parseInline(m.str_explanation_in_silico())}
       </Text>
     </Expander>
+    <hr />
+  {/if}
 
-    <Expander title={m.appearances()}>
-      <Text>
-        {@html marked.parseInline(m.appearance_explanation())}
-        {@html marked.parseInline(m.eps2_conference_title())}
-        {@html marked.parseInline(m.eps2_conference_1())}
-        {@html marked.parseInline(m.eps2_conference_2())}
-        {@html marked.parseInline(m.eps2_conference_3())}
-      </Text>
-      <img
-        src="{base}/pictures/Poster.png"
-        alt="ComPhot Poster"
-        class="poster-img"
-      />
-      <img
-        src="{base}/pictures/Editable/Elouen_Poster.svg"
-        alt="Elouen Poster"
-        class="poster-img"
-      />
-    </Expander>
+  <Expander title={m.str_expander_about()}>
+    <Text>
+      {@html marked.parseInline(m.str_explanation_about())}
+    </Text>
+  </Expander>
 
-    <Expander title={m.literature()}>
-      <Text>
-        {m.literature_onpage()}
-      </Text>
-      <ul>
-        <li>
-          Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A
-          mathematical model of non-photochemical quenching to study short-term
-          light memory in plants. Biochimica et Biophysica Acta (BBA) -
-          Bioenergetics, 1857(12), 1860-1869.
-          <a href="https://doi.org/10.1016/j.bbabio.2016.09.003">
-            https://doi.org/10.1016/j.bbabio.2016.09.003
-          </a>
-        </li>
-      </ul>
-      <Text>
-        {@html marked.parseInline(m.literature_plants_and_python())}
-      </Text>
-    </Expander>
-
-    <PageNav
-      base={base}
-      next={{
-        href: "/photosynthesis",
-        label: m.sde_pagenames_photosynthesis(),
-      }}
+  <Expander title={m.appearances()}>
+    <Text>
+      {@html marked.parseInline(m.appearance_explanation())}
+      {@html marked.parseInline(m.eps2_conference_title())}
+      {@html marked.parseInline(m.eps2_conference_1())}
+      {@html marked.parseInline(m.eps2_conference_2())}
+      {@html marked.parseInline(m.eps2_conference_3())}
+    </Text>
+    <img
+      src="{base}/pictures/Poster.png"
+      alt="ComPhot Poster"
+      class="poster-img"
     />
-  </Narrow>
+    <img
+      src="{base}/pictures/Editable/Elouen_Poster.svg"
+      alt="Elouen Poster"
+      class="poster-img"
+    />
+  </Expander>
+
+  <Expander title={m.literature()}>
+    <Text>
+      {m.literature_onpage()}
+    </Text>
+    <ul>
+      <li>
+        Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A
+        mathematical model of non-photochemical quenching to study short-term
+        light memory in plants. Biochimica et Biophysica Acta (BBA) -
+        Bioenergetics, 1857(12), 1860-1869.
+        <a href="https://doi.org/10.1016/j.bbabio.2016.09.003">
+          https://doi.org/10.1016/j.bbabio.2016.09.003
+        </a>
+      </li>
+    </ul>
+    <Text>
+      {@html marked.parseInline(m.literature_plants_and_python())}
+    </Text>
+  </Expander>
+
+  <PageNav
+    base={base}
+    next={{
+      href: "/photosynthesis",
+      label: m.sde_pagenames_photosynthesis(),
+    }}
+  />
 </Main>
 
-<Section variant="dark">
-  <Narrow>
-    <h2 id="imprint">Imprint</h2>
-    <Text color="light">
-      Anbieter i.S.d. TDG/MDStV: Prof. Dr. Anna B. Matuszyńska <br />
-      Worringerweg 1 52074 Aachen <br />
-      Sammelbau Biologie, Bauteil 42 C, Erdgeschoss, Raum 041 <br />
-      Work Phone: +49 241 80 25817 <br />
+<Section
+  variant="dark"
+  width="narrow"
+>
+  <h2 id="imprint">Imprint</h2>
+  <Text color="light">
+    Anbieter i.S.d. TDG/MDStV: Prof. Dr. Anna B. Matuszyńska <br />
+    Worringerweg 1 52074 Aachen <br />
+    Sammelbau Biologie, Bauteil 42 C, Erdgeschoss, Raum 041 <br />
+    Work Phone: +49 241 80 25817 <br />
 
-      Verantwortlich i.S.d. § 6 Abs. 2 MDStV: <br />
-      Prof. Dr. Anna B. Matuszyńska <br />
-      Design und Umsetzung Dr. Marvin van Aalst <Link
-        color="light"
-        href="https://github.com/Computational-Biology-Aachen/comphot"
-        ><Fa icon={faGithub} /></Link
-      >
-      <br />
-      (c) 2025 Prof. Dr. Anna B. Matuszyńska, Alle Rechte vorbehalten.
-    </Text>
-  </Narrow>
+    Verantwortlich i.S.d. § 6 Abs. 2 MDStV: <br />
+    Prof. Dr. Anna B. Matuszyńska <br />
+    Design und Umsetzung Dr. Marvin van Aalst <Link
+      color="light"
+      href="https://github.com/Computational-Biology-Aachen/comphot"
+      ><Fa icon={faGithub} /></Link
+    >
+    <br />
+    (c) 2025 Prof. Dr. Anna B. Matuszyńska, Alle Rechte vorbehalten.
+  </Text>
 </Section>
