@@ -36,6 +36,8 @@
 	},
 	"dependencies": {
 		"@computational-biology-aachen/design": "*",
+		"@fortawesome/free-brands-svg-icons": ">=7.2.0",
+		"@fortawesome/free-solid-svg-icons": ">=7.2.0",
 		"chart.js": "^4.5.1",
 		"katex": "^0.16.46",
 		"marked": "^18.0.3",
