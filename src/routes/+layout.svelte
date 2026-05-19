@@ -9,6 +9,7 @@
   import {
     Navbar,
     NavGH,
+    NavItem,
     Sidebar2 as Sidebar,
     LanguageSwitcher as ToggleLanguage,
   } from "@computational-biology-aachen/design";
@@ -80,11 +81,20 @@
 
 <Navbar>
   {#snippet brand()}
-    <a
-      href="{base}/"
-      class="brand">ComPhot</a
-    >
+    <div class="brand">
+      <span>ComPhot</span>
+    </div>
   {/snippet}
+  <NavItem href="{base}/">Home</NavItem>
+
+  <NavItem href="{base}/photosynthesis">Photosynthesis</NavItem>
+  <NavItem href="{base}/method">Method</NavItem>
+  <NavItem href="{base}/model">Model</NavItem>
+  <NavItem href="{base}/experiments">Experiments</NavItem>
+  <NavItem href="{base}/plant-memory">Plant Memory</NavItem>
+  <NavItem href="{base}/conclusion">Conclusion</NavItem>
+  <NavItem href="{base}/contact">Contact</NavItem>
+
   <NavGH href="https://github.com/Computational-Biology-Aachen/comphot" />
 </Navbar>
 
@@ -92,13 +102,13 @@
   <Sidebar
     navLinks={[
       { href: "/", label: "Home" },
-      { href: "/photosynthesis", label: "Photosynthesis" },
-      { href: "/method", label: "Method" },
-      { href: "/model", label: "Model" },
-      { href: "/experiments", label: "Experiments" },
-      { href: "/plant-memory", label: "Plant Memory" },
-      { href: "/conclusion", label: "Conclusion" },
-      { href: "/contact", label: "Contact" },
+      { href: "{base}/photosynthesis", label: "Photosynthesis" },
+      { href: "{base}/method", label: "Method" },
+      { href: "{base}/model", label: "Model" },
+      { href: "{base}/experiments", label: "Experiments" },
+      { href: "{base}/plant-memory", label: "Plant Memory" },
+      { href: "{base}/conclusion", label: "Conclusion" },
+      { href: "{base}/contact", label: "Contact" },
     ]}
     audienceOptions={[
       { value: "4bio", label: "4bio" },
@@ -119,15 +129,15 @@
 
 <style>
   .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
     color: var(--color-primary);
     font-weight: 600;
-    font-size: 1.2rem;
-    letter-spacing: -0.01em;
-    text-decoration: none;
   }
 
   .two-col {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 15rem auto;
   }
 </style>
