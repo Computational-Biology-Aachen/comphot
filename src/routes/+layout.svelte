@@ -2,11 +2,16 @@
   import { base } from "$app/paths";
   import { page } from "$app/state";
   import favicon from "$lib/assets/cpbl-favicon.svg";
-  import Sidebar from "$lib/components/Sidebar.svelte";
   import * as config from "$lib/config";
   import * as m from "$lib/paraglide/messages";
   import { locales, localizeHref } from "$lib/paraglide/runtime";
-  import { Navbar, NavGH } from "@computational-biology-aachen/design";
+  import { audienceStore } from "$lib/stores/audience.svelte";
+  import {
+    Navbar,
+    NavGH,
+    Sidebar2 as Sidebar,
+    LanguageSwitcher as ToggleLanguage,
+  } from "@computational-biology-aachen/design";
   import "../app.css";
 
   let { children } = $props();
@@ -80,10 +85,37 @@
       class="brand">ComPhot</a
     >
   {/snippet}
-  <NavGH />
+  <NavGH href="https://github.com/Computational-Biology-Aachen/comphot" />
 </Navbar>
-<Sidebar />
-{@render children()}
+
+<div class="two-col">
+  <Sidebar
+    navLinks={[
+      { href: "/", label: "Home" },
+      { href: "/photosynthesis", label: "Photosynthesis" },
+      { href: "/method", label: "Method" },
+      { href: "/model", label: "Model" },
+      { href: "/experiments", label: "Experiments" },
+      { href: "/plant-memory", label: "Plant Memory" },
+      { href: "/conclusion", label: "Conclusion" },
+      { href: "/contact", label: "Contact" },
+    ]}
+    audienceOptions={[
+      { value: "4bio", label: "4bio" },
+      { value: "4math", label: "4math" },
+    ]}
+    audienceStore={audienceStore}
+  >
+    <ToggleLanguage
+      locales={[
+        { code: "en", label: "EN" },
+        { code: "de", label: "DE" },
+        { code: "fr", label: "FR" },
+      ]}
+    />
+  </Sidebar>
+  {@render children()}
+</div>
 
 <style>
   .brand {
@@ -92,5 +124,10 @@
     font-size: 1.2rem;
     letter-spacing: -0.01em;
     text-decoration: none;
+  }
+
+  .two-col {
+    display: flex;
+    flex-direction: row;
   }
 </style>

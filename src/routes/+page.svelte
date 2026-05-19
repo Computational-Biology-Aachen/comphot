@@ -1,6 +1,5 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import VideoTranscriptToggle from "$lib/components/VideoTranscriptToggle.svelte";
   import { ta } from "$lib/i18n";
   import * as m from "$lib/paraglide/messages";
   import { audienceStore } from "$lib/stores/audience.svelte";
@@ -9,6 +8,7 @@
     InfoBox,
     Main,
     PageNav,
+    VideoTranscriptToggle,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
@@ -35,7 +35,10 @@
     </div>
   </section>
 
-  <VideoTranscriptToggle transcript={m.str_video_transcript_introduction()} />
+  <VideoTranscriptToggle
+    message={m.expander_video_transcript()}
+    transcript={m.str_video_transcript_introduction()}
+  />
 
   <div class="prose">
     {@html marked(ta(m.bio_str_specific_use(), m.math_str_specific_use()))}

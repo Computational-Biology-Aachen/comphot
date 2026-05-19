@@ -1,18 +1,5 @@
 @charset "UTF-8";
-@import "katex/dist/katex.min.css";
 @import "@computational-biology-aachen/design/tokens.css";
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/* comphot layout tokens (extend the design system) */
-:root {
-  --sidebar-width: 220px;
-  --content-max-width: 900px;
-}
 
 html,
 body {
@@ -28,12 +15,9 @@ body {
   font-family: var(--font-sans);
 }
 
-a {
-  color: var(--color-primary);
-}
-
-a:hover {
-  color: var(--color-accent);
+.katex-display {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 code,
