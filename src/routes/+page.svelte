@@ -10,7 +10,7 @@
     InfoBox,
     Li,
     Link,
-    Main,
+    SectionMain as Main,
     PageNav,
     Section,
     Text,
@@ -60,10 +60,22 @@
   </H2>
 
   <InfoBox header="Learning objectives">
-    <!-- FIXME: break message into smaller pieces -->
-    {@html marked.parse(
-      ta(m.bio_str_learning_objectives(), m.math_str_learning_objectives()),
-    )}
+    {#if audienceStore.audience === "4math"}
+      <Ul>
+        <Li>{@html marked.parseInline(m.math_str_lo_1())}</Li>
+        <Li>{@html marked.parseInline(m.math_str_lo_2())}</Li>
+        <Li>{@html marked.parseInline(m.math_str_lo_3())}</Li>
+        <Li>{@html marked.parseInline(m.math_str_lo_4())}</Li>
+        <Li>{@html marked.parseInline(m.math_str_lo_5())}</Li>
+      </Ul>
+    {:else}
+      <Ul>
+        <Li>{@html marked.parseInline(m.bio_str_lo_1())}</Li>
+        <Li>{@html marked.parseInline(m.bio_str_lo_2())}</Li>
+        <Li>{@html marked.parseInline(m.bio_str_lo_3())}</Li>
+        <Li>{@html marked.parseInline(m.bio_str_lo_4())}</Li>
+      </Ul>
+    {/if}
   </InfoBox>
 
   <Text>
@@ -156,7 +168,7 @@
 
 <Section
   variant="dark"
-  width="narrow"
+  width="full"
 >
   <h2 id="imprint">Imprint</h2>
   <Text color="light">

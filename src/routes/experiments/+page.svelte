@@ -15,11 +15,13 @@
     H1,
     H2,
     InfoBox,
+    Li,
     LiteratureExpander,
-    Main,
+    SectionMain as Main,
     PageNav,
     type PhaseRegion,
     Text,
+    Ul,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
   import Katex from "svelte-katex";
@@ -106,10 +108,29 @@
   <H1>{@html marked.parseInline(m.fal_headline_experiments())}</H1>
 
   <InfoBox header="Learning objectives">
-    <!-- FIXME: break message into smaller pieces -->
-    {@html marked.parse(
-      ta(m.bio_fal_learning_objectives(), m.math_fal_learning_objectives()),
-    )}
+    {#if audienceStore.audience === "4math"}
+      <Ul>
+        <Li>{@html marked.parseInline(m.math_fal_lo_1())}</Li>
+        <Li>{@html marked.parseInline(m.math_fal_lo_2())}</Li>
+      </Ul>
+    {:else}
+      <Ul>
+        <Li>{@html marked.parseInline(m.bio_fal_lo_1())}</Li>
+        <Li>{@html marked.parseInline(m.bio_fal_lo_2())}</Li>
+      </Ul>
+    {/if}
+  </InfoBox>
+
+  <InfoBox header="What you need to know">
+    {#if audienceStore.audience === "4math"}
+      <Ul>
+        <Li>{@html marked.parseInline(m.math_fal_prereq_1())}</Li>
+      </Ul>
+    {:else}
+      <Ul>
+        <Li>{@html marked.parseInline(m.bio_fal_prereq_1())}</Li>
+      </Ul>
+    {/if}
   </InfoBox>
 
   <PageNav

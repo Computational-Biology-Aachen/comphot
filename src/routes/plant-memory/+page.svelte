@@ -14,11 +14,13 @@
     Accordion as Expander,
     H1,
     InfoBox,
+    Li,
     LiteratureExpander,
-    Main,
+    SectionMain as Main,
     PageNav,
     Text,
     type PhaseRegion,
+    Ul,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
   import ActivationSliders from "../../../../../packages/design/src/lib/SliderActivation.svelte";
@@ -141,10 +143,30 @@
   </H1>
 
   <InfoBox header="Learning objectives">
-    <!-- FIXME: break message into smaller pieces -->
-    {@html marked.parse(
-      ta(m.bio_mem_learning_objectives(), m.math_mem_learning_objectives()),
-    )}
+    {#if audienceStore.audience === "4math"}
+      <Ul>
+        <Li>{@html marked.parseInline(m.math_mem_lo_1())}</Li>
+        <Li>{@html marked.parseInline(m.math_mem_lo_2())}</Li>
+      </Ul>
+    {:else}
+      <Ul>
+        <Li>{@html marked.parseInline(m.bio_mem_lo_1())}</Li>
+        <Li>{@html marked.parseInline(m.bio_mem_lo_2())}</Li>
+        <Li>{@html marked.parseInline(m.bio_mem_lo_3())}</Li>
+      </Ul>
+    {/if}
+  </InfoBox>
+
+  <InfoBox header="What you need to know">
+    {#if audienceStore.audience === "4math"}
+      <Ul>
+        <Li>{@html marked.parseInline(m.math_mem_prereq_1())}</Li>
+      </Ul>
+    {:else}
+      <Ul>
+        <Li>{@html marked.parseInline(m.bio_mem_prereq_1())}</Li>
+      </Ul>
+    {/if}
   </InfoBox>
 
   <PageNav

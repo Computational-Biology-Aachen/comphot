@@ -2,14 +2,17 @@
   import { base } from "$app/paths";
   import { ta } from "$lib/i18n";
   import * as m from "$lib/paraglide/messages";
+  import { audienceStore } from "$lib/stores/audience.svelte";
   import {
     Accordion,
     H1,
     H2,
     InfoBox,
-    Main,
+    Li,
+    SectionMain as Main,
     PageNav,
     Text,
+    Ul,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
@@ -25,12 +28,33 @@
   </H1>
 
   <InfoBox header="Learning objectives">
-    <Text>
-      <!-- FIXME: break message into smaller pieces -->
-      {@html marked.parse(
-        ta(m.bio_mth_learning_objectives(), m.math_mth_learning_objectives()),
-      )}
-    </Text>
+    {#if audienceStore.audience === "4math"}
+      <Ul>
+        <Li>{@html marked.parseInline(m.math_mth_lo_1())}</Li>
+        <Li>{@html marked.parseInline(m.math_mth_lo_2())}</Li>
+        <Li>{@html marked.parseInline(m.math_mth_lo_3())}</Li>
+      </Ul>
+    {:else}
+      <Ul>
+        <Li>{@html marked.parseInline(m.bio_mth_lo_1())}</Li>
+        <Li>{@html marked.parseInline(m.bio_mth_lo_2())}</Li>
+        <Li>{@html marked.parseInline(m.bio_mth_lo_3())}</Li>
+      </Ul>
+    {/if}
+  </InfoBox>
+
+  <InfoBox header="What you need to know">
+    {#if audienceStore.audience === "4math"}
+      <Ul>
+        <Li>{@html marked.parseInline(m.math_mth_prereq_1())}</Li>
+        <Li>{@html marked.parseInline(m.math_mth_prereq_2())}</Li>
+      </Ul>
+    {:else}
+      <Ul>
+        <Li>{@html marked.parseInline(m.bio_mth_prereq_1())}</Li>
+        <Li>{@html marked.parseInline(m.bio_mth_prereq_2())}</Li>
+      </Ul>
+    {/if}
   </InfoBox>
 
   <PageNav
