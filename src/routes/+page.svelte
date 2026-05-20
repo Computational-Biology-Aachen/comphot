@@ -4,15 +4,17 @@
   import * as m from "$lib/paraglide/messages";
   import { audienceStore } from "$lib/stores/audience.svelte";
   import {
-    Accordion as Expander,
+    Accordion,
     H1,
     H2,
     InfoBox,
+    Li,
     Link,
     Main,
     PageNav,
     Section,
     Text,
+    Ul,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
   import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -20,7 +22,10 @@
   import Fa from "svelte-fa";
 </script>
 
-<Main width="narrow">
+<Main
+  width="narrow"
+  align="start"
+>
   <H1>
     {@html marked.parseInline(m.str_headline_main())}
   </H1>
@@ -28,16 +33,16 @@
     {@html marked.parseInline(m.str_intro())}
   </Text>
 
-  <Section>
-    <H2>{@html marked.parseInline(m.str_headline_usage())}</H2>
-    <Text>
-      {@html marked.parseInline(ta(m.bio_str_usage(), m.math_str_usage()))}
-    </Text>
-    <YouTubeEmbed
-      videoId="KvyjIWLD8rU"
-      title="Introduction video"
-    />
-  </Section>
+  <H2>
+    {@html marked.parseInline(m.str_headline_usage())}
+  </H2>
+  <Text>
+    {@html marked.parseInline(ta(m.bio_str_usage(), m.math_str_usage()))}
+  </Text>
+  <YouTubeEmbed
+    videoId="KvyjIWLD8rU"
+    title="Introduction video"
+  />
 
   <Text>
     {@html marked.parseInline(
@@ -45,67 +50,62 @@
     )}
   </Text>
 
-  <Section>
-    <H2>
-      {@html marked.parseInline(
-        ta(
-          m.bio_str_learning_objectives_header(),
-          m.math_str_learning_objectives_header(),
-        ),
-      )}
-    </H2>
-    <InfoBox>
-      <!-- FIXME: break message into smaller pieces -->
-      {@html marked.parse(
-        ta(m.bio_str_learning_objectives(), m.math_str_learning_objectives()),
-      )}
-    </InfoBox>
-  </Section>
+  <H2>
+    {@html marked.parseInline(
+      ta(
+        m.bio_str_learning_objectives_header(),
+        m.math_str_learning_objectives_header(),
+      ),
+    )}
+  </H2>
+
+  <InfoBox header="Learning objectives">
+    <!-- FIXME: break message into smaller pieces -->
+    {@html marked.parse(
+      ta(m.bio_str_learning_objectives(), m.math_str_learning_objectives()),
+    )}
+  </InfoBox>
 
   <Text>
     {@html marked.parseInline(m.str_link_plants_and_python())}
   </Text>
 
-  <Section>
-    <H2>{@html marked.parseInline(m.str_headline_pages())}</H2>
-    <Text>
-      {@html marked.parseInline(
-        ta(m.bio_str_introduction_pages(), m.math_str_introduction_pages()),
-      )}
-      {@html marked.parseInline(
-        ta(m.bio_str_photosynthesis(), m.math_str_photosynthesis()),
-      )}
-      {@html marked.parseInline(ta(m.bio_str_method(), m.math_str_method()))}
-      {@html marked.parseInline(ta(m.bio_str_model(), m.math_str_model()))}
-      {@html marked.parseInline(
-        ta(m.bio_str_experiment(), m.math_str_experiment()),
-      )}
-      {@html marked.parseInline(ta(m.bio_str_memory(), m.math_str_memory()))}
-    </Text>
-  </Section>
+  <H2>{@html marked.parseInline(m.str_headline_pages())}</H2>
+  <Text>
+    {@html marked.parseInline(
+      ta(m.bio_str_introduction_pages(), m.math_str_introduction_pages()),
+    )}
+    {@html marked.parseInline(
+      ta(m.bio_str_photosynthesis(), m.math_str_photosynthesis()),
+    )}
+    {@html marked.parseInline(ta(m.bio_str_method(), m.math_str_method()))}
+    {@html marked.parseInline(ta(m.bio_str_model(), m.math_str_model()))}
+    {@html marked.parseInline(
+      ta(m.bio_str_experiment(), m.math_str_experiment()),
+    )}
+    {@html marked.parseInline(ta(m.bio_str_memory(), m.math_str_memory()))}
+  </Text>
 
   {#if audienceStore.audience === "4math"}
-    <hr />
     <Text>
       {@html marked.parseInline(m.str_drop_box_intro())}
     </Text>
-    <Expander title={m.str_expander_in()}>
+    <Accordion title={m.str_expander_in()}>
       <Text>
         {@html marked.parseInline(m.str_explanation_in_vitro())}
         {@html marked.parseInline(m.str_explanation_in_vivo())}
         {@html marked.parseInline(m.str_explanation_in_silico())}
       </Text>
-    </Expander>
-    <hr />
+    </Accordion>
   {/if}
 
-  <Expander title={m.str_expander_about()}>
+  <Accordion title={m.str_expander_about()}>
     <Text>
       {@html marked.parseInline(m.str_explanation_about())}
     </Text>
-  </Expander>
+  </Accordion>
 
-  <Expander title={m.appearances()}>
+  <Accordion title={m.appearances()}>
     <Text>
       {@html marked.parseInline(m.appearance_explanation())}
       {@html marked.parseInline(m.eps2_conference_title())}
@@ -123,14 +123,14 @@
       alt="Elouen Poster"
       class="poster-img"
     />
-  </Expander>
+  </Accordion>
 
-  <Expander title={m.literature()}>
+  <Accordion title={m.literature()}>
     <Text>
       {m.literature_onpage()}
     </Text>
-    <ul>
-      <li>
+    <Ul>
+      <Li>
         Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A
         mathematical model of non-photochemical quenching to study short-term
         light memory in plants. Biochimica et Biophysica Acta (BBA) -
@@ -138,12 +138,12 @@
         <a href="https://doi.org/10.1016/j.bbabio.2016.09.003">
           https://doi.org/10.1016/j.bbabio.2016.09.003
         </a>
-      </li>
-    </ul>
+      </Li>
+    </Ul>
     <Text>
       {@html marked.parseInline(m.literature_plants_and_python())}
     </Text>
-  </Expander>
+  </Accordion>
 
   <PageNav
     base={base}

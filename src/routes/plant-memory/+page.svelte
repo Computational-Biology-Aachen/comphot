@@ -140,7 +140,7 @@
     {@html marked.parseInline(m.mem_headline_brain())}
   </H1>
 
-  <InfoBox>
+  <InfoBox header="Learning objectives">
     <!-- FIXME: break message into smaller pieces -->
     {@html marked.parse(
       ta(m.bio_mem_learning_objectives(), m.math_mem_learning_objectives()),

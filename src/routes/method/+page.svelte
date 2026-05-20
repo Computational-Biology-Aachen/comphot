@@ -3,13 +3,12 @@
   import { ta } from "$lib/i18n";
   import * as m from "$lib/paraglide/messages";
   import {
-    Accordion as Expander,
+    Accordion,
     H1,
     H2,
     InfoBox,
     Main,
     PageNav,
-    Section,
     Text,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
@@ -25,7 +24,7 @@
     {@html marked.parseInline(m.mth_headline_one())}
   </H1>
 
-  <InfoBox>
+  <InfoBox header="Learning objectives">
     <Text>
       <!-- FIXME: break message into smaller pieces -->
       {@html marked.parse(
@@ -43,13 +42,11 @@
     next={{ href: "/model", label: m.sde_pagenames_computationalmodels() }}
   />
 
-  <Section>
-    <img
-      src="{base}/pictures/Kurzvideo-Messmethode.gif"
-      alt="PAM measurement short video"
-      class="gif-img"
-    />
-  </Section>
+  <img
+    src="{base}/pictures/Kurzvideo-Messmethode.gif"
+    alt="PAM measurement short video"
+    class="gif-img"
+  />
 
   <Text>
     {@html marked.parseInline(
@@ -69,7 +66,7 @@
     <figcaption class="caption">{m.mth_caption_abb1()}</figcaption>
   </figure>
 
-  <Expander
+  <Accordion
     title={ta(m.bio_mth_growing_plants_1(), m.math_mth_growing_plants_1())}
     open={false}
   >
@@ -99,9 +96,9 @@
         ta(m.bio_mth_explanation_video(), m.math_mth_explanation_video()),
       )}
     </Text>
-  </Expander>
+  </Accordion>
 
-  <Expander
+  <Accordion
     title={m.mth_measuring_fluoreszenz()}
     open={false}
   >
@@ -120,7 +117,7 @@
       videoId="EwXkOlMBl3o"
       title="Measuring fluorescence with PAM"
     />
-  </Expander>
+  </Accordion>
 
   <H2>
     {@html marked.parseInline(m.mth_headline_pam_measurement())}
@@ -134,7 +131,7 @@
     )}
   </Text>
 
-  <Expander
+  <Accordion
     title={m.mth_measuring_light_fluorescence()}
     open={false}
   >
@@ -154,28 +151,26 @@
       />
       <figcaption class="caption">{m.mth_caption_abb2()}</figcaption>
     </figure>
-  </Expander>
+  </Accordion>
 
-  <Section>
-    <H2>
-      {@html marked.parseInline(m.mth_headline_illustration())}
-    </H2>
-    <Text>
-      {@html marked.parseInline(m.mth_explanation_illustration_units())}
-      {@html marked.parseInline(m.mth_explanation_illustration())}
-    </Text>
+  <H2>
+    {@html marked.parseInline(m.mth_headline_illustration())}
+  </H2>
+  <Text>
+    {@html marked.parseInline(m.mth_explanation_illustration_units())}
+    {@html marked.parseInline(m.mth_explanation_illustration())}
+  </Text>
 
-    <figure class="page-figure">
-      <img
-        src="{base}/pictures/Beispielabbildung_en.png"
-        alt="Example PAM measurement result"
-        class="page-img"
-      />
-      <figcaption class="caption">{m.mth_caption_abb2()}</figcaption>
-    </figure>
-  </Section>
+  <figure class="page-figure">
+    <img
+      src="{base}/pictures/Beispielabbildung_en.png"
+      alt="Example PAM measurement result"
+      class="page-img"
+    />
+    <figcaption class="caption">{m.mth_caption_abb2()}</figcaption>
+  </figure>
 
-  <Expander title={m.literature()}>
+  <Accordion title={m.literature()}>
     <Text>
       {@html marked.parseInline(m.mth_literature_declaration())}
       <ul>
@@ -200,7 +195,7 @@
         </li>
       </ul>
     </Text>
-  </Expander>
+  </Accordion>
 
   <PageNav
     base={base}

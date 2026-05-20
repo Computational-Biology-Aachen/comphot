@@ -105,7 +105,7 @@
 <Main width="narrow">
   <H1>{@html marked.parseInline(m.fal_headline_experiments())}</H1>
 
-  <InfoBox>
+  <InfoBox header="Learning objectives">
     <!-- FIXME: break message into smaller pieces -->
     {@html marked.parse(
       ta(m.bio_fal_learning_objectives(), m.math_fal_learning_objectives()),
