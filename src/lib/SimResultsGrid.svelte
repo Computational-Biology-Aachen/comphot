@@ -3,9 +3,11 @@
   import * as m from "$lib/paraglide/messages";
   import { audienceStore } from "$lib/stores/audience.svelte";
   import type { Res } from "$lib/stores/workerStore";
-  import type { PhaseRegion } from "../../../../packages/design/src/lib/SimChart.svelte";
-  import SimChart from "../../../../packages/design/src/lib/SimChart.svelte";
-  import ParameterTable from "../../../../packages/design/src/lib/TableParameter.svelte";
+  import {
+    ParameterTable,
+    SimChart,
+    type PhaseRegion,
+  } from "@computational-biology-aachen/design";
 
   interface ParamRow {
     label: string;
