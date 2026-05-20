@@ -12,6 +12,9 @@ const config = {
 		paths: {
 			base: process.env.NODE_ENV === 'production' ? '/comphot' : ''
 		},
+		alias: {
+			'@computational-biology-aachen/design': './design/src/lib'
+		},
 		prerender: {
 			handleHttpError: ({ path, message }) => {
 				// Paraglide locale-prefixed URLs are handled client-side via reroute;
