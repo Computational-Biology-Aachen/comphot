@@ -22,7 +22,10 @@
   <title>{m.pho_headline_photosynthesis_page()} | ComPhot</title>
 </svelte:head>
 
-<Main width="narrow">
+<Main
+  width="narrow"
+  align="start"
+>
   <H1>
     {@html marked.parseInline(m.pho_headline_photosynthesis_page())}
   </H1>

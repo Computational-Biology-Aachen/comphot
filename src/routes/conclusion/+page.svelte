@@ -15,7 +15,10 @@
   <title>{m.con_headline_conclusion()} | ComPhot</title>
 </svelte:head>
 
-<Main width="narrow">
+<Main
+  width="narrow"
+  align="start"
+>
   <H1>{@html marked.parseInline(m.con_headline_conclusion())}</H1>
   <PageNav
     base={base}

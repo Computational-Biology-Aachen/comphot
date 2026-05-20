@@ -98,7 +98,10 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
   <title>{m.mdl_headline_computational_models()} | ComPhot</title>
 </svelte:head>
 
-<Main width="narrow">
+<Main
+  width="narrow"
+  align="start"
+>
   <H1>
     {@html marked.parseInline(m.mdl_headline_computational_models())}
   </H1>

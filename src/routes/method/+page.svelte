@@ -22,7 +22,10 @@
   <title>{m.mth_headline_one()} | ComPhot</title>
 </svelte:head>
 
-<Main width="narrow">
+<Main
+  width="narrow"
+  align="start"
+>
   <H1>
     {@html marked.parseInline(m.mth_headline_one())}
   </H1>
