@@ -4,12 +4,12 @@
   let {
     locales,
   }: {
-    locales: { code: string; label: string }[];
+    locales: { code: "en" | "de" | "fr"; label: string }[];
   } = $props();
 
   let currentLocale = $state(getLocale());
 
-  function switchLocale(code: (typeof locales)[number]["code"]) {
+  function switchLocale(code: "en" | "de" | "fr") {
     setLocale(code);
     currentLocale = getLocale();
   }
