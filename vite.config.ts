@@ -6,5 +6,6 @@ export default defineConfig({
 	plugins: [
 		sveltekit(),
 		paraglideVitePlugin({ project: './project.inlang', outdir: './src/lib/paraglide' })
-	]
+	],
+	server: { port: 5176, strictPort: true },
 });
