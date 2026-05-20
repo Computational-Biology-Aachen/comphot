@@ -7,7 +7,7 @@
     H2,
     InputChoice,
     Li,
-    Main,
+    SectionMain as Main,
     PageNav,
     Pre,
     Text,

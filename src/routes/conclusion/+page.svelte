@@ -4,7 +4,7 @@
   import * as m from "$lib/paraglide/messages";
   import {
     H1,
-    Main,
+    SectionMain as Main,
     PageNav,
     Text,
   } from "@computational-biology-aachen/design";
