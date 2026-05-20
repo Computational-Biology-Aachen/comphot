@@ -2,6 +2,7 @@
   import { base } from "$app/paths";
 
   import { ta } from "$lib/i18n";
+  import LiteratureExpander from "$lib/LiteratureExpander.svelte";
   import * as m from "$lib/paraglide/messages";
   import SimResultsGrid from "$lib/SimResultsGrid.svelte";
   import { buildPamProtocol } from "$lib/simulations/pam";
@@ -16,7 +17,6 @@
     H2,
     InfoBox,
     Li,
-    LiteratureExpander,
     SectionMain as Main,
     PageNav,
     type PhaseRegion,
@@ -104,7 +104,10 @@
   <title>Experiments in Silico</title>
 </svelte:head>
 
-<Main width="narrow">
+<Main
+  width="narrow"
+  align="start"
+>
   <H1>{@html marked.parseInline(m.fal_headline_experiments())}</H1>
 
   <InfoBox header="Learning objectives">

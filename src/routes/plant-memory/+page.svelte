@@ -2,12 +2,14 @@
   import { base } from "$app/paths";
 
   import { ta } from "$lib/i18n";
+  import LiteratureExpander from "$lib/LiteratureExpander.svelte";
   import * as m from "$lib/paraglide/messages";
   import SimResultsGrid from "$lib/SimResultsGrid.svelte";
   import { buildMemoryProtocol } from "$lib/simulations/pam";
   import { audienceStore } from "$lib/stores/audience.svelte";
   import { LOG_STEPS, SimState } from "$lib/stores/simState.svelte";
   import {
+    ActivationSliders,
     Bold,
     Button,
     CompareCheckbox,
@@ -15,15 +17,13 @@
     H1,
     InfoBox,
     Li,
-    LiteratureExpander,
     SectionMain as Main,
     PageNav,
     Text,
-    type PhaseRegion,
     Ul,
+    type PhaseRegion,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
-  import ActivationSliders from "../../../../../packages/design/src/lib/SliderActivation.svelte";
 
   const sim = new SimState();
   sim.setup();
@@ -137,7 +137,10 @@
   <title>Plant Light Memory</title>
 </svelte:head>
 
-<Main width="narrow">
+<Main
+  width="narrow"
+  align="start"
+>
   <H1>
     {@html marked.parseInline(m.mem_headline_brain())}
   </H1>
