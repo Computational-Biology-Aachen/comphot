@@ -39,7 +39,7 @@
 		"@fortawesome/free-brands-svg-icons": ">=7.2.0",
 		"@fortawesome/free-solid-svg-icons": ">=7.2.0",
 		"chart.js": "^4.5.1",
-		"katex": "^0.16.46",
+		"katex": "^0.17.0",
 		"marked": "^18.0.3",
 		"pyodide": "^0.29.4",
 		"svelte-chartjs": "^4.0.1",
