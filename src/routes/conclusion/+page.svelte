@@ -1,12 +1,15 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import { ta } from "$lib/i18n";
   import * as m from "$lib/paraglide/messages";
+  import { audienceStore } from "$lib/stores/audience.svelte";
   import {
+    Bold,
     H1,
+    Li,
     SectionMain as Main,
     PageNav,
     Text,
+    Ul,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
 </script>
@@ -30,11 +33,20 @@
   />
 
   <Text>
-    <!-- FIXME: break message into smaller pieces -->
-    {@html marked.parse(
-      ta(m.bio_con_conclusion_text_one(), m.math_con_conclusion_text_one()),
-    )}
+    {#if audienceStore.audience === "4bio"}
+      {@html marked.parseInline(m.bio_con_conclusion_intro())}
+    {:else}
+      {@html marked.parseInline(m.math_con_conclusion_intro())}
+    {/if}
   </Text>
+  <Ul>
+    <Li>{@html marked.parseInline(m.con_conclusion_c1())}</Li>
+    {#if audienceStore.audience === "4bio"}
+      <Li>{@html marked.parseInline(m.bio_con_conclusion_c2())}</Li>
+    {:else}
+      <Li>{@html marked.parseInline(m.math_con_conclusion_c2())}</Li>
+    {/if}
+  </Ul>
 
   <figure>
     <img
@@ -44,10 +56,13 @@
     />
   </figure>
 
-  <Text>
-    <!-- FIXME: break message into smaller pieces -->
-    {@html marked.parse(m.con_conclusion_text_two())}
-  </Text>
+  <Ul>
+    <Li>{@html marked.parseInline(m.con_conclusion_c3())}</Li>
+    <Li>{@html marked.parseInline(m.con_conclusion_c4())}</Li>
+  </Ul>
+  <Text>{@html marked.parseInline(m.con_conclusion_p1())}</Text>
+  <Text>{@html marked.parseInline(m.con_conclusion_p2())}</Text>
+  <Text><Bold>{@html marked.parseInline(m.con_conclusion_p3())}</Bold></Text>
 
   <PageNav
     base={base}

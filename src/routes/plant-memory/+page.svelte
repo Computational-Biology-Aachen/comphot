@@ -44,7 +44,6 @@
   let relaxationLength = $state(300);
   let memoryLength = $state(300);
   let compareWithLast = $state(true);
-  let showAnswers = $state(false);
 
   // Logspace sliders
   let activationIdx = $state(10); // LOG_STEPS[10] = 100
@@ -280,23 +279,49 @@
     <Text>
       <Bold>{@html marked.parseInline(m.mem_guiding_header())}</Bold>
     </Text>
-    <label class="toggle-label">
-      <input
-        type="checkbox"
-        bind:checked={showAnswers}
-      />
-      {@html marked.parseInline(m.mem_guiding_toggle())}
-    </label>
-    {#if !showAnswers}
-      <!-- FIXME: break message into smaller pieces -->
-      {@html marked.parse(
-        ta(m.bio_mem_guiding_questions(), m.math_mem_guiding_questions()),
-      )}
+
+    {#if audienceStore.audience === "4math"}
+      <Text>{@html marked.parseInline(m.math_mem_guiding_intro())}</Text>
+    {/if}
+
+    <!-- Q1 -->
+    <Text>
+      <Bold>1.</Bold>
+      {#if audienceStore.audience === "4bio"}
+        {@html marked.parseInline(m.bio_mem_guiding_q1_prompt())}
+      {:else}
+        {@html marked.parseInline(m.math_mem_guiding_q1_prompt())}
+      {/if}
+    </Text>
+    <Ul>
+      <Li>{@html marked.parseInline(m.mem_guiding_q1_1())}</Li>
+      <Li>{@html marked.parseInline(m.mem_guiding_q1_2())}</Li>
+      <Li>{@html marked.parseInline(m.mem_guiding_q1_3())}</Li>
+    </Ul>
+
+    <!-- Q2 -->
+    <Text><Bold>2.</Bold> {@html marked.parseInline(m.mem_guiding_q2_prompt())}</Text>
+    <Ul>
+      <Li>{@html marked.parseInline(m.mem_guiding_q2_1())}</Li>
+      <Li>{@html marked.parseInline(m.mem_guiding_q2_2())}</Li>
+    </Ul>
+
+    <!-- Q3: bio only -->
+    {#if audienceStore.audience === "4bio"}
+      <Text><Bold>3.</Bold> {@html marked.parseInline(m.bio_mem_guiding_q3_prompt())}</Text>
+      <Ul>
+        <Li>{@html marked.parseInline(m.bio_mem_guiding_q3_1())}</Li>
+        <Li>{@html marked.parseInline(m.bio_mem_guiding_q3_2())}</Li>
+        <Li>{@html marked.parseInline(m.bio_mem_guiding_q3_3())}</Li>
+        <Li>{@html marked.parseInline(m.bio_mem_guiding_q3_4())}</Li>
+      </Ul>
+    {/if}
+
+    <!-- Last Q: bio Q4 / math Q3 -->
+    {#if audienceStore.audience === "4bio"}
+      <Text><Bold>4.</Bold> {@html marked.parseInline(m.mem_guiding_last_prompt())}</Text>
     {:else}
-      <!-- FIXME: break message into smaller pieces -->
-      {@html marked.parse(
-        ta(m.bio_mem_guiding_answers(), m.math_mem_guiding_answers()),
-      )}
+      <Text><Bold>3.</Bold> {@html marked.parseInline(m.mem_guiding_last_prompt())}</Text>
     {/if}
   </Expander>
 
@@ -511,14 +536,6 @@
       grid-template-columns: 1fr 1fr 1fr 1fr;
       align-items: center;
     }
-  }
-
-  .toggle-label {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2, 8px);
-    cursor: pointer;
-    margin: var(--space-2, 8px) 0;
   }
 
   .error-msg {

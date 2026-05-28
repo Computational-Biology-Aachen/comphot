@@ -232,10 +232,8 @@ ER  -`;
   <H2>
     {@html marked.parseInline(m.cont_resources())}
   </H2>
-  <Text>
-    <!-- FIXME: break message into smaller pieces -->
-    {@html marked.parse(m.programs_used())}
-  </Text>
+  <Text>{@html marked.parseInline(m.cont_programs_svelte())}</Text>
+  <Text>{@html marked.parseInline(m.cont_programs_biorender())}</Text>
 
   <PageNav
     base={base}

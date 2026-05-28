@@ -15,6 +15,7 @@
   import { audienceStore } from "$lib/stores/audience.svelte";
   import { LOG_STEPS, SimState } from "$lib/stores/simStore.svelte";
   import {
+    Bold,
     CompareCheckbox,
     Accordion as Expander,
     H1,
@@ -389,18 +390,92 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
       />
       {@html marked.parseInline(m.fal_guiding_toggle())}
     </label>
-    {#if !showAnswers}
-      <!-- FIXME: break message into smaller pieces -->
-      {@html marked.parse(m.fal_guiding_questions())}
 
-      {#if audienceStore.audience === "4bio"}
-        {@html marked.parseInline(m.bio_fal_guiding_questions_extend())}
+    <Text>{@html marked.parseInline(m.fal_guiding_intro())}</Text>
+
+    <!-- Q1 -->
+    <Text><Bold>1.</Bold> {@html marked.parseInline(m.fal_guiding_q1_prompt())}</Text>
+    <Ul>
+      {#if !showAnswers}
+        <Li>{@html marked.parseInline(m.fal_guiding_q1_1())}</Li>
+        <Li>{@html marked.parseInline(m.fal_guiding_q1_2())}</Li>
+      {:else}
+        <Li>{@html marked.parseInline(m.fal_guiding_a1_1())}</Li>
+        <Li>{@html marked.parseInline(m.fal_guiding_a1_2())}</Li>
       {/if}
-    {:else}
-      {@html marked.parseInline(m.fal_guiding_answers())}
-      {#if audienceStore.audience === "4bio"}
-        {@html marked.parseInline(m.bio_fal_guiding_answers_extend())}
+    </Ul>
+
+    <!-- Q2 -->
+    <Text><Bold>2.</Bold> {@html marked.parseInline(m.fal_guiding_q2_prompt())}</Text>
+    <Ul>
+      {#if !showAnswers}
+        <Li>{@html marked.parseInline(m.fal_guiding_q2_1())}</Li>
+      {:else}
+        <Li>{@html marked.parseInline(m.fal_guiding_a2_1())}</Li>
+        <Li>{@html marked.parseInline(m.fal_guiding_a2_2())}</Li>
       {/if}
+    </Ul>
+
+    <!-- Q3 -->
+    <Text><Bold>3.</Bold> {@html marked.parseInline(m.fal_guiding_q3_prompt())}</Text>
+    <Ul>
+      {#if !showAnswers}
+        <Li>{@html marked.parseInline(m.fal_guiding_q3_1())}</Li>
+        <Li>{@html marked.parseInline(m.fal_guiding_q3_2())}</Li>
+      {:else}
+        <Li>{@html marked.parseInline(m.fal_guiding_a3_1())}</Li>
+        <Li>{@html marked.parseInline(m.fal_guiding_a3_2())}</Li>
+        <Li>{@html marked.parseInline(m.fal_guiding_a3_3())}</Li>
+      {/if}
+    </Ul>
+
+    <!-- Q4 -->
+    <Text><Bold>4.</Bold> {@html marked.parseInline(m.fal_guiding_q4_prompt())}</Text>
+    <Ul>
+      {#if !showAnswers}
+        <Li>{@html marked.parseInline(m.fal_guiding_q4_1())}</Li>
+        <Li>{@html marked.parseInline(m.fal_guiding_q4_2())}</Li>
+      {:else}
+        <Li>{@html marked.parseInline(m.fal_guiding_a4_1())}</Li>
+        <Li>{@html marked.parseInline(m.fal_guiding_a4_2())}</Li>
+      {/if}
+    </Ul>
+
+    <!-- Q5-Q7: bio only -->
+    {#if audienceStore.audience === "4bio"}
+      <Text><Bold>5.</Bold> {@html marked.parseInline(m.fal_guiding_q5_prompt())}</Text>
+      <Ul>
+        {#if !showAnswers}
+          <Li>{@html marked.parseInline(m.fal_guiding_q5_1())}</Li>
+          <Li>{@html marked.parseInline(m.fal_guiding_q5_2())}</Li>
+        {:else}
+          <Li>{@html marked.parseInline(m.fal_guiding_a5_1())}</Li>
+          <Li>{@html marked.parseInline(m.fal_guiding_a5_2())}</Li>
+          <Li>{@html marked.parseInline(m.fal_guiding_a5_3())}</Li>
+          <Li>{@html marked.parseInline(m.fal_guiding_a5_4())}</Li>
+        {/if}
+      </Ul>
+
+      <Text><Bold>6.</Bold> {@html marked.parseInline(m.fal_guiding_q6_prompt())}</Text>
+      <Ul>
+        {#if !showAnswers}
+          <Li>{@html marked.parseInline(m.fal_guiding_q6_1())}</Li>
+        {:else}
+          <Li>{@html marked.parseInline(m.fal_guiding_a6_1())}</Li>
+        {/if}
+      </Ul>
+
+      <Text><Bold>7.</Bold> {@html marked.parseInline(m.fal_guiding_q7_prompt())}</Text>
+      <Ul>
+        {#if !showAnswers}
+          <Li>{@html marked.parseInline(m.fal_guiding_q7_1())}</Li>
+          <Li>{@html marked.parseInline(m.fal_guiding_q7_2())}</Li>
+          <Li>{@html marked.parseInline(m.fal_guiding_q7_3())}</Li>
+        {:else}
+          <Li>{@html marked.parseInline(m.fal_guiding_a7_1())}</Li>
+          <Li>{@html marked.parseInline(m.fal_guiding_a7_2())}</Li>
+        {/if}
+      </Ul>
     {/if}
   </Expander>
 
