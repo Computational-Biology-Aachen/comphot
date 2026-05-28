@@ -305,9 +305,13 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
           {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_2())}
         </Text>
         <pre class="code-block"><code>{sirV2Model}</code></pre>
-        <Text>
-          {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_3())}
-        </Text>
+        <Text>{@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_3_intro())}</Text>
+        <ol class="content-ol">
+          <li>{m.math_mdl_sir_implementation_modelbase_3_item1()}</li>
+          <li>{m.math_mdl_sir_implementation_modelbase_3_item2()}</li>
+          <li>{m.math_mdl_sir_implementation_modelbase_3_item3()}</li>
+          <li>{m.math_mdl_sir_implementation_modelbase_3_item4()}</li>
+        </ol>
         <pre class="code-block"><code>{sirV2Reactions}</code></pre>
         <Text>
           {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_4())}
@@ -452,7 +456,11 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
           </a>
         </li>
       </Ul>
-      <p>{@html marked.parseInline(m.literature_plants_and_python())}</p>
+      <p>{@html marked.parseInline(m.literature_plants_and_python_intro())}</p>
+      <Ul>
+        <Li>{@html marked.parseInline(m.literature_plants_and_python_item1())}</Li>
+        <Li>{@html marked.parseInline(m.literature_plants_and_python_item2())}</Li>
+      </Ul>
     </Text>
   </Accordion>
 
@@ -505,5 +513,12 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
     overflow-x: auto;
     font-size: 0.85rem;
     margin: var(--space-3, 12px) 0;
+  }
+
+  .content-ol {
+    padding-left: 2rem;
+    padding-bottom: var(--space-4);
+    display: grid;
+    gap: var(--space-2);
   }
 </style>

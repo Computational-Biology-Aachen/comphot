@@ -414,7 +414,12 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     <Text>
       {@html marked.parseInline(m.fal_graph_explanation_header_single())}
     </Text>
-    <Text>{@html marked.parseInline(m.fal_graph_explanation_1())}</Text>
+    <Text>{@html marked.parseInline(m.fal_graph_explanation_1_intro())}</Text>
+    <ol class="content-ol">
+      <li>{@html marked.parseInline(m.fal_graph_explanation_1_phase1())}</li>
+      <li>{@html marked.parseInline(m.fal_graph_explanation_1_phase2())}</li>
+      <li>{@html marked.parseInline(m.fal_graph_explanation_1_phase3())}</li>
+    </ol>
     <div class="math-inline">
       <Katex displayMode>{"NPQ = \\dfrac{F_m - F_m'}{F_m'}"}</Katex>
     </div>
@@ -794,5 +799,12 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     background: var(--color-surface);
     font-weight: 600;
     white-space: nowrap;
+  }
+
+  .content-ol {
+    padding-left: 2rem;
+    padding-bottom: var(--space-4);
+    display: grid;
+    gap: var(--space-2);
   }
 </style>

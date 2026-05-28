@@ -152,9 +152,11 @@
         </a>
       </Li>
     </Ul>
-    <Text>
-      {@html marked.parseInline(m.literature_plants_and_python())}
-    </Text>
+    <Text>{@html marked.parseInline(m.literature_plants_and_python_intro())}</Text>
+    <Ul>
+      <Li>{@html marked.parseInline(m.literature_plants_and_python_item1())}</Li>
+      <Li>{@html marked.parseInline(m.literature_plants_and_python_item2())}</Li>
+    </Ul>
   </Accordion>
 
   <PageNav

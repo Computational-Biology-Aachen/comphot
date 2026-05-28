@@ -95,12 +95,12 @@
       class="page-img"
     />
   {:else}
-    <Text>
-      {@html marked.parseInline(m.bio_pho_point_1())}
-      {@html marked.parseInline(m.bio_pho_point_2())}
-      {@html marked.parseInline(m.bio_pho_point_3())}
-      {@html marked.parseInline(m.bio_pho_end_of_introduction())}
-    </Text>
+    <Ul>
+      <Li>{m.bio_pho_point_1()}</Li>
+      <Li>{m.bio_pho_point_2()}</Li>
+      <Li>{m.bio_pho_point_3()}</Li>
+    </Ul>
+    <Text>{@html marked.parseInline(m.bio_pho_end_of_introduction())}</Text>
   {/if}
 
   <H2>
