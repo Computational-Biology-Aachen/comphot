@@ -167,7 +167,11 @@
   <Text>{@html marked.parseInline(m.fal_rates_5())}</Text>
   <Text>{@html marked.parseInline(m.fal_rates_6())}</Text>
 
-  <Expander title={m.fal_components_explanation_header()}>
+  <Expander>
+    {#snippet header()}
+      {@html marked.parseInline(m.fal_components_explanation_header())}
+    {/snippet}
+
     <Text>{@html marked.parseInline(m.fal_molecules_explanation_table())}</Text>
     <Text>{@html marked.parseInline(m.fal_enzymes_explanation_table())}</Text>
   </Expander>
@@ -194,7 +198,10 @@ b_\mathrm{H} \cdot \frac{\mathrm{dH}}{\mathrm{d}t} &= 2 v_\mathrm{PSII} + 4 v_\m
       >
     </div>
 
-    <Expander title={m.math_fal_reaction_rates()}>
+    <Expander>
+      {#snippet header()}
+        {@html marked.parseInline(m.math_fal_reaction_rates())}
+      {/snippet}
       <Text>{@html marked.parseInline(m.math_fal_rates_dynamic())}</Text>
       <div class="math-block">
         <Katex displayMode
@@ -207,7 +214,10 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
       </div>
     </Expander>
 
-    <Expander title={m.math_fal_model_code_expander()}>
+    <Expander>
+      {#snippet header()}
+        {@html marked.parseInline(m.math_fal_model_code_expander())}
+      {/snippet}
       <Text>
         {@html marked.parseInline(m.math_fal_construction_header())}
       </Text>
@@ -261,10 +271,10 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
   <Text>{@html marked.parseInline(m.fal_headline_slider())}</Text>
   <Text>{@html marked.parseInline(m.fal_explanatnion())}</Text>
 
-  <Expander
-    title={m.fal_graph_explanation_expander()}
-    open={false}
-  >
+  <Expander open={false}>
+    {#snippet header()}
+      {@html marked.parseInline(m.fal_graph_explanation_expander())}
+    {/snippet}
     <Text>
       {@html marked.parseInline(m.fal_graph_explanation_header_single())}
     </Text>
@@ -285,10 +295,10 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
   </Expander>
 
   <!-- Having trouble connecting -->
-  <Expander
-    title={m.fal_guiding_expander()}
-    open={false}
-  >
+  <Expander open={false}>
+    {#snippet header()}
+      {@html marked.parseInline(m.fal_guiding_expander())}
+    {/snippet}
     <Text>{@html marked.parseInline(m.fal_guiding_header())}</Text>
     <label class="toggle-label">
       <input

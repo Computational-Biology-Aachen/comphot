@@ -5,18 +5,18 @@ Educational photosynthesis site. SvelteKit 5, adapter-static, i18n via paraglide
 ## Dev
 
 ```bash
-bun install
-bun run dev          # dev server on :5173
+npm install
+npm run dev          # dev server on :5173
 ```
 
 ## Commands
 
 ```bash
-bun run build        # static build → build/
-bun run preview      # preview the build
-bun run check        # TypeScript + Svelte type checking
-bun run lint         # Prettier + ESLint check
-bun run format       # auto-format with Prettier
+npm run build        # static build → build/
+npm run preview      # preview the build
+npm run check        # TypeScript + Svelte type checking
+npm run lint         # Prettier + ESLint check
+npm run format       # auto-format with Prettier
 ```
 
 ## i18n

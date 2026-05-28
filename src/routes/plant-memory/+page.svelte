@@ -195,10 +195,10 @@
   </figure>
 
   <!-- Guiding questions ------------------------------- -->
-  <Expander
-    title={m.mem_guiding_expander()}
-    open={false}
-  >
+  <Expander open={false}>
+    {#snippet header()}
+      {@html marked.parseInline(m.mem_guiding_expander())}
+    {/snippet}
     <Text>
       <Bold>{@html marked.parseInline(m.mem_guiding_header())}</Bold>
     </Text>
