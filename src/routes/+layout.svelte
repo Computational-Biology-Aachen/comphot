@@ -42,8 +42,6 @@
   ];
 
   let currentLocale = $state(getLocale());
-  let audience = $state<Audience>("4bio");
-
   function switchLocale(code: Lang) {
     setLocale(code);
     currentLocale = getLocale();
@@ -133,7 +131,7 @@
     {/snippet}
     {#each audChoices as { code, label } (code)}
       <ButtonMenuItem
-        active={audience === code}
+        active={audienceStore.audience === code}
         onclick={() => audienceStore.setAudience(code)}
       >
         {label}
