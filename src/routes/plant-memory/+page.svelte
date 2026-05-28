@@ -1,6 +1,7 @@
 <script lang="ts">
   import { base } from "$app/paths";
 
+  import { onMount } from "svelte";
   import { ta } from "$lib/i18n";
   import LiteratureExpander from "$lib/LiteratureExpander.svelte";
   import * as m from "$lib/paraglide/messages";
@@ -15,9 +16,7 @@
   import { audienceStore } from "$lib/stores/audience.svelte";
   import { LOG_STEPS, SimState } from "$lib/stores/simStore.svelte";
   import {
-    ActivationSliders,
     Bold,
-    Button,
     CompareCheckbox,
     Accordion as Expander,
     H1,
@@ -72,6 +71,8 @@
       kEpoxZ,
     );
   }
+
+  onMount(runSimulation);
 
   // Phase regions for 4-phase memory protocol
   const phases = $derived.by<PhaseRegion[]>(() => {
@@ -311,6 +312,7 @@
           max="900"
           step="50"
           bind:value={lightIntensity}
+          onchange={runSimulation}
         />
       </label>
       <label class="slider-label">
@@ -321,6 +323,7 @@
           max="150"
           step="5"
           bind:value={pulseInterval}
+          onchange={runSimulation}
         />
       </label>
     </div>
@@ -334,6 +337,7 @@
           max="300"
           step="10"
           bind:value={darkLength}
+          onchange={runSimulation}
         />
       </label>
       <label class="slider-label">
@@ -344,6 +348,7 @@
           max="10000"
           step="500"
           bind:value={saturatingPulse}
+          onchange={runSimulation}
         />
       </label>
     </div>
@@ -357,6 +362,7 @@
           max="600"
           step="30"
           bind:value={trainingLength}
+          onchange={runSimulation}
         />
       </label>
       <label class="slider-label">
@@ -368,6 +374,7 @@
           max="600"
           step="30"
           bind:value={relaxationLength}
+          onchange={runSimulation}
         />
       </label>
       <label class="slider-label">
@@ -378,6 +385,7 @@
           max="600"
           step="30"
           bind:value={memoryLength}
+          onchange={runSimulation}
         />
       </label>
     </div>
@@ -385,28 +393,33 @@
     <!-- 4bio: activation/deactivation sliders -->
     {#if audienceStore.audience === "4bio"}
       <div class="slider-row">
-        <ActivationSliders
-          bind:activationIdx={activationIdx}
-          bind:deactivationIdx={deactivationIdx}
-          activationLabel={m.slider_activation()}
-          deactivationLabel={m.slider_deactivation()}
-          activationMultiplier={activationMultiplier}
-          deactivationMultiplier={deactivationMultiplier}
-        />
+        <label class="slider-label">
+          {m.slider_activation()}: <strong>{activationMultiplier}</strong>
+          <input
+            type="range"
+            min="0"
+            max="20"
+            step="1"
+            bind:value={activationIdx}
+            onchange={runSimulation}
+          />
+        </label>
+        <label class="slider-label">
+          {m.slider_deactivation()}: <strong>{deactivationMultiplier}</strong>
+          <input
+            type="range"
+            min="0"
+            max="20"
+            step="1"
+            bind:value={deactivationIdx}
+            onchange={runSimulation}
+          />
+        </label>
       </div>
     {/if}
   </div>
 
-  <!-- Run controls-->
-  <div class="run-controls">
-    <div class="run-btn-wrap">
-      <Button
-        loading={sim.loading}
-        fullWidth
-        onclick={runSimulation}
-        >{sim.loading ? "Running…" : "Run simulation"}</Button
-      >
-    </div>
+  <div class="compare-row">
     <CompareCheckbox bind:checked={compareWithLast} />
   </div>
 
@@ -480,9 +493,9 @@
     max-width: 100%;
   }
   .fig figcaption {
-    font-size: 0.875rem;
-    color: var(--color-text-muted, #666);
     margin-top: var(--space-2, 8px);
+    color: var(--color-text-muted, #666);
+    font-size: 0.875rem;
   }
   .protocol-img {
     max-width: 100%;
@@ -502,8 +515,8 @@
   }
   .slider-row {
     display: flex;
-    gap: var(--space-4, 16px);
     flex-wrap: wrap;
+    gap: var(--space-4, 16px);
   }
   .slider-row > * {
     flex: 1;
@@ -513,15 +526,8 @@
     min-width: 120px;
   }
 
-  .run-controls {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4, 16px);
-    margin: var(--space-4, 16px) 0;
-  }
-  .run-btn-wrap {
-    flex: 1;
-    max-width: 220px;
+  .compare-row {
+    margin: var(--space-3, 12px) 0;
   }
 
   .toggle-label {
@@ -533,8 +539,8 @@
   }
 
   .error-msg {
-    color: var(--color-error, red);
     margin: var(--space-2, 8px) 0;
+    color: var(--color-error, red);
   }
 
   .charts-grid {
@@ -553,8 +559,8 @@
   }
   .chart-label {
     margin: 0;
-    font-size: 0.875rem;
     font-weight: 500;
+    font-size: 0.875rem;
   }
 
   .param-table-wrap {

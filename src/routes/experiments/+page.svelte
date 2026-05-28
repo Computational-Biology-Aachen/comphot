@@ -1,6 +1,7 @@
 <script lang="ts">
   import { base } from "$app/paths";
 
+  import { onMount } from "svelte";
   import { ta } from "$lib/i18n";
   import LiteratureExpander from "$lib/LiteratureExpander.svelte";
   import * as m from "$lib/paraglide/messages";
@@ -15,8 +16,6 @@
   import { audienceStore } from "$lib/stores/audience.svelte";
   import { LOG_STEPS, SimState } from "$lib/stores/simStore.svelte";
   import {
-    ActivationSliders,
-    Button,
     CompareCheckbox,
     Accordion as Expander,
     H1,
@@ -70,6 +69,8 @@
       kEpoxZ,
     );
   }
+
+  onMount(runSimulation);
 
   const phases = $derived.by<PhaseRegion[]>(() => [
     { start: 0, end: darkLength, color: "rgba(28, 91, 199, 0.18)" },
@@ -413,6 +414,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
         max="900"
         step="50"
         bind:value={lightIntensity}
+        onchange={runSimulation}
       />
     </label>
 
@@ -425,6 +427,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
           max="15"
           step="1"
           bind:value={totalMinutes}
+          onchange={runSimulation}
         />
       </label>
       <label class="slider-label">
@@ -435,6 +438,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
           max="150"
           step="5"
           bind:value={pulseInterval}
+          onchange={runSimulation}
         />
       </label>
     </div>
@@ -442,14 +446,28 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     {#if audienceStore.audience === "4bio"}
       <div class="slider-row">
         <div class="slider-col">
-          <ActivationSliders
-            bind:activationIdx={activationIdx}
-            bind:deactivationIdx={deactivationIdx}
-            activationMultiplier={activationMultiplier}
-            deactivationMultiplier={deactivationMultiplier}
-            activationLabel={m.slider_activation()}
-            deactivationLabel={m.slider_deactivation()}
-          />
+          <label class="slider-label">
+            {m.slider_activation()}: <strong>{activationMultiplier}</strong>
+            <input
+              type="range"
+              min="0"
+              max="20"
+              step="1"
+              bind:value={activationIdx}
+              onchange={runSimulation}
+            />
+          </label>
+          <label class="slider-label">
+            {m.slider_deactivation()}: <strong>{deactivationMultiplier}</strong>
+            <input
+              type="range"
+              min="0"
+              max="20"
+              step="1"
+              bind:value={deactivationIdx}
+              onchange={runSimulation}
+            />
+          </label>
         </div>
         <div class="slider-col">
           <label class="slider-label">
@@ -460,6 +478,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
               max={totalMinutes * 60}
               step="5"
               bind:value={darkLength}
+              onchange={runSimulation}
             />
           </label>
           <label class="slider-label">
@@ -471,6 +490,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
               max="10000"
               step="500"
               bind:value={saturatingPulse}
+              onchange={runSimulation}
             />
           </label>
         </div>
@@ -478,16 +498,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     {/if}
   </div>
 
-  <!-- Run controls -->
-  <div class="run-controls">
-    <div class="run-btn-wrap">
-      <Button
-        loading={sim.loading}
-        fullWidth
-        onclick={runSimulation}
-        >{sim.loading ? "Running…" : "Run simulation"}</Button
-      >
-    </div>
+  <div class="compare-row">
     <CompareCheckbox bind:checked={compareWithLast} />
   </div>
 
@@ -605,15 +616,8 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     min-width: 160px;
   }
 
-  .run-controls {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4, 16px);
-    margin: var(--space-4, 16px) 0;
-  }
-  .run-btn-wrap {
-    flex: 1;
-    max-width: 220px;
+  .compare-row {
+    margin: var(--space-3, 12px) 0;
   }
 
   .toggle-label {
