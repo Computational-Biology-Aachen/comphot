@@ -14,9 +14,9 @@
     PageNav,
     Text,
     Ul,
+    Tabs,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
-  import Tabs from "$lib/Tabs.svelte";
   import { marked } from "marked";
   import Katex from "svelte-katex";
 
@@ -256,7 +256,9 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
             {"\\begin{aligned} \\mathrm{Infecting\\ rate:\\ } v_1 &= \\beta \\cdot \\frac{\\mathrm{S}\\cdot \\mathrm{I}}{\\mathrm{N}} \\\\ \\mathrm{Recovery\\ rate:\\ } v_{2} &= \\gamma \\cdot \\mathrm{I} \\\\ \\end{aligned}"}
           </Katex>
           <Text>
-            {@html marked.parseInline(m.bio_mdl_mathematical_modelling_example_3())}
+            {@html marked.parseInline(
+              m.bio_mdl_mathematical_modelling_example_3(),
+            )}
           </Text>
           <div class="katex-block">
             <Katex displayMode>
@@ -264,7 +266,9 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
             </Katex>
           </div>
           <Text>
-            {@html marked.parseInline(m.bio_mdl_mathematical_modelling_example_4())}
+            {@html marked.parseInline(
+              m.bio_mdl_mathematical_modelling_example_4(),
+            )}
           </Text>
         {/if}
 
@@ -298,14 +302,22 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
       {:else if activeKey === "modelbase"}
         <Text>
           {@html marked.parseInline(m.math_mdl_headline_modelbase())}
-          {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_1())}
+          {@html marked.parseInline(
+            m.math_mdl_sir_implementation_modelbase_1(),
+          )}
         </Text>
         <pre class="code-block"><code>{sirV2RateFns}</code></pre>
         <Text>
-          {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_2())}
+          {@html marked.parseInline(
+            m.math_mdl_sir_implementation_modelbase_2(),
+          )}
         </Text>
         <pre class="code-block"><code>{sirV2Model}</code></pre>
-        <Text>{@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_3_intro())}</Text>
+        <Text
+          >{@html marked.parseInline(
+            m.math_mdl_sir_implementation_modelbase_3_intro(),
+          )}</Text
+        >
         <ol class="content-ol">
           <li>{m.math_mdl_sir_implementation_modelbase_3_item1()}</li>
           <li>{m.math_mdl_sir_implementation_modelbase_3_item2()}</li>
@@ -314,7 +326,9 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
         </ol>
         <pre class="code-block"><code>{sirV2Reactions}</code></pre>
         <Text>
-          {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_4())}
+          {@html marked.parseInline(
+            m.math_mdl_sir_implementation_modelbase_4(),
+          )}
         </Text>
         <figure class="page-figure">
           <img
@@ -325,11 +339,15 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
         </figure>
         <pre class="code-block"><code>{sirV2Simulation}</code></pre>
         <Text>
-          {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_5())}
+          {@html marked.parseInline(
+            m.math_mdl_sir_implementation_modelbase_5(),
+          )}
         </Text>
         <pre class="code-block"><code>{sird}</code></pre>
         <Text>
-          {@html marked.parseInline(m.math_mdl_sir_implementation_modelbase_6())}
+          {@html marked.parseInline(
+            m.math_mdl_sir_implementation_modelbase_6(),
+          )}
         </Text>
       {/if}
     {/snippet}
@@ -458,8 +476,16 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
       </Ul>
       <p>{@html marked.parseInline(m.literature_plants_and_python_intro())}</p>
       <Ul>
-        <Li>{@html marked.parseInline(m.literature_plants_and_python_item1())}</Li>
-        <Li>{@html marked.parseInline(m.literature_plants_and_python_item2())}</Li>
+        <Li
+          >{@html marked.parseInline(
+            m.literature_plants_and_python_item1(),
+          )}</Li
+        >
+        <Li
+          >{@html marked.parseInline(
+            m.literature_plants_and_python_item2(),
+          )}</Li
+        >
       </Ul>
     </Text>
   </Accordion>
@@ -476,14 +502,14 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 
 <style>
   .page-figure {
+    margin: var(--space-4, 16px) 0;
     width: 100%;
     text-align: center;
-    margin: var(--space-4, 16px) 0;
   }
 
   .page-img {
-    max-width: 100%;
     border-radius: var(--radius-md, 6px);
+    max-width: 100%;
   }
 
   .page-img.half-width {
@@ -507,18 +533,18 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
   }
 
   .code-block {
+    margin: var(--space-3, 12px) 0;
     border-radius: var(--radius-md, 6px);
     background: var(--color-surface-alt, #f5f5f5);
     padding: var(--space-3, 12px);
     overflow-x: auto;
     font-size: 0.85rem;
-    margin: var(--space-3, 12px) 0;
   }
 
   .content-ol {
-    padding-left: 2rem;
-    padding-bottom: var(--space-4);
     display: grid;
     gap: var(--space-2);
+    padding-bottom: var(--space-4);
+    padding-left: 2rem;
   }
 </style>
