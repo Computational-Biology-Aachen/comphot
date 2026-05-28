@@ -1,7 +1,6 @@
 <script lang="ts">
   import { base } from "$app/paths";
 
-  import { onMount } from "svelte";
   import { ta } from "$lib/i18n";
   import LiteratureExpander from "$lib/LiteratureExpander.svelte";
   import * as m from "$lib/paraglide/messages";
@@ -31,6 +30,7 @@
     type PhaseRegion,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
+  import { onMount } from "svelte";
 
   const sim = new SimState();
   sim.setup();
@@ -548,6 +548,7 @@
     grid-template-columns: 1fr;
     gap: var(--space-4, 16px);
     margin: var(--space-4, 16px) 0;
+    width: 100%;
   }
   .charts-grid.three-cols {
     grid-template-columns: repeat(3, 1fr);

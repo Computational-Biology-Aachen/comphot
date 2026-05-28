@@ -1,7 +1,6 @@
 <script lang="ts">
   import { base } from "$app/paths";
 
-  import { onMount } from "svelte";
   import { ta } from "$lib/i18n";
   import LiteratureExpander from "$lib/LiteratureExpander.svelte";
   import * as m from "$lib/paraglide/messages";
@@ -31,6 +30,7 @@
     Ul,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
+  import { onMount } from "svelte";
   import Katex from "svelte-katex";
 
   const sim = new SimState();
@@ -572,14 +572,14 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     max-width: 100%;
   }
   .fig figcaption {
-    font-size: 0.875rem;
-    color: var(--color-text-muted, #666);
     margin-top: var(--space-2, 8px);
+    color: var(--color-text-muted, #666);
+    font-size: 0.875rem;
   }
 
   .math-block {
-    overflow-x: auto;
     margin: var(--space-4, 16px) 0;
+    overflow-x: auto;
   }
   .math-inline {
     display: flex;
@@ -601,8 +601,8 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
   }
   .slider-row {
     display: flex;
-    gap: var(--space-4, 16px);
     flex-wrap: wrap;
+    gap: var(--space-4, 16px);
   }
   .slider-row > * {
     flex: 1;
@@ -610,9 +610,9 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
   }
   .slider-col {
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: var(--space-3, 12px);
-    flex: 1;
     min-width: 160px;
   }
 
@@ -633,6 +633,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     grid-template-columns: 1fr;
     gap: var(--space-4, 16px);
     margin: var(--space-4, 16px) 0;
+    width: 100%;
   }
   .charts-grid.three-cols {
     grid-template-columns: repeat(3, 1fr);
@@ -644,8 +645,8 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
   }
   .chart-label {
     margin: 0;
-    font-size: 0.875rem;
     font-weight: 500;
+    font-size: 0.875rem;
   }
 
   .param-table-wrap {
@@ -653,16 +654,16 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
   }
 
   pre {
+    border-radius: var(--radius-md, 6px);
     background: var(--color-surface-alt, #f5f5f5);
     padding: var(--space-3, 12px);
-    border-radius: var(--radius-md, 6px);
     overflow-x: auto;
     font-size: 0.85rem;
   }
 
   details summary {
     cursor: pointer;
-    font-weight: 500;
     padding: var(--space-2, 8px) 0;
+    font-weight: 500;
   }
 </style>
