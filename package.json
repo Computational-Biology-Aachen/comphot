@@ -36,13 +36,14 @@
 	},
 	"dependencies": {
 		"@computational-biology-aachen/design": "github:Computational-Biology-Aachen/design",
+		"@computational-biology-aachen/mxlweb-core": "github:Computational-Biology-Aachen/mxlweb-core",
 		"@fortawesome/free-brands-svg-icons": ">=7.2.0",
 		"@fortawesome/free-solid-svg-icons": ">=7.2.0",
 		"chart.js": "^4.5.1",
 		"katex": "^0.17.0",
 		"marked": "^18.0.4",
-		"pyodide": "^0.29.4",
 		"svelte-chartjs": "^4.0.1",
-		"svelte-katex": "^0.2.0"
+		"svelte-katex": "^0.2.0",
+		"wat-compiler": "^1.1.1"
 	}
 }

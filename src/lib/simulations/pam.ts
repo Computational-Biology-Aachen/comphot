@@ -4,14 +4,15 @@
  * These translate UI slider parameters into a flat protocol array that the
  * Python worker can run piecewise via solve_ivp.
  *
- * Protocol step format: { t_end: number; PFD: number }
+ * Protocol step format: { t_end: number; PPFD: number }
  * Each step describes the light intensity (PFD) that is applied from the
  * previous step's t_end up to this step's t_end.
  */
 
 export interface ProtocolStep {
 	t_end: number;
-	PFD: number;
+	PPFD: number;
+	[key: string]: number;
 }
 
 export interface PamParams {
@@ -51,9 +52,9 @@ export function buildPamProtocol(params: PamParams): ProtocolStep[] {
 	let t = 0;
 
 	// Helper to push a segment
-	function addStep(t_end: number, PFD: number) {
+	function addStep(t_end: number, PPFD: number) {
 		if (t_end > t) {
-			steps.push({ t_end, PFD });
+			steps.push({ t_end, PPFD });
 			t = t_end;
 		}
 	}
@@ -142,9 +143,9 @@ export function buildMemoryProtocol(params: MemoryPamParams): ProtocolStep[] {
 	const steps: ProtocolStep[] = [];
 	let t = 0;
 
-	function addStep(t_end: number, PFD: number) {
+	function addStep(t_end: number, PPFD: number) {
 		if (t_end > t) {
-			steps.push({ t_end, PFD });
+			steps.push({ t_end, PPFD });
 			t = t_end;
 		}
 	}

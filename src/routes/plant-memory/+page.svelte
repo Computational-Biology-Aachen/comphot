@@ -4,10 +4,16 @@
   import { ta } from "$lib/i18n";
   import LiteratureExpander from "$lib/LiteratureExpander.svelte";
   import * as m from "$lib/paraglide/messages";
-  import SimResultsGrid from "$lib/SimResultsGrid.svelte";
   import { buildMemoryProtocol } from "$lib/simulations/pam";
+  import {
+    computeNpq,
+    computePhiPsii,
+    findPeaks,
+    interpolateAtIndices,
+    normalizeToMax,
+  } from "$lib/simulations/pamAnalysis";
   import { audienceStore } from "$lib/stores/audience.svelte";
-  import { LOG_STEPS, SimState } from "$lib/stores/simState.svelte";
+  import { LOG_STEPS, SimState } from "$lib/stores/simStore.svelte";
   import {
     ActivationSliders,
     Bold,
@@ -17,8 +23,10 @@
     H1,
     InfoBox,
     Li,
+    LineChart,
     SectionMain as Main,
     PageNav,
+    ParameterTable,
     Text,
     Ul,
     type PhaseRegion,
@@ -44,9 +52,6 @@
   let deactivationIdx = $state(10);
   const activationMultiplier = $derived(LOG_STEPS[activationIdx]);
   const deactivationMultiplier = $derived(LOG_STEPS[deactivationIdx]);
-  const totalTime = $derived(
-    darkLength + trainingLength + relaxationLength + memoryLength,
-  );
 
   function runSimulation() {
     const protocol = buildMemoryProtocol({
@@ -63,7 +68,8 @@
     sim.run(
       protocol,
       { AL: lightIntensity, SP: saturatingPulse, CtZ: kDeepoxV, CtV: kEpoxZ },
-      [kDeepoxV, kEpoxZ],
+      kDeepoxV,
+      kEpoxZ,
     );
   }
 
@@ -130,6 +136,77 @@
         oldVal: pp?.CtV?.toFixed(6),
       },
     ];
+  });
+
+  // ── Chart data ────────────────────────────────────────────────────────────
+  const FLUO_COL = 8;
+
+  function extractFluo(result: typeof sim.currentResult): number[] {
+    return result?.values.map((v) => v[FLUO_COL]) ?? [];
+  }
+
+  const resultTime = $derived(sim.currentResult?.time ?? []);
+
+  const fluoCurrent = $derived(normalizeToMax(extractFluo(sim.currentResult)));
+  const fluoPrev = $derived(normalizeToMax(extractFluo(sim.previousResult)));
+
+  const peaksCurrent = $derived(findPeaks(fluoCurrent, 0.2));
+  const peaksPrev = $derived(findPeaks(fluoPrev, 0.2));
+
+  const npqCurrent = $derived.by(() =>
+    interpolateAtIndices(
+      peaksCurrent,
+      computeNpq(fluoCurrent, peaksCurrent),
+      fluoCurrent.length,
+      "akima",
+    ),
+  );
+  const npqPrev = $derived.by(() =>
+    interpolateAtIndices(
+      peaksPrev,
+      computeNpq(fluoPrev, peaksPrev),
+      fluoPrev.length,
+      "akima",
+    ),
+  );
+
+  const phiCurrent = $derived.by(() =>
+    interpolateAtIndices(
+      peaksCurrent,
+      computePhiPsii(fluoCurrent, peaksCurrent),
+      fluoCurrent.length,
+      "akima",
+    ),
+  );
+  const phiPrev = $derived.by(() =>
+    interpolateAtIndices(
+      peaksPrev,
+      computePhiPsii(fluoPrev, peaksPrev),
+      fluoPrev.length,
+      "akima",
+    ),
+  );
+
+  const fluoData = $derived({
+    labels: resultTime,
+    datasets: [
+      { label: ta(m.bio_fluo(), m.math_fluo()), data: fluoCurrent },
+      ...(showOld ? [{ label: m.old_label(), data: fluoPrev }] : []),
+    ],
+  });
+  const npqData = $derived({
+    labels: resultTime,
+    datasets: [
+      { label: m.axis_npq(), data: npqCurrent },
+      ...(showOld ? [{ label: m.old_label(), data: npqPrev }] : []),
+    ],
+  });
+  const phiData = $derived({
+    labels: resultTime,
+    datasets: [
+      { label: m.axis_phipsii(), data: phiCurrent },
+      ...(showOld ? [{ label: m.old_label(), data: phiPrev }] : []),
+    ],
   });
 </script>
 
@@ -339,15 +416,50 @@
 
   <!-- Results ---------------------------------------- -->
   {#if sim.currentResult}
-    <SimResultsGrid
-      currentResult={sim.currentResult}
-      previousResult={sim.previousResult}
-      showOld={showOld}
-      phases={phases}
-      totalTime={totalTime}
-      paramRows={paramRows}
-      showOldParams={showOld && sim.previousParams !== null}
-    />
+    <div
+      class="charts-grid"
+      class:three-cols={audienceStore.audience === "4bio"}
+    >
+      <div class="chart-card">
+        <p class="chart-label">{ta(m.bio_fluo(), m.math_fluo())}</p>
+        <LineChart
+          data={fluoData}
+          phases={phases}
+          loading={sim.loading}
+        />
+      </div>
+
+      {#if audienceStore.audience === "4bio"}
+        <div class="chart-card">
+          <p class="chart-label">{m.axis_npq()}</p>
+          <LineChart
+            data={npqData}
+            phases={phases}
+            loading={sim.loading}
+          />
+        </div>
+
+        <div class="chart-card">
+          <p class="chart-label">{m.axis_phipsii()}</p>
+          <LineChart
+            data={phiData}
+            phases={phases}
+            loading={sim.loading}
+          />
+        </div>
+      {/if}
+    </div>
+
+    {#if paramRows.length > 0}
+      <div class="param-table-wrap">
+        <ParameterTable
+          rows={paramRows}
+          showOld={showOld && sim.previousParams !== null}
+          newLabel={m.new_label()}
+          oldLabel={m.old_label()}
+        />
+      </div>
+    {/if}
   {/if}
 
   <LiteratureExpander />
@@ -358,3 +470,94 @@
     next={{ href: "/conclusion", label: "Conclusion" }}
   />
 </Main>
+
+<style>
+  .fig {
+    width: 100%;
+    text-align: center;
+  }
+  .fig img {
+    max-width: 100%;
+  }
+  .fig figcaption {
+    font-size: 0.875rem;
+    color: var(--color-text-muted, #666);
+    margin-top: var(--space-2, 8px);
+  }
+  .protocol-img {
+    max-width: 100%;
+  }
+
+  .slider-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3, 12px);
+    margin: var(--space-4, 16px) 0;
+  }
+  .slider-label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1, 4px);
+    font-size: 0.9rem;
+  }
+  .slider-row {
+    display: flex;
+    gap: var(--space-4, 16px);
+    flex-wrap: wrap;
+  }
+  .slider-row > * {
+    flex: 1;
+    min-width: 160px;
+  }
+  .slider-row.three > * {
+    min-width: 120px;
+  }
+
+  .run-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4, 16px);
+    margin: var(--space-4, 16px) 0;
+  }
+  .run-btn-wrap {
+    flex: 1;
+    max-width: 220px;
+  }
+
+  .toggle-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 8px);
+    cursor: pointer;
+    margin: var(--space-2, 8px) 0;
+  }
+
+  .error-msg {
+    color: var(--color-error, red);
+    margin: var(--space-2, 8px) 0;
+  }
+
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4, 16px);
+    margin: var(--space-4, 16px) 0;
+  }
+  .charts-grid.three-cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .chart-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2, 8px);
+  }
+  .chart-label {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .param-table-wrap {
+    margin: var(--space-4, 16px) 0;
+  }
+</style>
