@@ -326,9 +326,6 @@
           onchange={runSimulation}
         />
       </label>
-    </div>
-
-    <div class="slider-row">
       <label class="slider-label">
         {@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
         <input
@@ -351,9 +348,6 @@
           onchange={runSimulation}
         />
       </label>
-    </div>
-
-    <div class="slider-row three">
       <label class="slider-label">
         {@html m.mem_slider_training()}: <strong>{trainingLength} s</strong>
         <input
@@ -388,11 +382,8 @@
           onchange={runSimulation}
         />
       </label>
-    </div>
-
-    <!-- 4bio: activation/deactivation sliders -->
-    {#if audienceStore.audience === "4bio"}
-      <div class="slider-row">
+      <!-- 4bio: activation/deactivation sliders -->
+      {#if audienceStore.audience === "4bio"}
         <label class="slider-label">
           {m.slider_activation()}: <strong>{activationMultiplier}</strong>
           <input
@@ -415,8 +406,8 @@
             onchange={runSimulation}
           />
         </label>
-      </div>
-    {/if}
+      {/if}
+    </div>
   </div>
 
   <div class="compare-row">
@@ -515,15 +506,20 @@
   }
   .slider-row {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
+    align-items: inherit;
     gap: var(--space-4, 16px);
-  }
-  .slider-row > * {
-    flex: 1;
-    min-width: 160px;
-  }
-  .slider-row.three > * {
-    min-width: 120px;
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    padding: 1.5rem;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      align-items: center;
+    }
   }
 
   .compare-row {

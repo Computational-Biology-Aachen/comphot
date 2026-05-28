@@ -441,61 +441,56 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
           onchange={runSimulation}
         />
       </label>
-    </div>
 
-    {#if audienceStore.audience === "4bio"}
-      <div class="slider-row">
-        <div class="slider-col">
-          <label class="slider-label">
-            {m.slider_activation()}: <strong>{activationMultiplier}</strong>
-            <input
-              type="range"
-              min="0"
-              max="20"
-              step="1"
-              bind:value={activationIdx}
-              onchange={runSimulation}
-            />
-          </label>
-          <label class="slider-label">
-            {m.slider_deactivation()}: <strong>{deactivationMultiplier}</strong>
-            <input
-              type="range"
-              min="0"
-              max="20"
-              step="1"
-              bind:value={deactivationIdx}
-              onchange={runSimulation}
-            />
-          </label>
-        </div>
-        <div class="slider-col">
-          <label class="slider-label">
-            {@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
-            <input
-              type="range"
-              min="0"
-              max={totalMinutes * 60}
-              step="5"
-              bind:value={darkLength}
-              onchange={runSimulation}
-            />
-          </label>
-          <label class="slider-label">
-            {@html m.fal_slider_saturate()}:
-            <strong>{saturatingPulse}</strong>
-            <input
-              type="range"
-              min="0"
-              max="10000"
-              step="500"
-              bind:value={saturatingPulse}
-              onchange={runSimulation}
-            />
-          </label>
-        </div>
-      </div>
-    {/if}
+      {#if audienceStore.audience === "4bio"}
+        <label class="slider-label">
+          {m.slider_activation()}: <strong>{activationMultiplier}</strong>
+          <input
+            type="range"
+            min="0"
+            max="20"
+            step="1"
+            bind:value={activationIdx}
+            onchange={runSimulation}
+          />
+        </label>
+        <label class="slider-label">
+          {m.slider_deactivation()}: <strong>{deactivationMultiplier}</strong>
+          <input
+            type="range"
+            min="0"
+            max="20"
+            step="1"
+            bind:value={deactivationIdx}
+            onchange={runSimulation}
+          />
+        </label>
+
+        <label class="slider-label">
+          {@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
+          <input
+            type="range"
+            min="0"
+            max={totalMinutes * 60}
+            step="5"
+            bind:value={darkLength}
+            onchange={runSimulation}
+          />
+        </label>
+        <label class="slider-label">
+          {@html m.fal_slider_saturate()}:
+          <strong>{saturatingPulse}</strong>
+          <input
+            type="range"
+            min="0"
+            max="10000"
+            step="500"
+            bind:value={saturatingPulse}
+            onchange={runSimulation}
+          />
+        </label>
+      {/if}
+    </div>
   </div>
 
   <div class="compare-row">
@@ -601,19 +596,20 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
   }
   .slider-row {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4, 16px);
-  }
-  .slider-row > * {
-    flex: 1;
-    min-width: 160px;
-  }
-  .slider-col {
-    display: flex;
-    flex: 1;
     flex-direction: column;
-    gap: var(--space-3, 12px);
-    min-width: 160px;
+    flex-wrap: wrap;
+    align-items: inherit;
+    gap: var(--space-4, 16px);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    padding: 1.5rem;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      align-items: center;
+    }
   }
 
   .compare-row {
