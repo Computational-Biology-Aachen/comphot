@@ -13,6 +13,7 @@
     SectionMain as Main,
     PageNav,
     Text,
+    Ol,
     Ul,
     Tabs,
     YouTubeEmbed,
@@ -435,7 +436,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
   <Accordion title={m.literature()}>
     <Text>
       <p>{m.literature_onpage()}</p>
-      <Ul>
+      <Ol>
         <Li>
           van Aalst, M., Ebenhöh, O., &amp; Matuszyńska, A. (2021). Constructing
           and analysing dynamic models with modelbase v1.2.3. BMC
@@ -473,7 +474,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
             https://doi.org/10.1007/s11120-018-0601-1
           </a>
         </li>
-      </Ul>
+      </Ol>
       <p>{@html marked.parseInline(m.literature_plants_and_python_intro())}</p>
       <Ul>
         <Li

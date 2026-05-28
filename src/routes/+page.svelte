@@ -14,6 +14,7 @@
     PageNav,
     Section,
     Text,
+    Ol,
     Ul,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
@@ -141,7 +142,7 @@
     <Text>
       {m.literature_onpage()}
     </Text>
-    <Ul>
+    <Ol>
       <Li>
         Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A
         mathematical model of non-photochemical quenching to study short-term
@@ -151,11 +152,15 @@
           https://doi.org/10.1016/j.bbabio.2016.09.003
         </a>
       </Li>
-    </Ul>
-    <Text>{@html marked.parseInline(m.literature_plants_and_python_intro())}</Text>
+    </Ol>
+    <Text
+      >{@html marked.parseInline(m.literature_plants_and_python_intro())}</Text
+    >
     <Ul>
-      <Li>{@html marked.parseInline(m.literature_plants_and_python_item1())}</Li>
-      <Li>{@html marked.parseInline(m.literature_plants_and_python_item2())}</Li>
+      <Li>{@html marked.parseInline(m.literature_plants_and_python_item1())}</Li
+      >
+      <Li>{@html marked.parseInline(m.literature_plants_and_python_item2())}</Li
+      >
     </Ul>
   </Accordion>
 

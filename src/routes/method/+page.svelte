@@ -13,6 +13,7 @@
     SectionMain as Main,
     PageNav,
     Text,
+    Ol,
     Ul,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
@@ -201,7 +202,7 @@
   <Accordion title={m.literature()}>
     <Text>
       {@html marked.parseInline(m.mth_literature_declaration())}
-      <Ul>
+      <Ol>
         <Li>
           Brooks, M. D., &amp; Niyogi, K. K. (2011). Use of a pulse-amplitude
           modulated chlorophyll fluorometer to study the efficiency of
@@ -221,7 +222,7 @@
             https://doi.org/10.1101/2021.05.12.443801
           </a>
         </li>
-      </Ul>
+      </Ol>
     </Text>
   </Accordion>
 

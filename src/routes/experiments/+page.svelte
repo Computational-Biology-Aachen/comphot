@@ -2,7 +2,6 @@
   import { base } from "$app/paths";
 
   import { ta } from "$lib/i18n";
-  import LiteratureExpander from "$lib/LiteratureExpander.svelte";
   import * as m from "$lib/paraglide/messages";
   import { buildPamProtocol } from "$lib/simulations/pam";
   import {
@@ -17,17 +16,19 @@
   import {
     Bold,
     CompareCheckbox,
-    Accordion as Expander,
+    Accordion,
     H1,
     H2,
     InfoBox,
     Li,
     LineChart,
+    Link,
     SectionMain as Main,
     PageNav,
     ParameterTable,
     type PhaseRegion,
     Text,
+    Ol,
     Ul,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
@@ -250,7 +251,7 @@
   <Text>{@html marked.parseInline(m.fal_rates_5())}</Text>
   <Text>{@html marked.parseInline(m.fal_rates_6())}</Text>
 
-  <Expander>
+  <Accordion>
     {#snippet header()}
       {@html marked.parseInline(m.fal_components_explanation_header())}
     {/snippet}
@@ -310,7 +311,7 @@
         </tr>
       </tbody>
     </table>
-  </Expander>
+  </Accordion>
 
   <!-- 4math: ODE equations + code walkthrough -->
   {#if audienceStore.audience === "4math"}
@@ -334,7 +335,7 @@ b_\mathrm{H} \cdot \frac{\mathrm{dH}}{\mathrm{d}t} &= 2 v_\mathrm{PSII} + 4 v_\m
       >
     </div>
 
-    <Expander>
+    <Accordion>
       {#snippet header()}
         {@html marked.parseInline(m.math_fal_reaction_rates())}
       {/snippet}
@@ -348,9 +349,9 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 \end{aligned}`}</Katex
         >
       </div>
-    </Expander>
+    </Accordion>
 
-    <Expander>
+    <Accordion>
       {#snippet header()}
         {@html marked.parseInline(m.math_fal_model_code_expander())}
       {/snippet}
@@ -379,7 +380,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 
       <Text>{@html marked.parseInline(m.math_fal_simulation_2())}</Text>
       <pre><code>{CODE.initialisesim}</code></pre>
-    </Expander>
+    </Accordion>
   {/if}
 
   <!-- Implementation -->
@@ -407,7 +408,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
   <Text>{@html marked.parseInline(m.fal_headline_slider())}</Text>
   <Text>{@html marked.parseInline(m.fal_explanatnion())}</Text>
 
-  <Expander open={false}>
+  <Accordion open={false}>
     {#snippet header()}
       {@html marked.parseInline(m.fal_graph_explanation_expander())}
     {/snippet}
@@ -433,10 +434,10 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
       {@html marked.parseInline(m.fal_graph_explanation_header_duo())}
     </Text>
     <Text>{@html marked.parseInline(m.fal_graph_explanation_duo())}</Text>
-  </Expander>
+  </Accordion>
 
   <!-- Having trouble connecting -->
-  <Expander open={false}>
+  <Accordion open={false}>
     {#snippet header()}
       {@html marked.parseInline(m.fal_guiding_expander())}
     {/snippet}
@@ -452,7 +453,10 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     <Text>{@html marked.parseInline(m.fal_guiding_intro())}</Text>
 
     <!-- Q1 -->
-    <Text><Bold>1.</Bold> {@html marked.parseInline(m.fal_guiding_q1_prompt())}</Text>
+    <Text
+      ><Bold>1.</Bold>
+      {@html marked.parseInline(m.fal_guiding_q1_prompt())}</Text
+    >
     <Ul>
       {#if !showAnswers}
         <Li>{@html marked.parseInline(m.fal_guiding_q1_1())}</Li>
@@ -464,7 +468,10 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     </Ul>
 
     <!-- Q2 -->
-    <Text><Bold>2.</Bold> {@html marked.parseInline(m.fal_guiding_q2_prompt())}</Text>
+    <Text
+      ><Bold>2.</Bold>
+      {@html marked.parseInline(m.fal_guiding_q2_prompt())}</Text
+    >
     <Ul>
       {#if !showAnswers}
         <Li>{@html marked.parseInline(m.fal_guiding_q2_1())}</Li>
@@ -475,7 +482,10 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     </Ul>
 
     <!-- Q3 -->
-    <Text><Bold>3.</Bold> {@html marked.parseInline(m.fal_guiding_q3_prompt())}</Text>
+    <Text
+      ><Bold>3.</Bold>
+      {@html marked.parseInline(m.fal_guiding_q3_prompt())}</Text
+    >
     <Ul>
       {#if !showAnswers}
         <Li>{@html marked.parseInline(m.fal_guiding_q3_1())}</Li>
@@ -488,7 +498,10 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     </Ul>
 
     <!-- Q4 -->
-    <Text><Bold>4.</Bold> {@html marked.parseInline(m.fal_guiding_q4_prompt())}</Text>
+    <Text
+      ><Bold>4.</Bold>
+      {@html marked.parseInline(m.fal_guiding_q4_prompt())}</Text
+    >
     <Ul>
       {#if !showAnswers}
         <Li>{@html marked.parseInline(m.fal_guiding_q4_1())}</Li>
@@ -501,7 +514,10 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 
     <!-- Q5-Q7: bio only -->
     {#if audienceStore.audience === "4bio"}
-      <Text><Bold>5.</Bold> {@html marked.parseInline(m.fal_guiding_q5_prompt())}</Text>
+      <Text
+        ><Bold>5.</Bold>
+        {@html marked.parseInline(m.fal_guiding_q5_prompt())}</Text
+      >
       <Ul>
         {#if !showAnswers}
           <Li>{@html marked.parseInline(m.fal_guiding_q5_1())}</Li>
@@ -514,7 +530,10 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
         {/if}
       </Ul>
 
-      <Text><Bold>6.</Bold> {@html marked.parseInline(m.fal_guiding_q6_prompt())}</Text>
+      <Text
+        ><Bold>6.</Bold>
+        {@html marked.parseInline(m.fal_guiding_q6_prompt())}</Text
+      >
       <Ul>
         {#if !showAnswers}
           <Li>{@html marked.parseInline(m.fal_guiding_q6_1())}</Li>
@@ -523,7 +542,10 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
         {/if}
       </Ul>
 
-      <Text><Bold>7.</Bold> {@html marked.parseInline(m.fal_guiding_q7_prompt())}</Text>
+      <Text
+        ><Bold>7.</Bold>
+        {@html marked.parseInline(m.fal_guiding_q7_prompt())}</Text
+      >
       <Ul>
         {#if !showAnswers}
           <Li>{@html marked.parseInline(m.fal_guiding_q7_1())}</Li>
@@ -535,7 +557,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
         {/if}
       </Ul>
     {/if}
-  </Expander>
+  </Accordion>
 
   <!-- Slider controls -------------------------------- -->
 
@@ -676,7 +698,21 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
       />
     {/if}
   {/if}
-  <LiteratureExpander />
+  <Accordion title={m.literature()}>
+    <Text>{@html marked.parseInline(m.literature_onpage())}</Text>
+    <Ol>
+      <Li>
+        Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A
+        mathematical model of non-photochemical quenching to study short-term
+        light memory in plants.
+        <em>Biochimica et Biophysica Acta (BBA) - Bioenergetics</em>, 1857(12),
+        1860-1869.
+        <Link href="https://doi.org/10.1016/j.bbabio.2016.09.003"
+          >https://doi.org/10.1016/j.bbabio.2016.09.003</Link
+        >
+      </Li>
+    </Ol>
+  </Accordion>
   <PageNav
     base={base}
     prev={{ href: "/model", label: "Computational Models" }}
@@ -776,23 +812,23 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 
   .content-table-title {
     margin: var(--space-4, 16px) 0 var(--space-2, 8px);
-    font-size: 1rem;
     font-weight: 600;
+    font-size: 1rem;
   }
 
   .content-table {
+    margin-bottom: var(--space-4, 16px);
     border-collapse: collapse;
     width: 100%;
     font-size: 0.875rem;
-    margin-bottom: var(--space-4, 16px);
   }
 
   .content-table th,
   .content-table td {
+    vertical-align: top;
     border-bottom: 1px solid var(--color-border);
     padding: 0.4rem 0.75rem;
     text-align: left;
-    vertical-align: top;
   }
 
   .content-table th {
@@ -802,9 +838,9 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
   }
 
   .content-ol {
-    padding-left: 2rem;
-    padding-bottom: var(--space-4);
     display: grid;
     gap: var(--space-2);
+    padding-bottom: var(--space-4);
+    padding-left: 2rem;
   }
 </style>

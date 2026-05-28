@@ -12,6 +12,7 @@
     SectionMain as Main,
     PageNav,
     Text,
+    Ol,
     Ul,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
@@ -258,7 +259,7 @@
   <Accordion title={m.literature()}>
     <Text>
       <p>{m.literature_onpage()}</p>
-      <Ul>
+      <Ol>
         <Li>
           Cook, J., Oreskes, N., Doran, P. T., Anderegg, W. R. L., Verheggen,
           B., Maibach, E. W., Carlton, J. S., Lewandowsky, S., Skuce, A. G.,
@@ -270,7 +271,7 @@
             https://doi.org/10.1088/1748-9326/11/4/048002
           </a>
         </Li>
-      </Ul>
+      </Ol>
     </Text>
   </Accordion>
 
@@ -283,9 +284,9 @@
 
 <style>
   .content-ol {
-    padding-left: 2rem;
-    padding-bottom: var(--space-4);
     display: grid;
     gap: var(--space-1);
+    padding-bottom: var(--space-4);
+    padding-left: 2rem;
   }
 </style>

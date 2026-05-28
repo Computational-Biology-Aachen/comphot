@@ -2,7 +2,6 @@
   import { base } from "$app/paths";
 
   import { ta } from "$lib/i18n";
-  import LiteratureExpander from "$lib/LiteratureExpander.svelte";
   import * as m from "$lib/paraglide/messages";
   import { buildMemoryProtocol } from "$lib/simulations/pam";
   import {
@@ -17,15 +16,17 @@
   import {
     Bold,
     CompareCheckbox,
-    Accordion as Expander,
+    Accordion,
     H1,
     InfoBox,
     Li,
     LineChart,
+    Link,
     SectionMain as Main,
     PageNav,
     ParameterTable,
     Text,
+    Ol,
     Ul,
     type PhaseRegion,
   } from "@computational-biology-aachen/design";
@@ -272,7 +273,7 @@
   </figure>
 
   <!-- Guiding questions ------------------------------- -->
-  <Expander open={false}>
+  <Accordion open={false}>
     {#snippet header()}
       {@html marked.parseInline(m.mem_guiding_expander())}
     {/snippet}
@@ -335,7 +336,7 @@
         {@html marked.parseInline(m.mem_guiding_last_prompt())}</Text
       >
     {/if}
-  </Expander>
+  </Accordion>
 
   <!-- Sliders ---------------------------------------- -->
 
@@ -500,7 +501,21 @@
     {/if}
   {/if}
 
-  <LiteratureExpander />
+  <Accordion title={m.literature()}>
+    <Text>{@html marked.parseInline(m.literature_onpage())}</Text>
+    <Ol>
+      <Li>
+        Matuszyńska, A., Heidari, S., Jahns, P., &amp; Ebenhöh, O. (2016). A
+        mathematical model of non-photochemical quenching to study short-term
+        light memory in plants.
+        <em>Biochimica et Biophysica Acta (BBA) - Bioenergetics</em>, 1857(12),
+        1860-1869.
+        <Link href="https://doi.org/10.1016/j.bbabio.2016.09.003"
+          >https://doi.org/10.1016/j.bbabio.2016.09.003</Link
+        >
+      </Li>
+    </Ol>
+  </Accordion>
 
   <PageNav
     base={base}

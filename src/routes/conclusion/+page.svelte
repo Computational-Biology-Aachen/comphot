@@ -9,6 +9,7 @@
     SectionMain as Main,
     PageNav,
     Text,
+    Ol,
     Ul,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
