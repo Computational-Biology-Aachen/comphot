@@ -9,6 +9,7 @@
     H2,
     InfoBox,
     Li,
+    Link,
     SectionMain as Main,
     PageNav,
     Text,
@@ -200,18 +201,18 @@
   <Accordion title={m.literature()}>
     <Text>
       {@html marked.parseInline(m.mth_literature_declaration())}
-      <ul>
-        <li>
+      <Ul>
+        <Li>
           Brooks, M. D., &amp; Niyogi, K. K. (2011). Use of a pulse-amplitude
           modulated chlorophyll fluorometer to study the efficiency of
           photosynthesis in Arabidopsis plants. Chloroplast Research in
           Arabidopsis: Methods and Protocols, Volume II, 299-310.
-          <a
+          <Link
             href="https://link.springer.com/protocol/10.1007/978-1-61779-237-3_16"
           >
             https://link.springer.com/protocol/10.1007/978-1-61779-237-3_16
-          </a>
-        </li>
+          </Link>
+        </Li>
         <li>
           Nies, T., Niu, Y., Ebenhöh, O., Matsubara, S., &amp; Matuszyńska, A.
           (2021). Chlorophyll fluorescence: How the quality of information about
@@ -220,7 +221,7 @@
             https://doi.org/10.1101/2021.05.12.443801
           </a>
         </li>
-      </ul>
+      </Ul>
     </Text>
   </Accordion>
 

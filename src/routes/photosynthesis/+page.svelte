@@ -245,19 +245,21 @@
     />
     <p class="caption">{m.pho_caption_thaiana_picture()}</p>
 
-    <Text>
-      {@html ta(
-        m.bio_pho_expander_model_organism_explanation(),
-        m.math_pho_expander_model_organism_explanation(),
-      )}
-    </Text>
+    <Text>{@html m.pho_model_organism_intro()}</Text>
+    <ol class="content-ol">
+      <li>{@html m.pho_model_organism_item1()}</li>
+      <li>{@html m.pho_model_organism_item2()}</li>
+      <li>{@html m.pho_model_organism_item3()}</li>
+      <li>{@html m.pho_model_organism_item4()}</li>
+    </ol>
+    <Text>{@html m.pho_model_organism_outro()}</Text>
   </Accordion>
 
   <Accordion title={m.literature()}>
     <Text>
       <p>{m.literature_onpage()}</p>
-      <ul>
-        <li>
+      <Ul>
+        <Li>
           Cook, J., Oreskes, N., Doran, P. T., Anderegg, W. R. L., Verheggen,
           B., Maibach, E. W., Carlton, J. S., Lewandowsky, S., Skuce, A. G.,
           Green, S. A., Nuccitelli, D., Jacobs, P., Richardson, M., Winkler, B.,
@@ -267,8 +269,8 @@
           <a href="https://doi.org/10.1088/1748-9326/11/4/048002">
             https://doi.org/10.1088/1748-9326/11/4/048002
           </a>
-        </li>
-      </ul>
+        </Li>
+      </Ul>
     </Text>
   </Accordion>
 
@@ -278,3 +280,12 @@
     next={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
   />
 </Main>
+
+<style>
+  .content-ol {
+    padding-left: 2rem;
+    padding-bottom: var(--space-4);
+    display: grid;
+    gap: var(--space-1);
+  }
+</style>

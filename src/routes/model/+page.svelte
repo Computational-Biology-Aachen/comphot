@@ -378,7 +378,11 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
     {/if}
   </Accordion>
 
-  <Accordion title={m.mdl_headline_e_photosynthesis()}>
+  <!-- The e-photosynthesis model -->
+  <Accordion>
+    {#snippet header()}
+      {@html marked.parse(m.mdl_headline_e_photosynthesis())}
+    {/snippet}
     <Text>
       {@html marked.parseInline(
         ta(m.bio_mdl_e_photosynthesis_1(), m.math_mdl_e_photosynthesis_1()),
@@ -423,15 +427,15 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
   <Accordion title={m.literature()}>
     <Text>
       <p>{m.literature_onpage()}</p>
-      <ol>
-        <li>
+      <Ul>
+        <Li>
           van Aalst, M., Ebenhöh, O., &amp; Matuszyńska, A. (2021). Constructing
           and analysing dynamic models with modelbase v1.2.3. BMC
           Bioinformatics, 22(1), 1-15.
           <a href="https://doi.org/10.1186/s12859-021-04122-7">
             https://doi.org/10.1186/s12859-021-04122-7
           </a>
-        </li>
+        </Li>
         <li>
           Farquhar, G. D., von Caemmerer, S., &amp; Berry, J. A. (1980). A
           biochemical model of photosynthetic CO₂ assimilation in leaves of C3
@@ -461,7 +465,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
             https://doi.org/10.1007/s11120-018-0601-1
           </a>
         </li>
-      </ol>
+      </Ul>
       <p>{@html marked.parseInline(m.literature_plants_and_python())}</p>
     </Text>
   </Accordion>
