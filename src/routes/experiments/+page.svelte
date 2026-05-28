@@ -255,8 +255,61 @@
       {@html marked.parseInline(m.fal_components_explanation_header())}
     {/snippet}
 
-    <Text>{@html marked.parseInline(m.fal_molecules_explanation_table())}</Text>
-    <Text>{@html marked.parseInline(m.fal_enzymes_explanation_table())}</Text>
+    <h3 class="content-table-title">{m.fal_molecules_title()}</h3>
+    <table class="content-table">
+      <thead>
+        <tr>
+          <th>{m.fal_table_col_name()}</th>
+          <th>{m.fal_table_col_description()}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{m.fal_molecules_pq_name()}</td>
+          <td>{m.fal_molecules_pq_desc()}</td>
+        </tr>
+        <tr>
+          <td>{m.fal_molecules_atp_name()}</td>
+          <td>{m.fal_molecules_atp_desc()}</td>
+        </tr>
+        <tr>
+          <td>{m.fal_molecules_xantophyll_name()}</td>
+          <td>{m.fal_molecules_xantophyll_desc()}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="content-table-title">{m.fal_enzymes_title()}</h3>
+    <table class="content-table">
+      <thead>
+        <tr>
+          <th>{m.fal_table_col_name()}</th>
+          <th>{m.fal_table_col_description()}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{m.fal_enzymes_psii_name()}</td>
+          <td>{m.fal_enzymes_psii_desc()}</td>
+        </tr>
+        <tr>
+          <td>{m.fal_enzymes_psbs_name()}</td>
+          <td>{m.fal_enzymes_psbs_desc()}</td>
+        </tr>
+        <tr>
+          <td>{m.fal_enzymes_ptox_name()}</td>
+          <td>{m.fal_enzymes_ptox_desc()}</td>
+        </tr>
+        <tr>
+          <td>{m.fal_enzymes_cytb6f_name()}</td>
+          <td>{m.fal_enzymes_cytb6f_desc()}</td>
+        </tr>
+        <tr>
+          <td>{m.fal_enzymes_atpase_name()}</td>
+          <td>{m.fal_enzymes_atpase_desc()}</td>
+        </tr>
+      </tbody>
+    </table>
   </Expander>
 
   <!-- 4math: ODE equations + code walkthrough -->
@@ -714,5 +767,32 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     cursor: pointer;
     padding: var(--space-2, 8px) 0;
     font-weight: 500;
+  }
+
+  .content-table-title {
+    margin: var(--space-4, 16px) 0 var(--space-2, 8px);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .content-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.875rem;
+    margin-bottom: var(--space-4, 16px);
+  }
+
+  .content-table th,
+  .content-table td {
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.4rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .content-table th {
+    background: var(--color-surface);
+    font-weight: 600;
+    white-space: nowrap;
   }
 </style>

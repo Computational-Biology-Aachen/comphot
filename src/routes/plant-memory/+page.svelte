@@ -300,7 +300,10 @@
     </Ul>
 
     <!-- Q2 -->
-    <Text><Bold>2.</Bold> {@html marked.parseInline(m.mem_guiding_q2_prompt())}</Text>
+    <Text
+      ><Bold>2.</Bold>
+      {@html marked.parseInline(m.mem_guiding_q2_prompt())}</Text
+    >
     <Ul>
       <Li>{@html marked.parseInline(m.mem_guiding_q2_1())}</Li>
       <Li>{@html marked.parseInline(m.mem_guiding_q2_2())}</Li>
@@ -308,7 +311,10 @@
 
     <!-- Q3: bio only -->
     {#if audienceStore.audience === "4bio"}
-      <Text><Bold>3.</Bold> {@html marked.parseInline(m.bio_mem_guiding_q3_prompt())}</Text>
+      <Text
+        ><Bold>3.</Bold>
+        {@html marked.parseInline(m.bio_mem_guiding_q3_prompt())}</Text
+      >
       <Ul>
         <Li>{@html marked.parseInline(m.bio_mem_guiding_q3_1())}</Li>
         <Li>{@html marked.parseInline(m.bio_mem_guiding_q3_2())}</Li>
@@ -319,9 +325,15 @@
 
     <!-- Last Q: bio Q4 / math Q3 -->
     {#if audienceStore.audience === "4bio"}
-      <Text><Bold>4.</Bold> {@html marked.parseInline(m.mem_guiding_last_prompt())}</Text>
+      <Text
+        ><Bold>4.</Bold>
+        {@html marked.parseInline(m.mem_guiding_last_prompt())}</Text
+      >
     {:else}
-      <Text><Bold>3.</Bold> {@html marked.parseInline(m.mem_guiding_last_prompt())}</Text>
+      <Text
+        ><Bold>3.</Bold>
+        {@html marked.parseInline(m.mem_guiding_last_prompt())}</Text
+      >
     {/if}
   </Expander>
 
