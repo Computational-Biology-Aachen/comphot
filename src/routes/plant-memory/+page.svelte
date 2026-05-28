@@ -301,118 +301,115 @@
   </Expander>
 
   <!-- Sliders ---------------------------------------- -->
-  <div class="slider-section">
-    <!-- Common sliders -->
-    <div class="slider-row">
+
+  <!-- Common sliders -->
+  <div class="slider-row">
+    <label class="slider-label">
+      {@html m.slider_light()}: <strong>{lightIntensity}</strong>
+      <input
+        type="range"
+        min="50"
+        max="900"
+        step="50"
+        bind:value={lightIntensity}
+        onchange={runSimulation}
+      />
+    </label>
+    <label class="slider-label">
+      {@html m.slider_pulses()}: <strong>{pulseInterval} s</strong>
+      <input
+        type="range"
+        min="5"
+        max="150"
+        step="5"
+        bind:value={pulseInterval}
+        onchange={runSimulation}
+      />
+    </label>
+    <label class="slider-label">
+      {@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
+      <input
+        type="range"
+        min="0"
+        max="300"
+        step="10"
+        bind:value={darkLength}
+        onchange={runSimulation}
+      />
+    </label>
+    <label class="slider-label">
+      {@html m.fal_slider_saturate()}: <strong>{saturatingPulse}</strong>
+      <input
+        type="range"
+        min="0"
+        max="10000"
+        step="500"
+        bind:value={saturatingPulse}
+        onchange={runSimulation}
+      />
+    </label>
+    <label class="slider-label">
+      {@html m.mem_slider_training()}: <strong>{trainingLength} s</strong>
+      <input
+        type="range"
+        min="0"
+        max="600"
+        step="30"
+        bind:value={trainingLength}
+        onchange={runSimulation}
+      />
+    </label>
+    <label class="slider-label">
+      {@html m.mem_slider_relaxation()}:
+      <strong>{relaxationLength} s</strong>
+      <input
+        type="range"
+        min="0"
+        max="600"
+        step="30"
+        bind:value={relaxationLength}
+        onchange={runSimulation}
+      />
+    </label>
+    <label class="slider-label">
+      {@html m.mem_slider_memory()}: <strong>{memoryLength} s</strong>
+      <input
+        type="range"
+        min="0"
+        max="600"
+        step="30"
+        bind:value={memoryLength}
+        onchange={runSimulation}
+      />
+    </label>
+    <!-- 4bio: activation/deactivation sliders -->
+    {#if audienceStore.audience === "4bio"}
       <label class="slider-label">
-        {@html m.slider_light()}: <strong>{lightIntensity}</strong>
-        <input
-          type="range"
-          min="50"
-          max="900"
-          step="50"
-          bind:value={lightIntensity}
-          onchange={runSimulation}
-        />
-      </label>
-      <label class="slider-label">
-        {@html m.slider_pulses()}: <strong>{pulseInterval} s</strong>
-        <input
-          type="range"
-          min="5"
-          max="150"
-          step="5"
-          bind:value={pulseInterval}
-          onchange={runSimulation}
-        />
-      </label>
-      <label class="slider-label">
-        {@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
+        {m.slider_activation()}: <strong>{activationMultiplier}</strong>
         <input
           type="range"
           min="0"
-          max="300"
-          step="10"
-          bind:value={darkLength}
+          max="20"
+          step="1"
+          bind:value={activationIdx}
           onchange={runSimulation}
         />
       </label>
       <label class="slider-label">
-        {@html m.fal_slider_saturate()}: <strong>{saturatingPulse}</strong>
+        {m.slider_deactivation()}: <strong>{deactivationMultiplier}</strong>
         <input
           type="range"
           min="0"
-          max="10000"
-          step="500"
-          bind:value={saturatingPulse}
+          max="20"
+          step="1"
+          bind:value={deactivationIdx}
           onchange={runSimulation}
         />
       </label>
-      <label class="slider-label">
-        {@html m.mem_slider_training()}: <strong>{trainingLength} s</strong>
-        <input
-          type="range"
-          min="0"
-          max="600"
-          step="30"
-          bind:value={trainingLength}
-          onchange={runSimulation}
-        />
-      </label>
-      <label class="slider-label">
-        {@html m.mem_slider_relaxation()}:
-        <strong>{relaxationLength} s</strong>
-        <input
-          type="range"
-          min="0"
-          max="600"
-          step="30"
-          bind:value={relaxationLength}
-          onchange={runSimulation}
-        />
-      </label>
-      <label class="slider-label">
-        {@html m.mem_slider_memory()}: <strong>{memoryLength} s</strong>
-        <input
-          type="range"
-          min="0"
-          max="600"
-          step="30"
-          bind:value={memoryLength}
-          onchange={runSimulation}
-        />
-      </label>
-      <!-- 4bio: activation/deactivation sliders -->
-      {#if audienceStore.audience === "4bio"}
-        <label class="slider-label">
-          {m.slider_activation()}: <strong>{activationMultiplier}</strong>
-          <input
-            type="range"
-            min="0"
-            max="20"
-            step="1"
-            bind:value={activationIdx}
-            onchange={runSimulation}
-          />
-        </label>
-        <label class="slider-label">
-          {m.slider_deactivation()}: <strong>{deactivationMultiplier}</strong>
-          <input
-            type="range"
-            min="0"
-            max="20"
-            step="1"
-            bind:value={deactivationIdx}
-            onchange={runSimulation}
-          />
-        </label>
-      {/if}
-    </div>
+    {/if}
   </div>
 
-  <div class="compare-row">
-    <CompareCheckbox bind:checked={compareWithLast} />
-  </div>
+  <CompareCheckbox bind:checked={compareWithLast} />
 
   {#if sim.errorMsg}
     <p class="error-msg">{sim.errorMsg}</p>
@@ -492,12 +489,6 @@
     max-width: 100%;
   }
 
-  .slider-section {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3, 12px);
-    margin: var(--space-4, 16px) 0;
-  }
   .slider-label {
     display: flex;
     flex-direction: column;
@@ -520,10 +511,6 @@
       grid-template-columns: 1fr 1fr 1fr 1fr;
       align-items: center;
     }
-  }
-
-  .compare-row {
-    margin: var(--space-3, 12px) 0;
   }
 
   .toggle-label {

@@ -405,97 +405,94 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
   </Expander>
 
   <!-- Slider controls -------------------------------- -->
-  <div class="slider-section">
+
+  <label class="slider-label">
+    {@html m.slider_light()}: <strong>{lightIntensity}</strong>
+    <input
+      type="range"
+      min="50"
+      max="900"
+      step="50"
+      bind:value={lightIntensity}
+      onchange={runSimulation}
+    />
+  </label>
+
+  <div class="slider-row">
     <label class="slider-label">
-      {@html m.slider_light()}: <strong>{lightIntensity}</strong>
+      {@html m.fal_slider_time()}: <strong>{totalMinutes} min</strong>
       <input
         type="range"
-        min="50"
-        max="900"
-        step="50"
-        bind:value={lightIntensity}
+        min="1"
+        max="15"
+        step="1"
+        bind:value={totalMinutes}
+        onchange={runSimulation}
+      />
+    </label>
+    <label class="slider-label">
+      {@html m.slider_pulses()}: <strong>{pulseInterval} s</strong>
+      <input
+        type="range"
+        min="5"
+        max="150"
+        step="5"
+        bind:value={pulseInterval}
         onchange={runSimulation}
       />
     </label>
 
-    <div class="slider-row">
+    {#if audienceStore.audience === "4bio"}
       <label class="slider-label">
-        {@html m.fal_slider_time()}: <strong>{totalMinutes} min</strong>
+        {m.slider_activation()}: <strong>{activationMultiplier}</strong>
         <input
           type="range"
-          min="1"
-          max="15"
+          min="0"
+          max="20"
           step="1"
-          bind:value={totalMinutes}
+          bind:value={activationIdx}
           onchange={runSimulation}
         />
       </label>
       <label class="slider-label">
-        {@html m.slider_pulses()}: <strong>{pulseInterval} s</strong>
+        {m.slider_deactivation()}: <strong>{deactivationMultiplier}</strong>
         <input
           type="range"
-          min="5"
-          max="150"
-          step="5"
-          bind:value={pulseInterval}
+          min="0"
+          max="20"
+          step="1"
+          bind:value={deactivationIdx}
           onchange={runSimulation}
         />
       </label>
 
-      {#if audienceStore.audience === "4bio"}
-        <label class="slider-label">
-          {m.slider_activation()}: <strong>{activationMultiplier}</strong>
-          <input
-            type="range"
-            min="0"
-            max="20"
-            step="1"
-            bind:value={activationIdx}
-            onchange={runSimulation}
-          />
-        </label>
-        <label class="slider-label">
-          {m.slider_deactivation()}: <strong>{deactivationMultiplier}</strong>
-          <input
-            type="range"
-            min="0"
-            max="20"
-            step="1"
-            bind:value={deactivationIdx}
-            onchange={runSimulation}
-          />
-        </label>
-
-        <label class="slider-label">
-          {@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
-          <input
-            type="range"
-            min="0"
-            max={totalMinutes * 60}
-            step="5"
-            bind:value={darkLength}
-            onchange={runSimulation}
-          />
-        </label>
-        <label class="slider-label">
-          {@html m.fal_slider_saturate()}:
-          <strong>{saturatingPulse}</strong>
-          <input
-            type="range"
-            min="0"
-            max="10000"
-            step="500"
-            bind:value={saturatingPulse}
-            onchange={runSimulation}
-          />
-        </label>
-      {/if}
-    </div>
+      <label class="slider-label">
+        {@html m.fal_slider_darklength()}: <strong>{darkLength} s</strong>
+        <input
+          type="range"
+          min="0"
+          max={totalMinutes * 60}
+          step="5"
+          bind:value={darkLength}
+          onchange={runSimulation}
+        />
+      </label>
+      <label class="slider-label">
+        {@html m.fal_slider_saturate()}:
+        <strong>{saturatingPulse}</strong>
+        <input
+          type="range"
+          min="0"
+          max="10000"
+          step="500"
+          bind:value={saturatingPulse}
+          onchange={runSimulation}
+        />
+      </label>
+    {/if}
   </div>
 
-  <div class="compare-row">
-    <CompareCheckbox bind:checked={compareWithLast} />
-  </div>
+  <CompareCheckbox bind:checked={compareWithLast} />
 
   {#if sim.errorMsg}
     <Text>{sim.errorMsg}</Text>
@@ -538,19 +535,15 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     </div>
 
     {#if paramRows.length > 0}
-      <div class="param-table-wrap">
-        <ParameterTable
-          rows={paramRows}
-          showOld={showOld && sim.previousParams !== null}
-          newLabel={m.new_label()}
-          oldLabel={m.old_label()}
-        />
-      </div>
+      <ParameterTable
+        rows={paramRows}
+        showOld={showOld && sim.previousParams !== null}
+        newLabel={m.new_label()}
+        oldLabel={m.old_label()}
+      />
     {/if}
   {/if}
-
   <LiteratureExpander />
-
   <PageNav
     base={base}
     prev={{ href: "/model", label: "Computational Models" }}
@@ -582,12 +575,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     margin: var(--space-3, 12px) 0;
   }
 
-  .slider-section {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3, 12px);
-    margin: var(--space-4, 16px) 0;
-  }
   .slider-label {
     display: flex;
     flex-direction: column;
@@ -611,11 +598,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
       align-items: center;
     }
   }
-
-  .compare-row {
-    margin: var(--space-3, 12px) 0;
-  }
-
   .toggle-label {
     display: flex;
     align-items: center;
@@ -643,10 +625,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     margin: 0;
     font-weight: 500;
     font-size: 0.875rem;
-  }
-
-  .param-table-wrap {
-    margin: var(--space-4, 16px) 0;
   }
 
   pre {
