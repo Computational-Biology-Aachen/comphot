@@ -5,18 +5,20 @@
   import { audienceStore } from "$lib/stores/audience.svelte";
   import {
     Accordion,
+    Figure,
     H1,
     H2,
     InfoBox,
     Li,
     Link,
     SectionMain as Main,
+    Ol,
     PageNav,
     Text,
-    Ol,
     Ul,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
+  import Image from "@computational-biology-aachen/design/Image.svelte";
   import { marked } from "marked";
 </script>
 
@@ -25,7 +27,7 @@
 </svelte:head>
 
 <Main
-  width="narrow"
+  width="90ch"
   align="start"
 >
   <H1>
@@ -48,7 +50,10 @@
     {/if}
   </InfoBox>
 
-  <InfoBox header="What you need to know">
+  <InfoBox
+    header="What you need to know"
+    variant="warning"
+  >
     {#if audienceStore.audience === "4math"}
       <Ul>
         <Li>{@html marked.parseInline(m.math_mth_prereq_1())}</Li>
@@ -71,10 +76,9 @@
     next={{ href: "/model", label: m.sde_pagenames_computationalmodels() }}
   />
 
-  <img
+  <Image
     src="{base}/pictures/Kurzvideo-Messmethode.gif"
     alt="PAM measurement short video"
-    class="gif-img"
   />
 
   <Text>
@@ -86,14 +90,12 @@
     )}
   </Text>
 
-  <figure class="page-figure">
-    <img
-      src="{base}/pictures/Foto-Fluoreszierende_Pflanzen.jpg"
-      alt="A plant fluorescing under UV light"
-      class="page-img"
-    />
-    <figcaption class="caption">{m.mth_caption_abb1()}</figcaption>
-  </figure>
+  <Figure
+    src="{base}/pictures/Foto-Fluoreszierende_Pflanzen.jpg"
+    alt="A plant fluorescing under UV light"
+  >
+    {#snippet caption()}{m.mth_caption_abb1()}{/snippet}
+  </Figure>
 
   <Accordion
     title={ta(m.bio_mth_growing_plants_1(), m.math_mth_growing_plants_1())}
@@ -172,14 +174,12 @@
         ),
       )}
     </Text>
-    <figure class="page-figure">
-      <img
-        src="{base}/pictures/PAMbasics.png"
-        alt="PAM basics diagram"
-        class="page-img centered"
-      />
-      <figcaption class="caption">{m.mth_caption_abb2()}</figcaption>
-    </figure>
+    <Figure
+      src="{base}/pictures/PAMbasics.png"
+      alt="PAM basics diagram"
+    >
+      {#snippet caption()}{m.mth_caption_abb2()}{/snippet}
+    </Figure>
   </Accordion>
 
   <H2>
@@ -190,14 +190,12 @@
     {@html marked.parseInline(m.mth_explanation_illustration())}
   </Text>
 
-  <figure class="page-figure">
-    <img
-      src="{base}/pictures/Beispielabbildung_en.png"
-      alt="Example PAM measurement result"
-      class="page-img"
-    />
-    <figcaption class="caption">{m.mth_caption_abb2()}</figcaption>
-  </figure>
+  <Figure
+    src="{base}/pictures/Beispielabbildung_en.png"
+    alt="Example PAM measurement result"
+  >
+    {#snippet caption()}{m.mth_caption_abb2()}{/snippet}
+  </Figure>
 
   <Accordion title={m.literature()}>
     <Text>
@@ -214,14 +212,14 @@
             https://link.springer.com/protocol/10.1007/978-1-61779-237-3_16
           </Link>
         </Li>
-        <li>
+        <Li>
           Nies, T., Niu, Y., Ebenhöh, O., Matsubara, S., &amp; Matuszyńska, A.
           (2021). Chlorophyll fluorescence: How the quality of information about
           PAM instrument parameters may affect our research. bioRxiv.
           <a href="https://doi.org/10.1101/2021.05.12.443801">
             https://doi.org/10.1101/2021.05.12.443801
           </a>
-        </li>
+        </Li>
       </Ol>
     </Text>
   </Accordion>

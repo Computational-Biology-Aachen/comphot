@@ -7,14 +7,15 @@
     Accordion,
     H1,
     H2,
+    Image,
     InfoBox,
     Li,
     Link,
     SectionMain as Main,
+    Ol,
     PageNav,
     Section,
     Text,
-    Ol,
     Ul,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
@@ -24,7 +25,7 @@
 </script>
 
 <Main
-  width="narrow"
+  width="90ch"
   align="start"
 >
   <H1>
@@ -126,15 +127,13 @@
       {@html marked.parseInline(m.eps2_conference_2())}
       {@html marked.parseInline(m.eps2_conference_3())}
     </Text>
-    <img
+    <Image
       src="{base}/pictures/Poster.png"
       alt="ComPhot Poster"
-      class="poster-img"
     />
-    <img
+    <Image
       src="{base}/pictures/Editable/Elouen_Poster.svg"
       alt="Elouen Poster"
-      class="poster-img"
     />
   </Accordion>
 
@@ -148,9 +147,9 @@
         mathematical model of non-photochemical quenching to study short-term
         light memory in plants. Biochimica et Biophysica Acta (BBA) -
         Bioenergetics, 1857(12), 1860-1869.
-        <a href="https://doi.org/10.1016/j.bbabio.2016.09.003">
+        <Link href="https://doi.org/10.1016/j.bbabio.2016.09.003">
           https://doi.org/10.1016/j.bbabio.2016.09.003
-        </a>
+        </Link>
       </Li>
     </Ol>
     <Text
@@ -177,7 +176,7 @@
   variant="dark"
   width="full"
 >
-  <h2 id="imprint">Imprint</h2>
+  <H2>Imprint</H2>
   <Text color="light">
     Anbieter i.S.d. TDG/MDStV: Prof. Dr. Anna B. Matuszyńska <br />
     Worringerweg 1 52074 Aachen <br />

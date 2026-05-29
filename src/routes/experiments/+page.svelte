@@ -14,9 +14,10 @@
   import { audienceStore } from "$lib/stores/audience.svelte";
   import { LOG_STEPS, SimState } from "$lib/stores/simStore.svelte";
   import {
+    Accordion,
     Bold,
     CompareCheckbox,
-    Accordion,
+    Figure,
     H1,
     H2,
     InfoBox,
@@ -24,16 +25,18 @@
     LineChart,
     Link,
     SectionMain as Main,
+    Math,
+    Ol,
     PageNav,
     ParameterTable,
     type PhaseRegion,
     Text,
-    Ol,
     Ul,
   } from "@computational-biology-aachen/design";
+  import Code from "@computational-biology-aachen/design/Code.svelte";
+  import Pre from "@computational-biology-aachen/design/Pre.svelte";
   import { marked } from "marked";
   import { onMount } from "svelte";
-  import Katex from "svelte-katex";
 
   const sim = new SimState();
   sim.setup();
@@ -189,7 +192,7 @@
 </svelte:head>
 
 <Main
-  width="narrow"
+  width="90ch"
   align="start"
 >
   <H1>{@html marked.parseInline(m.fal_headline_experiments())}</H1>
@@ -208,7 +211,10 @@
     {/if}
   </InfoBox>
 
-  <InfoBox header="What you need to know">
+  <InfoBox
+    header="What you need to know"
+    variant="warning"
+  >
     {#if audienceStore.audience === "4math"}
       <Ul>
         <Li>{@html marked.parseInline(m.math_fal_prereq_1())}</Li>
@@ -235,13 +241,12 @@
     {@html marked.parseInline(m.fal_construction_explanation_1())}
   </Text>
 
-  <figure class="fig">
-    <img
-      src="{base}/pictures/NPQphotosynthesis.png"
-      alt={m.fal_caption_model_npq()}
-    />
-    <figcaption>{m.fal_caption_model_npq()}</figcaption>
-  </figure>
+  <Figure
+    src="{base}/pictures/NPQphotosynthesis.png"
+    alt={m.fal_caption_model_npq()}
+  >
+    {#snippet caption()}{m.fal_caption_model_npq()}{/snippet}
+  </Figure>
 
   <Text>{@html marked.parseInline(m.fal_construction_explanation_2())}</Text>
   <Text>{@html marked.parseInline(m.fal_rates_1())}</Text>
@@ -322,33 +327,32 @@
       {@html marked.parseInline(m.math_fal_model_equations_introduction())}
     </Text>
 
-    <div class="math-block">
-      <Katex displayMode
-        >{String.raw`\begin{aligned}
+    <Math
+      display
+      tex={String.raw`\begin{aligned}
 \frac{\mathrm{dPQH_2}}{\mathrm{d}t} &= v_\mathrm{PSII} - v_\mathrm{PQ_{ox}} \\
 \frac{\mathrm{dATP}}{\mathrm{d}t} &= v_\mathrm{ATPsynthase} - v_\mathrm{ATPconsumption} \\
 \frac{\mathrm{dATPase^{*}}}{\mathrm{d}t} &= F k_\mathrm{actATPase} \cdot \mathrm{H(PFD)} \cdot \mathrm{ATPase} - k_\mathrm{deactATPase} \cdot (1 - \mathrm{H(PFD)}) \cdot \mathrm{ATPase^{*}} \\
 b_\mathrm{H} \cdot \frac{\mathrm{dH}}{\mathrm{d}t} &= 2 v_\mathrm{PSII} + 4 v_\mathrm{PQ_{ox}} - \tfrac{14}{3} v_\mathrm{ATPsynthase} - v_\mathrm{leak} \\
 \frac{\mathrm{dPsbS}}{\mathrm{d}t} &= -v_\mathrm{Psbs^{p}} \\
 \frac{\mathrm{dVx}}{\mathrm{d}t} &= -v_\mathrm{Xcyc}
-\end{aligned}`}</Katex
-      >
-    </div>
+\end{aligned}`}
+    />
 
     <Accordion>
       {#snippet header()}
         {@html marked.parseInline(m.math_fal_reaction_rates())}
       {/snippet}
       <Text>{@html marked.parseInline(m.math_fal_rates_dynamic())}</Text>
-      <div class="math-block">
-        <Katex displayMode
-          >{String.raw`\begin{aligned}
+
+      <Math
+        display
+        tex={String.raw`\begin{aligned}
 v_{\mathrm{PSII}} &= k_2 \cdot 0.5 \cdot B_1 \\
 v_\mathrm{Xcyc} &= k_\mathrm{DeepoxV} \cdot \frac{H^{nH_X}}{H^{nH_X} + pH_{\mathrm{inv}}(K_\mathrm{phSat})^{nH_X}} \cdot \mathrm{Vx} - k_\mathrm{EpoxZ} \cdot (\mathrm{X^{tot}} - \mathrm{Vx}) \\
 Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS^p} + \gamma_2 \tfrac{Z}{Z+K_{ZSat}} \mathrm{PsbS^p} + \gamma_3 \tfrac{Z}{Z+K_{ZSat}} \mathrm{PsbS}
-\end{aligned}`}</Katex
-        >
-      </div>
+\end{aligned}`}
+      />
     </Accordion>
 
     <Accordion>
@@ -359,27 +363,27 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
         {@html marked.parseInline(m.math_fal_construction_header())}
       </Text>
       <Text>{@html marked.parseInline(m.math_fal_construction_1())}</Text>
-      <pre><code>{CODE.define}</code></pre>
+      <Code><Pre>{CODE.define}</Pre></Code>
 
       <Text>{@html marked.parseInline(m.math_fal_construction_2())}</Text>
       <details>
         <summary>Parameters</summary>
-        <pre><code>{CODE.params}</code></pre>
+        <Code><Pre>{CODE.params}</Pre></Code>
       </details>
       <details>
         <summary>Compounds</summary>
-        <pre><code>{CODE.comps}</code></pre>
+        <Code><Pre>{CODE.comps}</Pre></Code>
       </details>
 
       <Text>{@html marked.parseInline(m.math_fal_construction_3())}</Text>
-      <pre><code>{CODE.addCompsPars}</code></pre>
+      <Code><Pre>{CODE.addCompsPars}</Pre></Code>
 
       <Text>{@html marked.parseInline(m.math_fal_simulation_header())}</Text>
       <Text>{@html marked.parseInline(m.math_fal_simulation_1())}</Text>
-      <pre><code>{CODE.definesim}</code></pre>
+      <Code><Pre>{CODE.definesim}</Pre></Code>
 
       <Text>{@html marked.parseInline(m.math_fal_simulation_2())}</Text>
-      <pre><code>{CODE.initialisesim}</code></pre>
+      <Code><Pre>{CODE.initialisesim}</Pre></Code>
     </Accordion>
   {/if}
 
@@ -416,14 +420,15 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
       {@html marked.parseInline(m.fal_graph_explanation_header_single())}
     </Text>
     <Text>{@html marked.parseInline(m.fal_graph_explanation_1_intro())}</Text>
-    <ol class="content-ol">
-      <li>{@html marked.parseInline(m.fal_graph_explanation_1_phase1())}</li>
-      <li>{@html marked.parseInline(m.fal_graph_explanation_1_phase2())}</li>
-      <li>{@html marked.parseInline(m.fal_graph_explanation_1_phase3())}</li>
-    </ol>
-    <div class="math-inline">
-      <Katex displayMode>{"NPQ = \\dfrac{F_m - F_m'}{F_m'}"}</Katex>
-    </div>
+    <Ol>
+      <Li>{@html marked.parseInline(m.fal_graph_explanation_1_phase1())}</Li>
+      <Li>{@html marked.parseInline(m.fal_graph_explanation_1_phase2())}</Li>
+      <Li>{@html marked.parseInline(m.fal_graph_explanation_1_phase3())}</Li>
+    </Ol>
+    <Math
+      display={false}
+      tex={"NPQ = \\dfrac{F_m - F_m'}{F_m'}"}
+    />
     <Text>
       {@html ta(
         m.bio_fal_graph_explanation_2(),
@@ -561,19 +566,18 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 
   <!-- Slider controls -------------------------------- -->
 
-  <label class="slider-label">
-    {@html m.slider_light()}: <strong>{lightIntensity}</strong>
-    <input
-      type="range"
-      min="50"
-      max="900"
-      step="50"
-      bind:value={lightIntensity}
-      onchange={runSimulation}
-    />
-  </label>
-
   <div class="slider-row">
+    <label class="slider-label">
+      {@html m.slider_light()}: <strong>{lightIntensity}</strong>
+      <input
+        type="range"
+        min="50"
+        max="900"
+        step="50"
+        bind:value={lightIntensity}
+        onchange={runSimulation}
+      />
+    </label>
     <label class="slider-label">
       {@html m.fal_slider_time()}: <strong>{totalMinutes} min</strong>
       <input
@@ -665,6 +669,7 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
           data={fluoData}
           phases={phases}
           loading={sim.loading}
+          yMax={1.2}
         />
       </div>
 
@@ -721,29 +726,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 </Main>
 
 <style>
-  .fig {
-    width: 100%;
-    text-align: center;
-  }
-  .fig img {
-    max-width: 100%;
-  }
-  .fig figcaption {
-    margin-top: var(--space-2, 8px);
-    color: var(--color-text-muted, #666);
-    font-size: 0.875rem;
-  }
-
-  .math-block {
-    margin: var(--space-4, 16px) 0;
-    overflow-x: auto;
-  }
-  .math-inline {
-    display: flex;
-    justify-content: center;
-    margin: var(--space-3, 12px) 0;
-  }
-
   .slider-label {
     display: flex;
     flex-direction: column;
@@ -835,12 +817,5 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     background: var(--color-surface);
     font-weight: 600;
     white-space: nowrap;
-  }
-
-  .content-ol {
-    display: grid;
-    gap: var(--space-2);
-    padding-bottom: var(--space-4);
-    padding-left: 2rem;
   }
 </style>

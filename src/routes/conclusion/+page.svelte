@@ -4,12 +4,12 @@
   import { audienceStore } from "$lib/stores/audience.svelte";
   import {
     Bold,
+    Figure,
     H1,
     Li,
     SectionMain as Main,
     PageNav,
     Text,
-    Ol,
     Ul,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
@@ -20,7 +20,7 @@
 </svelte:head>
 
 <Main
-  width="narrow"
+  width="90ch"
   align="start"
 >
   <H1>{@html marked.parseInline(m.con_headline_conclusion())}</H1>
@@ -49,13 +49,10 @@
     {/if}
   </Ul>
 
-  <figure>
-    <img
-      src="{base}/pictures/photosynthesis_productivity.gif"
-      alt="Photosynthesis productivity animation"
-      class="page-img centered"
-    />
-  </figure>
+  <Figure
+    src="{base}/pictures/photosynthesis_productivity.gif"
+    alt="Photosynthesis productivity animation"
+  />
 
   <Ul>
     <Li>{@html marked.parseInline(m.con_conclusion_c3())}</Li>

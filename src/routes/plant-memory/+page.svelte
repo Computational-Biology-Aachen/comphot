@@ -14,19 +14,20 @@
   import { audienceStore } from "$lib/stores/audience.svelte";
   import { LOG_STEPS, SimState } from "$lib/stores/simStore.svelte";
   import {
+    Accordion,
     Bold,
     CompareCheckbox,
-    Accordion,
+    Figure,
     H1,
     InfoBox,
     Li,
     LineChart,
     Link,
     SectionMain as Main,
+    Ol,
     PageNav,
     ParameterTable,
     Text,
-    Ol,
     Ul,
     type PhaseRegion,
   } from "@computational-biology-aachen/design";
@@ -216,7 +217,7 @@
 </svelte:head>
 
 <Main
-  width="narrow"
+  width="90ch"
   align="start"
 >
   <H1>
@@ -238,7 +239,10 @@
     {/if}
   </InfoBox>
 
-  <InfoBox header="What you need to know">
+  <InfoBox
+    header="What you need to know"
+    variant="warning"
+  >
     {#if audienceStore.audience === "4math"}
       <Ul>
         <Li>{@html marked.parseInline(m.math_mem_prereq_1())}</Li>
@@ -263,14 +267,12 @@
     )}
   </Text>
 
-  <figure class="fig">
-    <img
-      src="{base}/pictures/NPQphotosynthesis.png"
-      alt="Memory protocol diagram"
-      class="protocol-img"
-    />
-    <figcaption>Memory protocol overview</figcaption>
-  </figure>
+  <Figure
+    src="{base}/pictures/NPQphotosynthesis.png"
+    alt="Memory protocol diagram"
+  >
+    {#snippet caption()}Memory protocol overview{/snippet}
+  </Figure>
 
   <!-- Guiding questions ------------------------------- -->
   <Accordion open={false}>
@@ -465,6 +467,7 @@
           data={fluoData}
           phases={phases}
           loading={sim.loading}
+          yMax={1.2}
         />
       </div>
 
@@ -525,22 +528,6 @@
 </Main>
 
 <style>
-  .fig {
-    width: 100%;
-    text-align: center;
-  }
-  .fig img {
-    max-width: 100%;
-  }
-  .fig figcaption {
-    margin-top: var(--space-2, 8px);
-    color: var(--color-text-muted, #666);
-    font-size: 0.875rem;
-  }
-  .protocol-img {
-    max-width: 100%;
-  }
-
   .slider-label {
     display: flex;
     flex-direction: column;

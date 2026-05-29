@@ -5,14 +5,16 @@
   import { audienceStore } from "$lib/stores/audience.svelte";
   import {
     Accordion,
+    Figure,
     H1,
     H2,
+    Image,
     InfoBox,
     Li,
     SectionMain as Main,
+    Ol,
     PageNav,
     Text,
-    Ol,
     Ul,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
@@ -24,7 +26,7 @@
 </svelte:head>
 
 <Main
-  width="narrow"
+  width="90ch"
   align="start"
 >
   <H1>
@@ -48,7 +50,10 @@
     {/if}
   </InfoBox>
 
-  <InfoBox header="What you need to know">
+  <InfoBox
+    header="What you need to know"
+    variant="warning"
+  >
     {#if audienceStore.audience === "4math"}
       <Ul>
         <Li>{@html marked.parseInline(m.math_pho_prereq_1())}</Li>
@@ -85,15 +90,13 @@
   </Text>
 
   {#if audienceStore.audience === "4math"}
-    <img
+    <Image
       src="{base}/pictures/plants_basics.jpeg"
       alt="Plant basics"
-      class="page-img"
     />
-    <img
+    <Image
       src="{base}/pictures/plants_stress.jpeg"
       alt="Plants under stress"
-      class="page-img"
     />
   {:else}
     <Ul>
@@ -122,19 +125,15 @@
     )}
   </Text>
 
-  <figure class="page-figure">
-    <img
-      src="{base}/pictures/Fotosynthese_eng.jpg"
-      alt="Photosynthesis diagram"
-      class="page-img centered"
-    />
-    <figcaption class="caption">
-      {ta(
+  <Figure
+    src="{base}/pictures/Fotosynthese_eng.jpg"
+    alt="Photosynthesis diagram"
+  >
+    {#snippet caption()}{ta(
         m.bio_pho_caption_fotosynthese_picture(),
         m.math_pho_caption_fotosynthese_picture(),
-      )}
-    </figcaption>
-  </figure>
+      )}{/snippet}
+  </Figure>
 
   <H2>
     {@html marked.parseInline(m.pho_headline_photosynthesis_location())}
@@ -148,30 +147,22 @@
     )}
   </Text>
 
-  <figure class="page-figure">
-    <img
-      src="{base}/pictures/phot_place_upper.PNG"
-      alt="Leaf cross-section showing chloroplasts"
-      class="page-img centered"
-    />
-    <figcaption class="caption">
-      {ta(
+  <Figure
+    src="{base}/pictures/phot_place_upper.PNG"
+    alt="Leaf cross-section showing chloroplasts"
+  >
+    {#snippet caption()}{ta(
         m.bio_pho_caption_fotosynthese_leaf_zoom(),
         m.math_pho_caption_fotosynthese_leaf_zoom(),
-      )}
-    </figcaption>
-  </figure>
+      )}{/snippet}
+  </Figure>
 
-  <figure class="page-figure">
-    <img
-      src="{base}/pictures/NPQphotosynthesis.png"
-      alt="NPQ photosynthesis apparatus"
-      class="page-img centered"
-    />
-    <figcaption class="caption">
-      {m.pho_caption_fotosynthese_apparat_picture()}
-    </figcaption>
-  </figure>
+  <Figure
+    src="{base}/pictures/NPQphotosynthesis.png"
+    alt="NPQ photosynthesis apparatus"
+  >
+    {#snippet caption()}{m.pho_caption_fotosynthese_apparat_picture()}{/snippet}
+  </Figure>
 
   <Text>
     {@html marked.parseInline(
@@ -213,16 +204,15 @@
     )}
   </Text>
 
-  <figure class="page-figure">
-    <img
-      src="{base}/pictures/Violaxanthin Scheme-4.png"
-      alt="Violaxanthin scheme - Xanthophyll cycle"
-      class="page-img centered"
-    />
-    <figcaption class="caption">
-      {ta(m.bio_pho_caption_npq(), m.math_pho_caption_npq())}
-    </figcaption>
-  </figure>
+  <Figure
+    src="{base}/pictures/Violaxanthin Scheme-4.png"
+    alt="Violaxanthin scheme - Xanthophyll cycle"
+  >
+    {#snippet caption()}{ta(
+        m.bio_pho_caption_npq(),
+        m.math_pho_caption_npq(),
+      )}{/snippet}
+  </Figure>
 
   <!-- SECTION -->
 
@@ -239,40 +229,42 @@
   </Text>
 
   <Accordion title={m.pho_expander_model_organismen()}>
-    <img
+    <Figure
       src="{base}/pictures/Arabidopsis.jpg"
       alt="Arabidopsis thaliana"
-      class="arabidopsis-img"
-    />
-    <p class="caption">{m.pho_caption_thaiana_picture()}</p>
+    >
+      {#snippet caption()}
+        {m.pho_caption_thaiana_picture()}
+      {/snippet}
+    </Figure>
 
     <Text>{@html m.pho_model_organism_intro()}</Text>
-    <ol class="content-ol">
-      <li>{@html m.pho_model_organism_item1()}</li>
-      <li>{@html m.pho_model_organism_item2()}</li>
-      <li>{@html m.pho_model_organism_item3()}</li>
-      <li>{@html m.pho_model_organism_item4()}</li>
-    </ol>
+    <Ol>
+      <Li>{@html m.pho_model_organism_item1()}</Li>
+      <Li>{@html m.pho_model_organism_item2()}</Li>
+      <Li>{@html m.pho_model_organism_item3()}</Li>
+      <Li>{@html m.pho_model_organism_item4()}</Li>
+    </Ol>
     <Text>{@html m.pho_model_organism_outro()}</Text>
   </Accordion>
 
   <Accordion title={m.literature()}>
     <Text>
-      <p>{m.literature_onpage()}</p>
-      <Ol>
-        <Li>
-          Cook, J., Oreskes, N., Doran, P. T., Anderegg, W. R. L., Verheggen,
-          B., Maibach, E. W., Carlton, J. S., Lewandowsky, S., Skuce, A. G.,
-          Green, S. A., Nuccitelli, D., Jacobs, P., Richardson, M., Winkler, B.,
-          Painting, R., &amp; Rice, K. (2016). Consensus on consensus: A
-          synthesis of consensus estimates on human-caused global warming.
-          Environmental Research Letters, 11(4), 048002.
-          <a href="https://doi.org/10.1088/1748-9326/11/4/048002">
-            https://doi.org/10.1088/1748-9326/11/4/048002
-          </a>
-        </Li>
-      </Ol>
+      {m.literature_onpage()}
     </Text>
+    <Ol>
+      <Li>
+        Cook, J., Oreskes, N., Doran, P. T., Anderegg, W. R. L., Verheggen, B.,
+        Maibach, E. W., Carlton, J. S., Lewandowsky, S., Skuce, A. G., Green, S.
+        A., Nuccitelli, D., Jacobs, P., Richardson, M., Winkler, B., Painting,
+        R., &amp; Rice, K. (2016). Consensus on consensus: A synthesis of
+        consensus estimates on human-caused global warming. Environmental
+        Research Letters, 11(4), 048002.
+        <a href="https://doi.org/10.1088/1748-9326/11/4/048002">
+          https://doi.org/10.1088/1748-9326/11/4/048002
+        </a>
+      </Li>
+    </Ol>
   </Accordion>
 
   <PageNav
@@ -281,12 +273,3 @@
     next={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
   />
 </Main>
-
-<style>
-  .content-ol {
-    display: grid;
-    gap: var(--space-1);
-    padding-bottom: var(--space-4);
-    padding-left: 2rem;
-  }
-</style>
