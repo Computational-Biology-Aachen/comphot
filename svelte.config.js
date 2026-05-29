@@ -2,10 +2,18 @@ import adapter from "@sveltejs/adapter-static";
 import { existsSync } from "fs";
 import { mdsvex } from "mdsvex";
 
+// In the meta-repo, resolve the workspace packages from source for live edits;
+// standalone installs fall back to the published package via its exports map.
 const designSrc = new URL("../design/src/lib", import.meta.url).pathname;
-const designAlias = existsSync(designSrc)
-  ? { "@computational-biology-aachen/design": designSrc }
-  : {};
+const coreSrc = new URL("../../pkg/mxlweb-core/src", import.meta.url).pathname;
+const workspaceAlias = {
+  ...(existsSync(designSrc)
+    ? { "@computational-biology-aachen/design": designSrc }
+    : {}),
+  ...(existsSync(coreSrc)
+    ? { "@computational-biology-aachen/mxlweb-core": coreSrc }
+    : {}),
+};
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -15,7 +23,7 @@ const config = {
       filename.split(/[/\\]/).includes("node_modules") ? undefined : true,
   },
   kit: {
-    alias: designAlias,
+    alias: workspaceAlias,
     adapter: adapter(),
     prerender: {
       handleHttpError: ({ path, message }) => {
