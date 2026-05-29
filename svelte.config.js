@@ -1,5 +1,11 @@
 import adapter from "@sveltejs/adapter-static";
 import { mdsvex } from "mdsvex";
+import { existsSync } from "fs";
+
+const designSrc = new URL("../design/src/lib", import.meta.url).pathname;
+const designAlias = existsSync(designSrc)
+  ? { "@computational-biology-aachen/design": designSrc }
+  : {};
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -9,6 +15,7 @@ const config = {
       filename.split(/[/\\]/).includes("node_modules") ? undefined : true,
   },
   kit: {
+    alias: designAlias,
     adapter: adapter(),
     prerender: {
       handleHttpError: ({ path, message }) => {
