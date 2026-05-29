@@ -1,4 +1,4 @@
-import { audienceStore } from '$lib/stores/audience.svelte';
+import { audienceStore } from "$lib/stores/audience.svelte";
 
 /**
  * Selects the bio or math message variant based on the current audience.
@@ -8,5 +8,5 @@ import { audienceStore } from '$lib/stores/audience.svelte';
  * ta(m.bio_fal_learning_objectives(), m.math_fal_learning_objectives())
  */
 export function ta<T>(bio: T, math: T): T {
-	return audienceStore.audience === '4math' ? math : bio;
+  return audienceStore.audience === "4math" ? math : bio;
 }

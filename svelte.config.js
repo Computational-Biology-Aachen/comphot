@@ -1,6 +1,6 @@
 import adapter from "@sveltejs/adapter-static";
-import { mdsvex } from "mdsvex";
 import { existsSync } from "fs";
+import { mdsvex } from "mdsvex";
 
 const designSrc = new URL("../design/src/lib", import.meta.url).pathname;
 const designAlias = existsSync(designSrc)
