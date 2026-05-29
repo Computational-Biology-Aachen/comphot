@@ -3,16 +3,10 @@
 
   import { ta } from "$lib/i18n";
   import * as m from "$lib/paraglide/messages";
+  import PamResults from "$lib/components/PamResults.svelte";
   import { buildMemoryProtocol } from "$lib/simulations/pam";
-  import {
-    computeNpq,
-    computePhiPsii,
-    findPeaks,
-    interpolateAtIndices,
-    normalizeToMax,
-  } from "$lib/simulations/pamAnalysis";
+  import { LOG_STEPS } from "$lib/simulations/pamSim";
   import { audienceStore } from "$lib/stores/audience.svelte";
-  import { LOG_STEPS, SimState } from "$lib/stores/simStore.svelte";
   import {
     Accordion,
     Bold,
@@ -21,21 +15,15 @@
     H1,
     InfoBox,
     Li,
-    LineChart,
     Link,
     SectionMain as Main,
     Ol,
     PageNav,
-    ParameterTable,
     Text,
     Ul,
     type PhaseRegion,
   } from "@computational-biology-aachen/design";
   import { marked } from "marked";
-  import { onMount } from "svelte";
-
-  const sim = new SimState();
-  sim.setup();
 
   // Slider state
   let lightIntensity = $state(100);
@@ -53,8 +41,10 @@
   const activationMultiplier = $derived(LOG_STEPS[activationIdx]);
   const deactivationMultiplier = $derived(LOG_STEPS[deactivationIdx]);
 
-  function runSimulation() {
-    const protocol = buildMemoryProtocol({
+  const kDeepoxV = $derived(0.0024 * (activationMultiplier / 100));
+  const kEpoxZ = $derived(0.00024 * (deactivationMultiplier / 100));
+  const protocol = $derived(
+    buildMemoryProtocol({
       lightIntensity,
       saturatingPulse,
       darkLength,
@@ -62,18 +52,14 @@
       trainingLength,
       relaxationLength,
       memoryLength,
-    });
-    const kDeepoxV = 0.0024 * (activationMultiplier / 100);
-    const kEpoxZ = 0.00024 * (deactivationMultiplier / 100);
-    sim.run(
-      protocol,
-      { AL: lightIntensity, SP: saturatingPulse, CtZ: kDeepoxV, CtV: kEpoxZ },
-      kDeepoxV,
-      kEpoxZ,
-    );
-  }
-
-  onMount(runSimulation);
+    }),
+  );
+  const simParams = $derived({
+    AL: lightIntensity,
+    SP: saturatingPulse,
+    CtZ: kDeepoxV,
+    CtV: kEpoxZ,
+  });
 
   // Phase regions for 4-phase memory protocol
   const phases = $derived.by<PhaseRegion[]>(() => {
@@ -116,99 +102,6 @@
       });
     }
     return regions;
-  });
-
-  const showOld = $derived(compareWithLast && sim.previousResult !== null);
-
-  const paramRows = $derived.by(() => {
-    const cp = sim.currentParams;
-    const pp = sim.previousParams;
-    if (!cp) return [];
-    return [
-      { label: "AL [μmol m⁻² s⁻¹]", newVal: cp.AL, oldVal: pp?.AL },
-      { label: "SP [μmol m⁻² s⁻¹]", newVal: cp.SP, oldVal: pp?.SP },
-      {
-        label: "CtZ [s⁻¹]",
-        newVal: cp.CtZ.toFixed(5),
-        oldVal: pp?.CtZ?.toFixed(5),
-      },
-      {
-        label: "CtV [s⁻¹]",
-        newVal: cp.CtV.toFixed(6),
-        oldVal: pp?.CtV?.toFixed(6),
-      },
-    ];
-  });
-
-  // ── Chart data ────────────────────────────────────────────────────────────
-  const FLUO_COL = 8;
-
-  function extractFluo(result: typeof sim.currentResult): number[] {
-    return result?.values.map((v) => v[FLUO_COL]) ?? [];
-  }
-
-  const resultTime = $derived(sim.currentResult?.time ?? []);
-
-  const fluoCurrent = $derived(normalizeToMax(extractFluo(sim.currentResult)));
-  const fluoPrev = $derived(normalizeToMax(extractFluo(sim.previousResult)));
-
-  const peaksCurrent = $derived(findPeaks(fluoCurrent, 0.2));
-  const peaksPrev = $derived(findPeaks(fluoPrev, 0.2));
-
-  const npqCurrent = $derived.by(() =>
-    interpolateAtIndices(
-      peaksCurrent,
-      computeNpq(fluoCurrent, peaksCurrent),
-      fluoCurrent.length,
-      "akima",
-    ),
-  );
-  const npqPrev = $derived.by(() =>
-    interpolateAtIndices(
-      peaksPrev,
-      computeNpq(fluoPrev, peaksPrev),
-      fluoPrev.length,
-      "akima",
-    ),
-  );
-
-  const phiCurrent = $derived.by(() =>
-    interpolateAtIndices(
-      peaksCurrent,
-      computePhiPsii(fluoCurrent, peaksCurrent),
-      fluoCurrent.length,
-      "akima",
-    ),
-  );
-  const phiPrev = $derived.by(() =>
-    interpolateAtIndices(
-      peaksPrev,
-      computePhiPsii(fluoPrev, peaksPrev),
-      fluoPrev.length,
-      "akima",
-    ),
-  );
-
-  const fluoData = $derived({
-    labels: resultTime,
-    datasets: [
-      { label: ta(m.bio_fluo(), m.math_fluo()), data: fluoCurrent },
-      ...(showOld ? [{ label: m.old_label(), data: fluoPrev }] : []),
-    ],
-  });
-  const npqData = $derived({
-    labels: resultTime,
-    datasets: [
-      { label: m.axis_npq(), data: npqCurrent },
-      ...(showOld ? [{ label: m.old_label(), data: npqPrev }] : []),
-    ],
-  });
-  const phiData = $derived({
-    labels: resultTime,
-    datasets: [
-      { label: m.axis_phipsii(), data: phiCurrent },
-      ...(showOld ? [{ label: m.old_label(), data: phiPrev }] : []),
-    ],
   });
 </script>
 
@@ -352,7 +245,6 @@
         max="900"
         step="50"
         bind:value={lightIntensity}
-        onchange={runSimulation}
       />
     </label>
     <label class="slider-label">
@@ -363,7 +255,6 @@
         max="150"
         step="5"
         bind:value={pulseInterval}
-        onchange={runSimulation}
       />
     </label>
     <label class="slider-label">
@@ -374,7 +265,6 @@
         max="300"
         step="10"
         bind:value={darkLength}
-        onchange={runSimulation}
       />
     </label>
     <label class="slider-label">
@@ -385,7 +275,6 @@
         max="10000"
         step="500"
         bind:value={saturatingPulse}
-        onchange={runSimulation}
       />
     </label>
     <label class="slider-label">
@@ -396,7 +285,6 @@
         max="600"
         step="30"
         bind:value={trainingLength}
-        onchange={runSimulation}
       />
     </label>
     <label class="slider-label">
@@ -408,7 +296,6 @@
         max="600"
         step="30"
         bind:value={relaxationLength}
-        onchange={runSimulation}
       />
     </label>
     <label class="slider-label">
@@ -419,7 +306,6 @@
         max="600"
         step="30"
         bind:value={memoryLength}
-        onchange={runSimulation}
       />
     </label>
     <!-- 4bio: activation/deactivation sliders -->
@@ -432,7 +318,6 @@
           max="20"
           step="1"
           bind:value={activationIdx}
-          onchange={runSimulation}
         />
       </label>
       <label class="slider-label">
@@ -443,7 +328,6 @@
           max="20"
           step="1"
           bind:value={deactivationIdx}
-          onchange={runSimulation}
         />
       </label>
     {/if}
@@ -451,58 +335,15 @@
 
   <CompareCheckbox bind:checked={compareWithLast} />
 
-  {#if sim.errorMsg}
-    <p class="error-msg">{sim.errorMsg}</p>
-  {/if}
-
   <!-- Results ---------------------------------------- -->
-  {#if sim.currentResult}
-    <div
-      class="charts-grid"
-      class:three-cols={audienceStore.audience === "4bio"}
-    >
-      <div class="chart-card">
-        <p class="chart-label">{ta(m.bio_fluo(), m.math_fluo())}</p>
-        <LineChart
-          data={fluoData}
-          phases={phases}
-          loading={sim.loading}
-          yMax={1.2}
-        />
-      </div>
-
-      {#if audienceStore.audience === "4bio"}
-        <div class="chart-card">
-          <p class="chart-label">{m.axis_npq()}</p>
-          <LineChart
-            data={npqData}
-            phases={phases}
-            loading={sim.loading}
-          />
-        </div>
-
-        <div class="chart-card">
-          <p class="chart-label">{m.axis_phipsii()}</p>
-          <LineChart
-            data={phiData}
-            phases={phases}
-            loading={sim.loading}
-          />
-        </div>
-      {/if}
-    </div>
-
-    {#if paramRows.length > 0}
-      <div class="param-table-wrap">
-        <ParameterTable
-          rows={paramRows}
-          showOld={showOld && sim.previousParams !== null}
-          newLabel={m.new_label()}
-          oldLabel={m.old_label()}
-        />
-      </div>
-    {/if}
-  {/if}
+  <PamResults
+    protocol={protocol}
+    params={simParams}
+    kDeepoxV={kDeepoxV}
+    kEpoxZ={kEpoxZ}
+    phases={phases}
+    compare={compareWithLast}
+  />
 
   <Accordion title={m.literature()}>
     <Text>{@html marked.parseInline(m.literature_onpage())}</Text>
@@ -531,7 +372,9 @@
   .slider-label {
     display: flex;
     flex-direction: column;
+    justify-content: end;
     gap: var(--space-1, 4px);
+    height: 100%;
     font-size: 0.9rem;
   }
   .slider-row {
@@ -550,35 +393,5 @@
       grid-template-columns: 1fr 1fr 1fr 1fr;
       align-items: center;
     }
-  }
-
-  .error-msg {
-    margin: var(--space-2, 8px) 0;
-    color: var(--color-error, red);
-  }
-
-  .charts-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-4, 16px);
-    margin: var(--space-4, 16px) 0;
-    width: 100%;
-  }
-  .charts-grid.three-cols {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .chart-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2, 8px);
-  }
-  .chart-label {
-    margin: 0;
-    font-weight: 500;
-    font-size: 0.875rem;
-  }
-
-  .param-table-wrap {
-    margin: var(--space-4, 16px) 0;
   }
 </style>

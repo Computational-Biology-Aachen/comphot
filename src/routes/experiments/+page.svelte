@@ -3,16 +3,10 @@
 
   import { ta } from "$lib/i18n";
   import * as m from "$lib/paraglide/messages";
+  import PamResults from "$lib/components/PamResults.svelte";
   import { buildPamProtocol } from "$lib/simulations/pam";
-  import {
-    computeNpq,
-    computePhiPsii,
-    findPeaks,
-    interpolateAtIndices,
-    normalizeToMax,
-  } from "$lib/simulations/pamAnalysis";
+  import { LOG_STEPS } from "$lib/simulations/pamSim";
   import { audienceStore } from "$lib/stores/audience.svelte";
-  import { LOG_STEPS, SimState } from "$lib/stores/simStore.svelte";
   import {
     Accordion,
     Bold,
@@ -22,13 +16,11 @@
     H2,
     InfoBox,
     Li,
-    LineChart,
     Link,
     SectionMain as Main,
     Math,
     Ol,
     PageNav,
-    ParameterTable,
     type PhaseRegion,
     Text,
     Ul,
@@ -36,10 +28,6 @@
   import Code from "@computational-biology-aachen/design/Code.svelte";
   import Pre from "@computational-biology-aachen/design/Pre.svelte";
   import { marked } from "marked";
-  import { onMount } from "svelte";
-
-  const sim = new SimState();
-  sim.setup();
 
   // Slider state
   let lightIntensity = $state(100);
@@ -57,52 +45,28 @@
   const deactivationMultiplier = $derived(LOG_STEPS[deactivationIdx]);
   const totalTime = $derived(totalMinutes * 60);
 
-  function runSimulation() {
-    const protocol = buildPamProtocol({
+  const kDeepoxV = $derived(0.0024 * (activationMultiplier / 100));
+  const kEpoxZ = $derived(0.00024 * (deactivationMultiplier / 100));
+  const protocol = $derived(
+    buildPamProtocol({
       lightIntensity,
       saturatingPulse,
       totalMinutes,
       darkLength,
       pulseInterval,
-    });
-    const kDeepoxV = 0.0024 * (activationMultiplier / 100);
-    const kEpoxZ = 0.00024 * (deactivationMultiplier / 100);
-    sim.run(
-      protocol,
-      { AL: lightIntensity, SP: saturatingPulse, CtZ: kDeepoxV, CtV: kEpoxZ },
-      kDeepoxV,
-      kEpoxZ,
-    );
-  }
-
-  onMount(runSimulation);
+    }),
+  );
+  const simParams = $derived({
+    AL: lightIntensity,
+    SP: saturatingPulse,
+    CtZ: kDeepoxV,
+    CtV: kEpoxZ,
+  });
 
   const phases = $derived.by<PhaseRegion[]>(() => [
     { start: 0, end: darkLength, color: "rgba(28, 91, 199, 0.18)" },
     { start: darkLength, end: totalTime, color: "rgba(207, 109, 12, 0.18)" },
   ]);
-
-  const showOld = $derived(compareWithLast && sim.previousResult !== null);
-
-  const paramRows = $derived.by(() => {
-    const cp = sim.currentParams;
-    const pp = sim.previousParams;
-    if (!cp) return [];
-    return [
-      { label: "AL [μmol m⁻² s⁻¹]", newVal: cp.AL, oldVal: pp?.AL },
-      { label: "SP [μmol m⁻² s⁻¹]", newVal: cp.SP, oldVal: pp?.SP },
-      {
-        label: "CtZ [s⁻¹]",
-        newVal: cp.CtZ.toFixed(5),
-        oldVal: pp?.CtZ?.toFixed(5),
-      },
-      {
-        label: "CtV [s⁻¹]",
-        newVal: cp.CtV.toFixed(6),
-        oldVal: pp?.CtV?.toFixed(6),
-      },
-    ];
-  });
 
   // Model code constants (4math walkthrough)
   const CODE = {
@@ -113,78 +77,6 @@
     definesim: `from modelbase.ode import Simulator\nsimulator = Simulator(model)`,
     initialisesim: `y0 = {"P": 0, "H": 6.32975752e-05, "E": 0, "A": 25.0, "Pr": 1, "V": 1}\nsimulator.initialise(y0)`,
   };
-
-  // ── Chart data ────────────────────────────────────────────────────────────
-  // Fluo is appended after 8 state variables → column index 8
-  const FLUO_COL = 8;
-
-  function extractFluo(result: typeof sim.currentResult): number[] {
-    return result?.values.map((v) => v[FLUO_COL]) ?? [];
-  }
-
-  const resultTime = $derived(sim.currentResult?.time ?? []);
-
-  const fluoCurrent = $derived(normalizeToMax(extractFluo(sim.currentResult)));
-  const fluoPrev = $derived(normalizeToMax(extractFluo(sim.previousResult)));
-
-  const peaksCurrent = $derived(findPeaks(fluoCurrent, 0.2));
-  const peaksPrev = $derived(findPeaks(fluoPrev, 0.2));
-
-  const npqCurrent = $derived.by(() =>
-    interpolateAtIndices(
-      peaksCurrent,
-      computeNpq(fluoCurrent, peaksCurrent),
-      fluoCurrent.length,
-      "akima",
-    ),
-  );
-  const npqPrev = $derived.by(() =>
-    interpolateAtIndices(
-      peaksPrev,
-      computeNpq(fluoPrev, peaksPrev),
-      fluoPrev.length,
-      "akima",
-    ),
-  );
-
-  const phiCurrent = $derived.by(() =>
-    interpolateAtIndices(
-      peaksCurrent,
-      computePhiPsii(fluoCurrent, peaksCurrent),
-      fluoCurrent.length,
-      "akima",
-    ),
-  );
-  const phiPrev = $derived.by(() =>
-    interpolateAtIndices(
-      peaksPrev,
-      computePhiPsii(fluoPrev, peaksPrev),
-      fluoPrev.length,
-      "akima",
-    ),
-  );
-
-  const fluoData = $derived({
-    labels: resultTime,
-    datasets: [
-      { label: ta(m.bio_fluo(), m.math_fluo()), data: fluoCurrent },
-      ...(showOld ? [{ label: m.old_label(), data: fluoPrev }] : []),
-    ],
-  });
-  const npqData = $derived({
-    labels: resultTime,
-    datasets: [
-      { label: m.axis_npq(), data: npqCurrent },
-      ...(showOld ? [{ label: m.old_label(), data: npqPrev }] : []),
-    ],
-  });
-  const phiData = $derived({
-    labels: resultTime,
-    datasets: [
-      { label: m.axis_phipsii(), data: phiCurrent },
-      ...(showOld ? [{ label: m.old_label(), data: phiPrev }] : []),
-    ],
-  });
 </script>
 
 <svelte:head>
@@ -575,7 +467,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
         max="900"
         step="50"
         bind:value={lightIntensity}
-        onchange={runSimulation}
       />
     </label>
     <label class="slider-label">
@@ -586,7 +477,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
         max="15"
         step="1"
         bind:value={totalMinutes}
-        onchange={runSimulation}
       />
     </label>
     <label class="slider-label">
@@ -597,7 +487,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
         max="150"
         step="5"
         bind:value={pulseInterval}
-        onchange={runSimulation}
       />
     </label>
 
@@ -610,7 +499,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
           max="20"
           step="1"
           bind:value={activationIdx}
-          onchange={runSimulation}
         />
       </label>
       <label class="slider-label">
@@ -621,7 +509,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
           max="20"
           step="1"
           bind:value={deactivationIdx}
-          onchange={runSimulation}
         />
       </label>
 
@@ -633,7 +520,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
           max={totalMinutes * 60}
           step="5"
           bind:value={darkLength}
-          onchange={runSimulation}
         />
       </label>
       <label class="slider-label">
@@ -645,7 +531,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
           max="10000"
           step="500"
           bind:value={saturatingPulse}
-          onchange={runSimulation}
         />
       </label>
     {/if}
@@ -653,56 +538,16 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
 
   <CompareCheckbox bind:checked={compareWithLast} />
 
-  {#if sim.errorMsg}
-    <Text>{sim.errorMsg}</Text>
-  {/if}
-
   <!-- Results ---------------------------------------- -->
-  {#if sim.currentResult}
-    <div
-      class="charts-grid"
-      class:three-cols={audienceStore.audience === "4bio"}
-    >
-      <div class="chart-card">
-        <p class="chart-label">{ta(m.bio_fluo(), m.math_fluo())}</p>
-        <LineChart
-          data={fluoData}
-          phases={phases}
-          loading={sim.loading}
-          yMax={1.2}
-        />
-      </div>
+  <PamResults
+    protocol={protocol}
+    params={simParams}
+    kDeepoxV={kDeepoxV}
+    kEpoxZ={kEpoxZ}
+    phases={phases}
+    compare={compareWithLast}
+  />
 
-      {#if audienceStore.audience === "4bio"}
-        <div class="chart-card">
-          <p class="chart-label">{m.axis_npq()}</p>
-          <LineChart
-            data={npqData}
-            phases={phases}
-            loading={sim.loading}
-          />
-        </div>
-
-        <div class="chart-card">
-          <p class="chart-label">{m.axis_phipsii()}</p>
-          <LineChart
-            data={phiData}
-            phases={phases}
-            loading={sim.loading}
-          />
-        </div>
-      {/if}
-    </div>
-
-    {#if paramRows.length > 0}
-      <ParameterTable
-        rows={paramRows}
-        showOld={showOld && sim.previousParams !== null}
-        newLabel={m.new_label()}
-        oldLabel={m.old_label()}
-      />
-    {/if}
-  {/if}
   <Accordion title={m.literature()}>
     <Text>{@html marked.parseInline(m.literature_onpage())}</Text>
     <Ol>
@@ -729,7 +574,9 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
   .slider-label {
     display: flex;
     flex-direction: column;
+    justify-content: end;
     gap: var(--space-1, 4px);
+    height: 100%;
     font-size: 0.9rem;
   }
   .slider-row {
@@ -755,35 +602,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     gap: var(--space-2, 8px);
     cursor: pointer;
     margin: var(--space-2, 8px) 0;
-  }
-
-  .charts-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-4, 16px);
-    margin: var(--space-4, 16px) 0;
-    width: 100%;
-  }
-  .charts-grid.three-cols {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .chart-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2, 8px);
-  }
-  .chart-label {
-    margin: 0;
-    font-weight: 500;
-    font-size: 0.875rem;
-  }
-
-  pre {
-    border-radius: var(--radius-md, 6px);
-    background: var(--color-surface-alt, #f5f5f5);
-    padding: var(--space-3, 12px);
-    overflow-x: auto;
-    font-size: 0.85rem;
   }
 
   details summary {
