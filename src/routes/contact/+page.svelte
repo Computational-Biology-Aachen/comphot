@@ -11,9 +11,11 @@
     PageNav,
     Pre,
     Text,
-    Ol,
     Ul,
   } from "@computational-biology-aachen/design";
+  import Bold from "@computational-biology-aachen/design/Bold.svelte";
+  import H3 from "@computational-biology-aachen/design/H3.svelte";
+  import Link from "@computational-biology-aachen/design/Link.svelte";
   import { marked } from "marked";
 
   const bibTexContent = `@article{
@@ -81,7 +83,7 @@ ER  -`;
 </svelte:head>
 
 <Main
-  width="narrow"
+  width="90ch"
   align="start"
 >
   <H1>
@@ -98,106 +100,100 @@ ER  -`;
     {m.cont_subheader()}
   </Text>
 
-  <h3>Sarah Philipps</h3>
+  <H3>Sarah Philipps</H3>
   <Ul>
     <Li>
-      <strong>{m.cont_email()}</strong>
-      <a href="mailto:sarah.philipps@rwth-aachen.de"
-        >sarah.philipps@rwth-aachen.de</a
+      <Bold>{m.cont_email()}</Bold>
+      <Link href="mailto:sarah.philipps@rwth-aachen.de"
+        >sarah.philipps@rwth-aachen.de</Link
       >
     </Li>
-    <Li><strong>{m.cont_topics()}</strong> {m.cont_topics_sarah()}</Li>
+    <Li><Bold>{m.cont_topics()}</Bold> {m.cont_topics_sarah()}</Li>
   </Ul>
 
-  <h3>Tobias Pfennig</h3>
+  <H3>Tobias Pfennig</H3>
   <Ul>
     <Li>
-      <strong>{m.cont_email()}</strong>
-      <a href="mailto:tobias.pfennig@rwth-aachen.de"
-        >tobias.pfennig@rwth-aachen.de</a
+      <Bold>{m.cont_email()}</Bold>
+      <Link href="mailto:tobias.pfennig@rwth-aachen.de"
+        >tobias.pfennig@rwth-aachen.de</Link
       >
     </Li>
-    <Li><strong>{m.cont_topics()}</strong> {m.cont_topics_tobias()}</Li>
+    <Li><Bold>{m.cont_topics()}</Bold> {m.cont_topics_tobias()}</Li>
     <Li>
-      <strong>{m.cont_website()}</strong>
-      <a
+      <Bold>{m.cont_website()}</Bold>
+      <Link
         href="https://www.cpbl.rwth-aachen.de/cms/CPBL/Die-Juniorprofessur/Unser/~wljpm/Tobias-Pfennig/"
-        target="_blank"
-        rel="noopener">RWTH Aachen</a
+        >RWTH Aachen</Link
       >
     </Li>
   </Ul>
 
-  <h3>Elouen Corvest</h3>
+  <H3>Elouen Corvest</H3>
   <Ul>
     <Li>
-      <strong>{m.cont_email()}</strong>
-      <a href="mailto:elouen.corvest@rwth-aachen.de"
-        >elouen.corvest@rwth-aachen.de</a
+      <Bold>{m.cont_email()}</Bold>
+      <Link href="mailto:elouen.corvest@rwth-aachen.de"
+        >elouen.corvest@rwth-aachen.de</Link
       >
     </Li>
-    <Li><strong>{m.cont_topics()}</strong> {m.cont_topics_elouen()}</Li>
+    <Li><Bold>{m.cont_topics()}</Bold> {m.cont_topics_elouen()}</Li>
     <Li>
-      <strong>{m.cont_website()}</strong>
-      <a
+      <Bold>{m.cont_website()}</Bold>
+      <Link
         href="https://www.cpbl.rwth-aachen.de/cms/CPBL/Die-Juniorprofessur/Unser/~wljuk/Elouen-Corvest/lidx/1/"
-        target="_blank"
-        rel="noopener">RWTH Aachen</a
+        >RWTH Aachen</Link
       >
     </Li>
   </Ul>
 
-  <h3>Marvin van Aalst</h3>
+  <H3>Marvin van Aalst</H3>
   <Ul>
     <Li>
-      <strong>{m.cont_email()}</strong>
-      <a href="mailto:marvin.van.aalst@hhu.de">marvin.van.aalst@hhu.de</a>
+      <Bold>{m.cont_email()}</Bold>
+      <Link href="mailto:marvin.van.aalst@hhu.de">marvin.van.aalst@hhu.de</Link>
     </Li>
-    <Li><strong>{m.cont_topics()}</strong> {m.cont_topics_marvin()}</Li>
+    <Li><Bold>{m.cont_topics()}</Bold> {m.cont_topics_marvin()}</Li>
     <Li>
-      <strong>{m.cont_website()}</strong>
-      <a
-        href="https://www.qtb.hhu.de/"
-        target="_blank"
-        rel="noopener">Heinrich Heine University Duesseldorf</a
+      <Bold>{m.cont_website()}</Bold>
+      <Link href="https://www.qtb.hhu.de/"
+        >Heinrich Heine University Duesseldorf</Link
       >
     </Li>
   </Ul>
 
-  <h3>Lisa Fürtauer</h3>
+  <H3>Lisa Fürtauer</H3>
   <Ul>
     <Li>
-      <strong>{m.cont_email()}</strong>
-      <a href="mailto:lisa.fuertauer@bio3.rwth-aachen.de"
-        >lisa.fuertauer@bio3.rwth-aachen.de</a
+      <Bold>{m.cont_email()}</Bold>
+      <Link href="mailto:lisa.fuertauer@bio3.rwth-aachen.de"
+        >lisa.fuertauer@bio3.rwth-aachen.de</Link
       >
     </Li>
-    <Li><strong>{m.cont_topics()}</strong> {m.cont_topics_lisa()}</Li>
+    <Li><Bold>{m.cont_topics()}</Bold> {m.cont_topics_lisa()}</Li>
     <Li>
-      <strong>{m.cont_website()}</strong>
-      <a
+      <Bold>{m.cont_website()}</Bold>
+      <Link
         href="https://www.bio3.rwth-aachen.de/cms/BIO3/Das-Institut/~tcejj/Juniorprofessur-Molekulare-Systembiologi/"
-        target="_blank"
-        rel="noopener">RWTH Aachen</a
+        >RWTH Aachen</Link
       >
     </Li>
   </Ul>
 
-  <h3>Anna Matuszyńska</h3>
+  <H3>Anna Matuszyńska</H3>
   <Ul>
     <Li>
-      <strong>{m.cont_email()}</strong>
-      <a href="mailto:anna.matuszynska@rwth-aachen.de"
-        >anna.matuszynska@rwth-aachen.de</a
+      <Bold>{m.cont_email()}</Bold>
+      <Link href="mailto:anna.matuszynska@rwth-aachen.de"
+        >anna.matuszynska@rwth-aachen.de</Link
       >
     </Li>
-    <Li><strong>{m.cont_topics()}</strong> {m.cont_topics_anna()}</Li>
+    <Li><Bold>{m.cont_topics()}</Bold> {m.cont_topics_anna()}</Li>
     <Li>
-      <strong>{m.cont_website()}</strong>
-      <a
+      <Bold>{m.cont_website()}</Bold>
+      <Link
         href="https://www.cpbl.rwth-aachen.de/cms/CPBL/Die-Juniorprofessur/Unser/~ywkwc/Anna-Matuszy-324-ska/"
-        target="_blank"
-        rel="noopener">RWTH Aachen</a
+        >RWTH Aachen</Link
       >
     </Li>
   </Ul>
