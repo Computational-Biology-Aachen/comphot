@@ -8,6 +8,7 @@
     Figure,
     H1,
     H2,
+    Image,
     InfoBox,
     Li,
     Link,
@@ -18,7 +19,6 @@
     Ul,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
-  import Image from "@computational-biology-aachen/design/Image.svelte";
   import { marked } from "marked";
 </script>
 

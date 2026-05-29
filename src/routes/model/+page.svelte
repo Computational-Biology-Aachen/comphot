@@ -12,6 +12,7 @@
     H2,
     InfoBox,
     Li,
+    Link,
     SectionMain as Main,
     Math,
     Ol,
@@ -22,7 +23,6 @@
     Ul,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
-  import Link from "@computational-biology-aachen/design/Link.svelte";
   import { marked } from "marked";
 
   // Python code snippets for 4math tabs

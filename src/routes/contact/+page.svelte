@@ -2,20 +2,20 @@
   import { base } from "$app/paths";
   import * as m from "$lib/paraglide/messages";
   import {
+    Bold,
     Button,
     H1,
     H2,
+    H3,
     InputChoice,
     Li,
+    Link,
     SectionMain as Main,
     PageNav,
     Pre,
     Text,
     Ul,
   } from "@computational-biology-aachen/design";
-  import Bold from "@computational-biology-aachen/design/Bold.svelte";
-  import H3 from "@computational-biology-aachen/design/H3.svelte";
-  import Link from "@computational-biology-aachen/design/Link.svelte";
   import { marked } from "marked";
 
   const bibTexContent = `@article{

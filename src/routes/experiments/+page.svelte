@@ -10,6 +10,7 @@
   import {
     Accordion,
     Bold,
+    Code,
     CompareCheckbox,
     Figure,
     H1,
@@ -22,11 +23,10 @@
     Ol,
     PageNav,
     type PhaseRegion,
+    Pre,
     Text,
     Ul,
   } from "@computational-biology-aachen/design";
-  import Code from "@computational-biology-aachen/design/Code.svelte";
-  import Pre from "@computational-biology-aachen/design/Pre.svelte";
   import { marked } from "marked";
 
   // Slider state
