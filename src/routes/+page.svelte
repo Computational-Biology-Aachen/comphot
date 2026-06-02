@@ -22,6 +22,11 @@
   import { marked } from "marked";
 </script>
 
+<svelte:head>
+  <title>ComPhot</title>
+  <!-- <title>{m.str_headline_main()} | ComPhot</title> -->
+</svelte:head>
+
 <Main
   width="90ch"
   align="start"

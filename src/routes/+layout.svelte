@@ -82,7 +82,6 @@
     rel="icon"
     href={favicon}
   />
-  <!-- <title>{m.str_headline_main()} | ComPhot</title> -->
   <!-- Alternate locale links for crawlers -->
   {#each locales as locale (locale)}
     <link
@@ -91,7 +90,6 @@
       href="{base}{localizeHref(routePath(), { locale })}"
     />
   {/each}
-  <title>ComPhot</title>
   <meta
     property="og:type"
     content="website"
