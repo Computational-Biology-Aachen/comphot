@@ -8,20 +8,18 @@
     H1,
     H2,
     Image,
+    Imprint,
     InfoBox,
     Li,
     Link,
     SectionMain as Main,
     Ol,
     PageNav,
-    Section,
     Text,
     Ul,
     YouTubeEmbed,
   } from "@computational-biology-aachen/design";
-  import { faGithub } from "@fortawesome/free-brands-svg-icons";
   import { marked } from "marked";
-  import Fa from "svelte-fa";
 </script>
 
 <Main
@@ -172,25 +170,4 @@
   />
 </Main>
 
-<Section
-  variant="dark"
-  width="full"
->
-  <H2>Imprint</H2>
-  <Text color="light">
-    Anbieter i.S.d. TDG/MDStV: Prof. Dr. Anna B. Matuszyńska <br />
-    Worringerweg 1 52074 Aachen <br />
-    Sammelbau Biologie, Bauteil 42 C, Erdgeschoss, Raum 041 <br />
-    Work Phone: +49 241 80 25817 <br />
-
-    Verantwortlich i.S.d. § 6 Abs. 2 MDStV: <br />
-    Prof. Dr. Anna B. Matuszyńska <br />
-    Design und Umsetzung Dr. Marvin van Aalst <Link
-      color="light"
-      href="https://github.com/Computational-Biology-Aachen/comphot"
-      ><Fa icon={faGithub} /></Link
-    >
-    <br />
-    (c) 2025 Prof. Dr. Anna B. Matuszyńska, Alle Rechte vorbehalten.
-  </Text>
-</Section>
+<Imprint github="https://github.com/Computational-Biology-Aachen/comphot" />
