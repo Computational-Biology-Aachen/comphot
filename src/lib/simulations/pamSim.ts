@@ -1,6 +1,7 @@
 import { browser } from "$app/environment";
 import { base } from "$app/paths";
-import type { ProtocolStep } from "$lib/simulations/pam";
+import type { ProtocolStep } from "@computational-biology-aachen/mxlweb-core/pam";
+
 import { initModel } from "$lib/simulations/matuszynska2016_npq";
 import type {
   SimulationRequest,

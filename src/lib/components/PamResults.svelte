@@ -1,14 +1,16 @@
 <script lang="ts">
   import { ta } from "$lib/i18n";
   import * as m from "$lib/paraglide/messages";
+  import type { ProtocolStep } from "@computational-biology-aachen/mxlweb-core/pam";
+
   import {
     computeNpq,
     computePhiPsii,
     findPeaks,
     interpolateAtIndices,
     normalizeToMax,
-  } from "$lib/simulations/pamAnalysis";
-  import type { ProtocolStep } from "$lib/simulations/pam";
+  } from "@computational-biology-aachen/mxlweb-core/pam";
+
   import { simulate, type SimParams } from "$lib/simulations/pamSim";
   import { audienceStore } from "$lib/stores/audience.svelte";
   import {

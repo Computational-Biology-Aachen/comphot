@@ -1,10 +1,8 @@
 <script lang="ts">
   import { base } from "$app/paths";
-
+  import PamResults from "$lib/components/PamResults.svelte";
   import { ta } from "$lib/i18n";
   import * as m from "$lib/paraglide/messages";
-  import PamResults from "$lib/components/PamResults.svelte";
-  import { buildMemoryProtocol } from "$lib/simulations/pam";
   import { LOG_STEPS } from "$lib/simulations/pamSim";
   import { audienceStore } from "$lib/stores/audience.svelte";
   import {
@@ -23,6 +21,7 @@
     Ul,
     type PhaseRegion,
   } from "@computational-biology-aachen/design";
+  import { buildMemoryProtocol } from "@computational-biology-aachen/mxlweb-core/pam";
   import { marked } from "marked";
 
   // Slider state
