@@ -16,7 +16,7 @@
 </script>
 
 <svelte:head>
-  <title>{m.con_headline_conclusion()} | ComPhot</title>
+  <title>{m.con_headline_conclusion()} - ComPhot</title>
 </svelte:head>
 
 <Main

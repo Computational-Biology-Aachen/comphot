@@ -54,6 +54,7 @@
 </script>
 
 <svelte:head>
+  <title>ComPhot</title>
   <meta
     name="description"
     content={config.description}

@@ -23,7 +23,7 @@
 </script>
 
 <svelte:head>
-  <title>{m.mth_headline_one()} | ComPhot</title>
+  <title>{m.mth_headline_one()} - ComPhot</title>
 </svelte:head>
 
 <Main

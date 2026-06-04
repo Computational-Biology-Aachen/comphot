@@ -80,7 +80,7 @@
 </script>
 
 <svelte:head>
-  <title>Experiments in Silico</title>
+  <title>Experiments in Silico - ComPhot</title>
 </svelte:head>
 
 <Main

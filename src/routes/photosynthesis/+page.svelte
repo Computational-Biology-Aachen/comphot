@@ -22,7 +22,7 @@
 </script>
 
 <svelte:head>
-  <title>{m.pho_headline_photosynthesis_page()} | ComPhot</title>
+  <title>{m.pho_headline_photosynthesis_page()} - ComPhot</title>
 </svelte:head>
 
 <Main

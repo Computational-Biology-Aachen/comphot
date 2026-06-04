@@ -105,7 +105,7 @@
 </script>
 
 <svelte:head>
-  <title>Plant Light Memory</title>
+  <title>Plant Light Memory - ComPhot</title>
 </svelte:head>
 
 <Main

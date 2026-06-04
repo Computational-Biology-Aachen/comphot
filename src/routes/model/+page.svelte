@@ -109,7 +109,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
 </script>
 
 <svelte:head>
-  <title>{m.mdl_headline_computational_models()} | ComPhot</title>
+  <title>{m.mdl_headline_computational_models()} - ComPhot</title>
 </svelte:head>
 
 <Main

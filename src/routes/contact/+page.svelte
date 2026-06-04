@@ -79,7 +79,7 @@ ER  -`;
 </script>
 
 <svelte:head>
-  <title>{m.cont_header()} | ComPhot</title>
+  <title>{m.cont_header()} - ComPhot</title>
 </svelte:head>
 
 <Main
