@@ -8,7 +8,6 @@
     H1,
     H2,
     Image,
-    Imprint,
     InfoBox,
     Li,
     Link,
@@ -174,5 +173,3 @@
     }}
   />
 </Main>
-
-<Imprint github="https://github.com/Computational-Biology-Aachen/comphot" />
