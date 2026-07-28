@@ -38,6 +38,11 @@ const config = {
     paths: {
       base: process.argv.includes("dev") ? "" : "/comphot",
     },
+    version: {
+      // Poll for new deploys so long-lived tabs upgrade proactively instead of
+      // only recovering reactively after a failed navigation.
+      pollInterval: 300_000,
+    },
   },
   preprocess: [mdsvex({ extensions: [".svx", ".md"] })],
   extensions: [".svelte", ".svx", ".md"],
