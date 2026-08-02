@@ -172,7 +172,7 @@
   <p class="error-msg">{errorMsg}</p>
 {/if}
 
-{#if currentResult}
+{#if currentResult || loading}
   <div
     class="charts-grid"
     class:three-cols={audienceStore.audience === "4bio"}
