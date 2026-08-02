@@ -32,6 +32,10 @@ export default ts.config(
       // Internal links use the `{base}` + paraglide `localizeHref()` pattern,
       // which already resolves paths; SvelteKit's resolve() does not apply here.
       "svelte/no-navigation-without-resolve": "off",
+      // Not enabled by svelte.configs.recommended - surfaces the Svelte
+      // compiler's own warnings (including a11y checks like missing alt
+      // text) as lint errors instead of easy-to-miss build output.
+      "svelte/valid-compile": ["error", { ignoreWarnings: false }],
       // allow intentionally-unused placeholder args/vars when prefixed with "_"
       "@typescript-eslint/no-unused-vars": [
         "error",
