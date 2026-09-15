@@ -376,6 +376,9 @@
     height: 100%;
     font-size: 0.9rem;
   }
+  .slider-label input[type="range"] {
+    accent-color: var(--color-primary);
+  }
   .slider-row {
     display: flex;
     flex-direction: column;

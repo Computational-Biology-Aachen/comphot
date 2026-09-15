@@ -579,6 +579,9 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     height: 100%;
     font-size: 0.9rem;
   }
+  .slider-label input[type="range"] {
+    accent-color: var(--color-primary);
+  }
   .slider-row {
     display: flex;
     flex-direction: column;
