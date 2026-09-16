@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-15T00:00:00Z",
+  "title": "Design System: ComPhot",
+  "extensions": {
+    "note": "ComPhot has no local color/typography/rounded/spacing tokens — it consumes @computational-biology-aachen/design's tokens verbatim. See pkg-js/design/.impeccable/design.json for colorMeta, typographyMeta, shadows, motion, and breakpoints. Nothing is duplicated here.",
+    "breakpoints": [
+      { "name": "slider-grid", "value": "768px", "purpose": "The one place ComPhot defines its own responsive break: the parameter-slider panel goes from a stacked column to a 4-column grid at this width." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Parameter Slider",
+      "kind": "input",
+      "refersTo": null,
+      "description": "Native range input for continuous simulation parameters (light intensity, duration, rate constants), styled to match the shared primary color. Not part of the design package — synthesized locally because the shared library has no continuous-slider primitive.",
+      "html": "<label class=\"ds-slider-label\">Light intensity: <strong>100</strong><input type=\"range\" min=\"50\" max=\"900\" step=\"50\" value=\"100\" class=\"ds-slider-input\" /></label>",
+      "css": ".ds-slider-label { display: flex; flex-direction: column; justify-content: end; gap: 4px; height: 100%; font-size: 0.9rem; } .ds-slider-input { accent-color: var(--color-primary); }"
+    },
+    {
+      "name": "Slider Panel",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Card grouping multiple Parameter Sliders. Uses shared surface/radius/spacing tokens but defines its own responsive grid (stacked below 768px, 4-column grid at/above it) rather than delegating to a shared layout primitive.",
+      "html": "<div class=\"ds-slider-row\"><label class=\"ds-slider-label\">Light intensity: <strong>100</strong><input type=\"range\" class=\"ds-slider-input\" /></label><label class=\"ds-slider-label\">Duration: <strong>5 min</strong><input type=\"range\" class=\"ds-slider-input\" /></label></div>",
+      "css": ".ds-slider-row { display: flex; flex-direction: column; flex-wrap: wrap; align-items: inherit; gap: var(--space-4, 16px); border-radius: var(--radius-lg); background-color: var(--color-surface); padding: 1.5rem; width: 100%; } @media (min-width: 768px) { .ds-slider-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; align-items: center; } } .ds-slider-label { display: flex; flex-direction: column; justify-content: end; gap: 4px; height: 100%; font-size: 0.9rem; } .ds-slider-input { accent-color: var(--color-primary); }"
+    },
+    {
+      "name": "Simulation Phase Overlay",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Chart background overlay marking dark-adaptation vs actinic-light phases on any LineChart with a PhaseRegion[] prop. Fixed color pair, not sourced from the shared chart tokens (which mark data series, not time regions): dark phase rgba(28, 91, 199, 0.18-0.25) blue, light phase rgba(207, 109, 12, 0.18-0.25) orange.",
+      "html": "<div class=\"ds-phase-legend\"><span class=\"ds-phase-dark\">Dark</span><span class=\"ds-phase-light\">Light</span></div>",
+      "css": ".ds-phase-dark { background: rgba(28, 91, 199, 0.22); } .ds-phase-light { background: rgba(207, 109, 12, 0.22); } .ds-phase-legend span { display: inline-block; padding: 2px 8px; border-radius: 4px; margin-right: 6px; font-size: 0.8rem; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Fork in the Reading Path",
+    "overview": "This file does not define ComPhot's visual system — it does not have one. Per PRODUCT.md, ComPhot's colors, typography, spacing, radii, shadows, and component library are entirely inherited from @computational-biology-aachen/design (this meta-repo's pkg-js/design). That package's own DESIGN.md, PRODUCT.md, and .impeccable/design.json sidecar are the binding visual authority for every token and primitive component ComPhot uses.\n\nWhat this file documents instead is ComPhot-specific composition: how this site arranges the shared primitives into its own recurring page structure and the small number of genuinely local patterns (raw HTML sliders, chart phase-region conventions) that the shared library doesn't ship and ComPhot had to build itself.",
+    "keyCharacteristics": [
+      "Every lesson page follows the same skeleton: objectives → prerequisites → navigation → content → simulation → literature → navigation.",
+      "Content is audience-forked (4Bio / 4Math) at the block level throughout, not just in a sidebar note.",
+      "The only non-inherited interactive primitive is the raw <input type=\"range\"> parameter slider, styled to match the shared token palette but not sourced from the design package.",
+      "Simulation charts use a fixed dark-phase-blue / light-phase-orange convention to mark experimental phases, independent of and layered on top of the shared chart component."
+    ],
+    "rules": [
+      { "name": "The Dark-Blue, Light-Orange Rule", "body": "Any new simulation that has a dark/light (or off/on) phase structure reuses exactly the established rgba(28, 91, 199, ...) / rgba(207, 109, 12, ...) pair rather than inventing a new phase palette.", "section": "components" }
+    ],
+    "dos": [
+      "Do reuse the exact H1 → objectives InfoBox → prerequisites InfoBox (warning) → PageNav → content → PageNav skeleton for any new lesson page.",
+      "Do fork audience-dependent structure as a duplicated block ({#if 4math}...{:else}...{/if}) and reserve ta() for single-string swaps.",
+      "Do reuse the dark-blue/light-orange rgba pair for any new simulation's phase regions.",
+      "Do style any new native form control with accent-color: var(--color-primary) inside a --color-surface / --radius-lg card, matching the slider panel."
+    ],
+    "donts": [
+      "Don't add colors, fonts, spacing values, or new component variants here — that's pkg-js/design's job.",
+      "Don't use InfoBox for anything other than the two established slots (objectives / prerequisites-warning) without a clear new reason.",
+      "Don't invent a second phase-color pair for a new simulation; extend the existing dark/light convention instead.",
+      "Don't break the single Main width=\"90ch\" reading column for ordinary content — the slider panel's grid is the one deliberate, narrow exception."
+    ]
+  }
+}
