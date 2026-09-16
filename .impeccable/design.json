@@ -5,7 +5,11 @@
   "extensions": {
     "note": "ComPhot has no local color/typography/rounded/spacing tokens — it consumes @computational-biology-aachen/design's tokens verbatim. See pkg-js/design/.impeccable/design.json for colorMeta, typographyMeta, shadows, motion, and breakpoints. Nothing is duplicated here.",
     "breakpoints": [
-      { "name": "slider-grid", "value": "768px", "purpose": "The one place ComPhot defines its own responsive break: the parameter-slider panel goes from a stacked column to a 4-column grid at this width." }
+      {
+        "name": "slider-grid",
+        "value": "768px",
+        "purpose": "The one place ComPhot defines its own responsive break: the parameter-slider panel goes from a stacked column to a 4-column grid at this width."
+      }
     ]
   },
   "components": [
@@ -44,7 +48,11 @@
       "Simulation charts use a fixed dark-phase-blue / light-phase-orange convention to mark experimental phases, independent of and layered on top of the shared chart component."
     ],
     "rules": [
-      { "name": "The Dark-Blue, Light-Orange Rule", "body": "Any new simulation that has a dark/light (or off/on) phase structure reuses exactly the established rgba(28, 91, 199, ...) / rgba(207, 109, 12, ...) pair rather than inventing a new phase palette.", "section": "components" }
+      {
+        "name": "The Dark-Blue, Light-Orange Rule",
+        "body": "Any new simulation that has a dark/light (or off/on) phase structure reuses exactly the established rgba(28, 91, 199, ...) / rgba(207, 109, 12, ...) pair rather than inventing a new phase palette.",
+        "section": "components"
+      }
     ],
     "dos": [
       "Do reuse the exact H1 → objectives InfoBox → prerequisites InfoBox (warning) → PageNav → content → PageNav skeleton for any new lesson page.",
