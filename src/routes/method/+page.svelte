@@ -8,7 +8,6 @@
     Figure,
     H1,
     H2,
-    Image,
     InfoBox,
     Li,
     Link,
@@ -76,10 +75,23 @@
     next={{ href: "/model", label: m.sde_pagenames_computationalmodels() }}
   />
 
-  <Image
-    src="{base}/pictures/Kurzvideo-Messmethode.gif"
-    alt="PAM measurement short video"
-  />
+  <video
+    class="measurement-video"
+    controls
+    muted
+    loop
+    playsinline
+    aria-label="PAM measurement short video"
+  >
+    <source
+      src="{base}/pictures/Kurzvideo-Messmethode.webm"
+      type="video/webm"
+    />
+    <source
+      src="{base}/pictures/Kurzvideo-Messmethode.mp4"
+      type="video/mp4"
+    />
+  </video>
 
   <Text>
     {@html marked.parseInline(
@@ -233,3 +245,12 @@
     next={{ href: "/model", label: m.sde_pagenames_computationalmodels() }}
   />
 </Main>
+
+<style>
+  .measurement-video {
+    display: block;
+    margin: var(--space-4, 16px) auto;
+    border-radius: var(--radius-md);
+    max-width: 100%;
+  }
+</style>

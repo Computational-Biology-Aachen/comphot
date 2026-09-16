@@ -580,7 +580,17 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     font-size: 0.9rem;
   }
   .slider-label input[type="range"] {
+    cursor: pointer;
+    block-size: 28px;
     accent-color: var(--color-primary);
+  }
+  .slider-label input[type="range"]::-webkit-slider-thumb {
+    width: 26px;
+    height: 26px;
+  }
+  .slider-label input[type="range"]::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
   }
   .slider-row {
     display: flex;

@@ -100,6 +100,8 @@ ER  -`;
     {m.cont_subheader()}
   </Text>
 
+  <H2>{m.cont_team_header()}</H2>
+
   <H3>Sarah Philipps</H3>
   <Ul>
     <Li>
