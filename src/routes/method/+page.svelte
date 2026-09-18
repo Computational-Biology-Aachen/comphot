@@ -33,7 +33,7 @@
     {@html marked.parseInline(m.mth_headline_one())}
   </H1>
 
-  <InfoBox header="Learning objectives">
+  <InfoBox header={m.sde_infobox_learning_objectives()}>
     {#if audienceStore.audience === "4math"}
       <Ul>
         <Li>{@html marked.parseInline(m.math_mth_lo_1())}</Li>
@@ -50,7 +50,7 @@
   </InfoBox>
 
   <InfoBox
-    header="What you need to know"
+    header={m.sde_infobox_prerequisites()}
     variant="warning"
   >
     {#if audienceStore.audience === "4math"}

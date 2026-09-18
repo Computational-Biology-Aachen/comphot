@@ -4,6 +4,8 @@
   import { page, updated } from "$app/state";
   import favicon from "$lib/assets/cpbl-favicon.svg";
   import * as config from "$lib/config";
+  import { ta } from "$lib/i18n";
+  import * as m from "$lib/paraglide/messages";
   import {
     getLocale,
     locales,
@@ -124,19 +126,28 @@
       <span>ComPhot</span>
     </div>
   {/snippet}
-  <CollapseToBurger collapseAt="1200px">
-    <NavItem href="{base}/">Home</NavItem>
-    <NavItem href="{base}/photosynthesis">Photosynthesis</NavItem>
-    <NavItem href="{base}/method">Method</NavItem>
-    <NavItem href="{base}/model">Model</NavItem>
-    <NavItem href="{base}/experiments">Experiments</NavItem>
-    <NavItem href="{base}/plant-memory">Plant Memory</NavItem>
-    <NavItem href="{base}/conclusion">Conclusion</NavItem>
-    <NavItem href="{base}/contact">Contact</NavItem>
+  <CollapseToBurger collapseAt="1800px">
+    <NavItem href="{base}/">{m.sde_pagenames_start()}</NavItem>
+    <NavItem href="{base}/photosynthesis">
+      {m.sde_pagenames_photosynthesis()}
+    </NavItem>
+    <NavItem href="{base}/method">{m.sde_pagenames_measuringmethod()}</NavItem>
+    <NavItem href="{base}/model">
+      {m.sde_pagenames_computationalmodels()}
+    </NavItem>
+    <NavItem href="{base}/experiments">
+      {m.sde_pagenames_experimentsinsilico()}
+    </NavItem>
+    <NavItem href="{base}/plant-memory">
+      {m.sde_pagenames_plantlightmemory()}
+    </NavItem>
+    <NavItem href="{base}/conclusion">{m.sde_pagenames_conclusion()}</NavItem>
+    <NavItem href="{base}/contact">{m.sde_pagenames_contact()}</NavItem>
   </CollapseToBurger>
-  <ButtonMenu>
+  <ButtonMenu aria-label={m.sde_sidebar_audience()}>
     {#snippet label()}
       <Icon>group</Icon>
+      <span class="trigger-label">{ta(m.sde_4bio(), m.sde_4math())}</span>
     {/snippet}
     {#each audChoices as { code, label } (code)}
       <ButtonMenuItem
@@ -147,9 +158,9 @@
       </ButtonMenuItem>
     {/each}
   </ButtonMenu>
-  <ButtonMenu>
+  <ButtonMenu aria-label={m.sde_sidebar_language()}>
     {#snippet label()}
-      <Icon>language</Icon>
+      <Icon fontSize="lg">language</Icon>
     {/snippet}
     {#each locChoices as { code, label } (code)}
       <ButtonMenuItem
@@ -175,5 +186,10 @@
     gap: var(--space-2);
     color: var(--color-primary);
     font-weight: 600;
+  }
+
+  .trigger-label {
+    font-weight: 600;
+    font-size: 14px;
   }
 </style>

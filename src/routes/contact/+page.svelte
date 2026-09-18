@@ -87,7 +87,6 @@ ER  -`;
   align="start"
 >
   <H1>
-    <span aria-hidden="true">📬 </span>
     {m.cont_header()}
   </H1>
 

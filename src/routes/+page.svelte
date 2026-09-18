@@ -63,7 +63,7 @@
     )}
   </H2>
 
-  <InfoBox header="Learning objectives">
+  <InfoBox header={m.sde_infobox_learning_objectives()}>
     {#if audienceStore.audience === "4math"}
       <Ul>
         <Li>{@html marked.parseInline(m.math_str_lo_1())}</Li>

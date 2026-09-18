@@ -33,7 +33,7 @@
     {@html marked.parseInline(m.pho_headline_photosynthesis_page())}
   </H1>
 
-  <InfoBox header="Learning objectives">
+  <InfoBox header={m.sde_infobox_learning_objectives()}>
     {#if audienceStore.audience === "4math"}
       <Ul>
         <Li>{@html marked.parseInline(m.math_pho_lo_1())}</Li>
@@ -51,7 +51,7 @@
   </InfoBox>
 
   <InfoBox
-    header="What you need to know"
+    header={m.sde_infobox_prerequisites()}
     variant="warning"
   >
     {#if audienceStore.audience === "4math"}
@@ -189,11 +189,9 @@
     )}
   </Text>
 
-  <InfoBox header="Learning objectives">
-    <Text>
-      {@html marked.parseInline(m.pho_npq_explanation_detailed())}
-    </Text>
-  </InfoBox>
+  <Text>
+    {@html marked.parseInline(m.pho_npq_explanation_detailed())}
+  </Text>
 
   <Text>
     {@html marked.parseInline(

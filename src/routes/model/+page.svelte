@@ -121,7 +121,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
   </H1>
 
   <!-- section: learning objectives -->
-  <InfoBox header="Learning objectives">
+  <InfoBox header={m.sde_infobox_learning_objectives()}>
     {#if audienceStore.audience === "4math"}
       <Ul>
         <Li>{@html marked.parseInline(m.math_mdl_lo_1())}</Li>
@@ -137,7 +137,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
   </InfoBox>
 
   <InfoBox
-    header="What you need to know"
+    header={m.sde_infobox_prerequisites()}
     variant="warning"
   >
     {#if audienceStore.audience === "4math"}
