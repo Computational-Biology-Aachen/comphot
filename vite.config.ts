@@ -14,14 +14,18 @@ const coreStatic = join(
 );
 
 // In the meta-repo, svelte.config.js aliases the design package to its
-// source under ../design/src/lib for live edits (see workspaceAlias there).
-// That makes imports resolve relative to ../design, so a package it depends
-// on (e.g. katex, for its fonts) can resolve to ../design's own nested
-// node_modules rather than this project's — which SvelteKit's dev server
-// doesn't allow serving from by default. Allow it explicitly when present.
-const designNodeModules = new URL("../design/node_modules", import.meta.url)
+// source under ../../pkg-js/design/src/lib for live edits (see workspaceAlias
+// there). That makes imports resolve relative to ../../pkg-js/design, so a
+// package it depends on (e.g. katex, for its fonts) can resolve to
+// ../../pkg-js/design's own nested node_modules rather than this project's —
+// which SvelteKit's dev server doesn't allow serving from by default. Allow
+// it explicitly when present.
+const designNodeModules = new URL(
+  "../../pkg-js/design/node_modules",
+  import.meta.url,
+).pathname;
+const designSrc = new URL("../../pkg-js/design/src/lib", import.meta.url)
   .pathname;
-const designSrc = new URL("../design/src/lib", import.meta.url).pathname;
 
 const MIME: Record<string, string> = {
   ".js": "application/javascript",
@@ -68,6 +72,12 @@ export default defineConfig({
     paraglideVitePlugin({
       project: "./project.inlang",
       outdir: "./src/lib/paraglide",
+      // This site is locale-prefixed (/de/, /fr/) and statically prerendered
+      // for GitHub Pages — there's no server to read a cookie after deploy,
+      // so the URL must be the source of truth for locale resolution. The
+      // plugin's own default strategy omits "url" entirely, which is why
+      // locale-prefixed routes were silently rendering baseLocale (English).
+      strategy: ["url", "baseLocale"],
     }),
     serveAndCopyCoreStatic(),
   ],
