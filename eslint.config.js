@@ -12,7 +12,7 @@ const gitignorePath = fileURLToPath(new URL("./.gitignore", import.meta.url));
 export default ts.config(
   includeIgnoreFile(gitignorePath),
   // generated/vendored assets (e.g. the radau5 WASM glue) are not ours to lint
-  { ignores: ["static/"] },
+  { ignores: ["static/", ".claude/"] },
   js.configs.recommended,
   ...ts.configs.recommended,
   ...svelte.configs.recommended,
