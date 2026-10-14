@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { base } from "$app/paths";
-  import { ta } from "$lib/i18n";
-  import * as m from "$lib/paraglide/messages";
-  import { audienceStore } from "$lib/stores/audience.svelte";
+  import { asset } from "$app/paths";
+  import { ta } from "#lib/i18n.js";
+  import * as m from "#lib/paraglide/messages.js";
+  import { audienceStore } from "#lib/stores/audience.svelte.js";
   import {
     Accordion,
     H1,
@@ -130,11 +130,11 @@
       {@html marked.parseInline(m.eps2_conference_3())}
     </Text>
     <Image
-      src="{base}/pictures/Poster.png"
+      src={asset("pictures/Poster.png")}
       alt="ComPhot Poster"
     />
     <Image
-      src="{base}/pictures/Editable/Elouen_Poster.svg"
+      src={asset("pictures/Editable/Elouen_Poster.svg")}
       alt="Elouen Poster"
     />
   </Accordion>
@@ -166,7 +166,6 @@
   </Accordion>
 
   <PageNav
-    base={base}
     next={{
       href: "/photosynthesis",
       label: m.sde_pagenames_photosynthesis(),

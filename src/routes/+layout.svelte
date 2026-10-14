@@ -1,18 +1,18 @@
 <script lang="ts">
   import { beforeNavigate } from "$app/navigation";
-  import { base } from "$app/paths";
+  import { resolve } from "$app/paths";
   import { page, updated } from "$app/state";
-  import favicon from "$lib/assets/cpbl-favicon.svg";
-  import * as config from "$lib/config";
-  import { ta } from "$lib/i18n";
-  import * as m from "$lib/paraglide/messages";
+  import favicon from "#lib/assets/cpbl-favicon.svg";
+  import * as config from "#lib/config.js";
+  import { ta } from "#lib/i18n.js";
+  import * as m from "#lib/paraglide/messages.js";
   import {
     getLocale,
     locales,
     localizeHref,
     setLocale,
-  } from "$lib/paraglide/runtime";
-  import { audienceStore, type Audience } from "$lib/stores/audience.svelte";
+  } from "#lib/paraglide/runtime.js";
+  import { audienceStore, type Audience } from "#lib/stores/audience.svelte.js";
   import {
     ButtonMenu,
     ButtonMenuItem,
@@ -49,6 +49,9 @@
     setLocale(code);
     currentLocale = getLocale();
   }
+
+  // Localized hrefs (e.g. /de/model) aren't in the app's route types
+  const resolveHref = resolve as (href: string) => string;
 
   // Get the route path without base prefix for localizeHref
   function routePath() {
@@ -100,7 +103,7 @@
     <link
       rel="alternate"
       hreflang={locale}
-      href="{base}{localizeHref(routePath(), { locale })}"
+      href={resolveHref(localizeHref(routePath(), { locale }))}
     />
   {/each}
   <meta
@@ -116,7 +119,7 @@
 <!-- Hidden locale links for Paraglide's prerender crawler -->
 <div style="display:none">
   {#each locales as locale (locale)}
-    <a href="{base}{localizeHref(routePath(), { locale })}">{locale}</a>
+    <a href={resolveHref(localizeHref(routePath(), { locale }))}>{locale}</a>
   {/each}
 </div>
 
@@ -127,22 +130,26 @@
     </div>
   {/snippet}
   <CollapseToBurger collapseAt="1800px">
-    <NavItem href="{base}/">{m.sde_pagenames_start()}</NavItem>
-    <NavItem href="{base}/photosynthesis">
+    <NavItem href={resolve("/")}>{m.sde_pagenames_start()}</NavItem>
+    <NavItem href={resolve("photosynthesis")}>
       {m.sde_pagenames_photosynthesis()}
     </NavItem>
-    <NavItem href="{base}/method">{m.sde_pagenames_measuringmethod()}</NavItem>
-    <NavItem href="{base}/model">
+    <NavItem href={resolve("method")}
+      >{m.sde_pagenames_measuringmethod()}</NavItem
+    >
+    <NavItem href={resolve("model")}>
       {m.sde_pagenames_computationalmodels()}
     </NavItem>
-    <NavItem href="{base}/experiments">
+    <NavItem href={resolve("experiments")}>
       {m.sde_pagenames_experimentsinsilico()}
     </NavItem>
-    <NavItem href="{base}/plant-memory">
+    <NavItem href={resolve("plant-memory")}>
       {m.sde_pagenames_plantlightmemory()}
     </NavItem>
-    <NavItem href="{base}/conclusion">{m.sde_pagenames_conclusion()}</NavItem>
-    <NavItem href="{base}/contact">{m.sde_pagenames_contact()}</NavItem>
+    <NavItem href={resolve("conclusion")}
+      >{m.sde_pagenames_conclusion()}</NavItem
+    >
+    <NavItem href={resolve("contact")}>{m.sde_pagenames_contact()}</NavItem>
   </CollapseToBurger>
   <ButtonMenu aria-label={m.sde_sidebar_audience()}>
     {#snippet label()}

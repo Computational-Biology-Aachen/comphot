@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { base } from "$app/paths";
-  import { ta } from "$lib/i18n";
-  import * as m from "$lib/paraglide/messages";
-  import { audienceStore } from "$lib/stores/audience.svelte";
+  import { asset } from "$app/paths";
+  import { ta } from "#lib/i18n.js";
+  import * as m from "#lib/paraglide/messages.js";
+  import { audienceStore } from "#lib/stores/audience.svelte.js";
   import {
     Accordion,
     Bold,
@@ -154,7 +154,6 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
   </InfoBox>
 
   <PageNav
-    base={base}
     prev={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
     next={{
       href: "/experiments",
@@ -170,7 +169,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
   </Text>
 
   <Figure
-    src="{base}/pictures/Modeling_scheme_eng.png"
+    src={asset("pictures/Modeling_scheme_eng.png")}
     alt="Modeling cycle diagram"
   >
     {#snippet caption()}{m.mdl_caption_modelling_picture()}{/snippet}
@@ -206,7 +205,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
         {#if audienceStore.audience === "4bio"}
           <div class="max-width">
             <Figure
-              src="{base}/pictures/SIR_Aliens.png"
+              src={asset("pictures/SIR_Aliens.png")}
               alt="SIR Aliens diagram"
             />
           </div>
@@ -233,7 +232,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
         {#if audienceStore.audience === "4bio"}
           <div class="max-width">
             <Figure
-              src="{base}/pictures/SIR_AliensScheme.png"
+              src={asset("pictures/SIR_AliensScheme.png")}
               alt="SIR Aliens scheme"
             />
           </div>
@@ -296,7 +295,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
           {@html marked.parseInline(m.math_mdl_sir_implementation_manual_1())}
         </Text>
         <Figure
-          src="{base}/pictures/SIR_manual.png"
+          src={asset("pictures/SIR_manual.png")}
           alt="SIR model manual plot"
         />
         <Code><Pre>{sirV1Plot}</Pre></Code>
@@ -335,7 +334,7 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
           )}
         </Text>
         <Figure
-          src="{base}/pictures/SIR_modelbase.png"
+          src={asset("pictures/SIR_modelbase.png")}
           alt="SIR modelbase plot"
         />
         <Code><Pre>{sirV2Simulation}</Pre></Code>
@@ -495,7 +494,6 @@ sird.add_reaction_from_args("death", proportional, {"i": -1, "d": 1}, ["mu", "i"
   </Accordion>
 
   <PageNav
-    base={base}
     prev={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
     next={{
       href: "/experiments",

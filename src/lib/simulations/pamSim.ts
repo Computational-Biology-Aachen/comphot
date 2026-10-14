@@ -1,8 +1,8 @@
-import { browser } from "$app/environment";
-import { base } from "$app/paths";
+import { browser } from "$app/env";
+import { resolve } from "$app/paths";
 import type { ProtocolStep } from "@computational-biology-aachen/mxlweb-core/pam";
 
-import { initModel } from "$lib/simulations/matuszynska2016_npq";
+import { initModel } from "#lib/simulations/matuszynska2016_npq.js";
 import type {
   SimulationRequest,
   SimulationResult,
@@ -28,7 +28,11 @@ const handlers = new Set<(data: SimulationResult) => void>();
 if (browser) {
   const url = new URL(wasmWorkerUrlString, import.meta.url);
   worker = new Worker(url, { type: "module" });
-  worker.postMessage({ type: "__INIT__", basePath: base });
+  // the worker appends "/wasm/..." itself, so hand it the base path without the trailing slash
+  worker.postMessage({
+    type: "__INIT__",
+    basePath: resolve("/").replace(/\/$/, ""),
+  });
   worker.onmessage = (e: MessageEvent<SimulationResult>) =>
     handlers.forEach((h) => h(e.data));
 }

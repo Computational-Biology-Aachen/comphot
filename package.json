@@ -17,8 +17,9 @@
     "@eslint/compat": "^2.1.1",
     "@eslint/js": "^10.0.1",
     "@inlang/paraglide-js": "^2.26.0",
-    "@sveltejs/adapter-static": "^3.0.10",
-    "@sveltejs/kit": "^2.70.3",
+    "@sveltejs/adapter-static": "^4.0.0",
+    "@sveltejs/kit": "^3.0.1",
+    "@sveltejs/load-config": "^0.2.2",
     "@sveltejs/vite-plugin-svelte": "^7.3.1",
     "@types/node": "^26",
     "eslint": "^10.12.0",
@@ -31,7 +32,7 @@
     "prettier-plugin-css-order": "^2.2.0",
     "prettier-plugin-svelte": "^4.1.1",
     "svelte": ">=5.57.2",
-    "svelte-check": "^4.7.4",
+    "svelte-check": "^4.7.5",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.71.1",
     "vite": "^8.3.4"
@@ -47,5 +48,9 @@
     "svelte-chartjs": "^4.0.1",
     "svelte-katex": "^0.2.0",
     "wat-compiler": "^1.1.1"
+  },
+  "imports": {
+    "#lib": "./src/lib/index.js",
+    "#lib/*": "./src/lib/*"
   }
 }

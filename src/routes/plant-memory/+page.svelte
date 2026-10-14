@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { base } from "$app/paths";
-  import PamResults from "$lib/components/PamResults.svelte";
-  import { ta } from "$lib/i18n";
-  import * as m from "$lib/paraglide/messages";
-  import { LOG_STEPS } from "$lib/simulations/pamSim";
-  import { audienceStore } from "$lib/stores/audience.svelte";
+  import { asset } from "$app/paths";
+  import PamResults from "#lib/components/PamResults.svelte";
+  import { ta } from "#lib/i18n.js";
+  import * as m from "#lib/paraglide/messages.js";
+  import { LOG_STEPS } from "#lib/simulations/pamSim.js";
+  import { audienceStore } from "#lib/stores/audience.svelte.js";
   import {
     Accordion,
     Bold,
@@ -147,7 +147,6 @@
   </InfoBox>
 
   <PageNav
-    base={base}
     prev={{ href: "/experiments", label: "Experiments in Silico" }}
     next={{ href: "/conclusion", label: "Conclusion" }}
   />
@@ -160,7 +159,7 @@
   </Text>
 
   <Figure
-    src="{base}/pictures/NPQphotosynthesis.png"
+    src={asset("pictures/NPQphotosynthesis.png")}
     alt="Memory protocol diagram"
   >
     {#snippet caption()}Memory protocol overview{/snippet}
@@ -361,7 +360,6 @@
   </Accordion>
 
   <PageNav
-    base={base}
     prev={{ href: "/experiments", label: "Experiments in Silico" }}
     next={{ href: "/conclusion", label: "Conclusion" }}
   />

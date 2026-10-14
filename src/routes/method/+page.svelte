@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { base } from "$app/paths";
-  import { ta } from "$lib/i18n";
-  import * as m from "$lib/paraglide/messages";
-  import { audienceStore } from "$lib/stores/audience.svelte";
+  import { asset } from "$app/paths";
+  import { ta } from "#lib/i18n.js";
+  import * as m from "#lib/paraglide/messages.js";
+  import { audienceStore } from "#lib/stores/audience.svelte.js";
   import {
     Accordion,
     Figure,
@@ -67,7 +67,6 @@
   </InfoBox>
 
   <PageNav
-    base={base}
     prev={{
       href: "/photosynthesis",
       label: m.sde_pagenames_photosynthesis(),
@@ -84,11 +83,11 @@
     aria-label="PAM measurement short video"
   >
     <source
-      src="{base}/pictures/Kurzvideo-Messmethode.webm"
+      src={asset("pictures/Kurzvideo-Messmethode.webm")}
       type="video/webm"
     />
     <source
-      src="{base}/pictures/Kurzvideo-Messmethode.mp4"
+      src={asset("pictures/Kurzvideo-Messmethode.mp4")}
       type="video/mp4"
     />
   </video>
@@ -103,7 +102,7 @@
   </Text>
 
   <Figure
-    src="{base}/pictures/Foto-Fluoreszierende_Pflanzen.jpg"
+    src={asset("pictures/Foto-Fluoreszierende_Pflanzen.jpg")}
     alt="A plant fluorescing under UV light"
   >
     {#snippet caption()}{m.mth_caption_abb1()}{/snippet}
@@ -187,7 +186,7 @@
       )}
     </Text>
     <Figure
-      src="{base}/pictures/PAMbasics.png"
+      src={asset("pictures/PAMbasics.png")}
       alt="PAM basics diagram"
     >
       {#snippet caption()}{m.mth_caption_abb2()}{/snippet}
@@ -203,7 +202,7 @@
   </Text>
 
   <Figure
-    src="{base}/pictures/Beispielabbildung_en.png"
+    src={asset("pictures/Beispielabbildung_en.png")}
     alt="Example PAM measurement result"
   >
     {#snippet caption()}{m.mth_caption_abb2()}{/snippet}
@@ -237,7 +236,6 @@
   </Accordion>
 
   <PageNav
-    base={base}
     prev={{
       href: "/photosynthesis",
       label: m.sde_pagenames_photosynthesis(),

@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { base } from "$app/paths";
-  import * as m from "$lib/paraglide/messages";
+  import * as m from "#lib/paraglide/messages.js";
   import {
     Bold,
     Button,
@@ -91,7 +90,6 @@ ER  -`;
   </H1>
 
   <PageNav
-    base={base}
     prev={{ href: "/conclusion", label: m.sde_pagenames_conclusion() }}
   />
 
@@ -234,7 +232,6 @@ ER  -`;
   <Text>{@html marked.parseInline(m.cont_programs_biorender())}</Text>
 
   <PageNav
-    base={base}
     prev={{ href: "/conclusion", label: m.sde_pagenames_conclusion() }}
   />
 </Main>

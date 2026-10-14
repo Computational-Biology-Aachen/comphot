@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { base } from "$app/paths";
-  import * as m from "$lib/paraglide/messages";
-  import { audienceStore } from "$lib/stores/audience.svelte";
+  import { asset } from "$app/paths";
+  import * as m from "#lib/paraglide/messages.js";
+  import { audienceStore } from "#lib/stores/audience.svelte.js";
   import {
     Bold,
     Figure,
@@ -25,7 +25,6 @@
 >
   <H1>{@html marked.parseInline(m.con_headline_conclusion())}</H1>
   <PageNav
-    base={base}
     prev={{
       href: "/plant-memory",
       label: m.sde_pagenames_plantlightmemory(),
@@ -50,7 +49,7 @@
   </Ul>
 
   <Figure
-    src="{base}/pictures/photosynthesis_productivity.gif"
+    src={asset("pictures/photosynthesis_productivity.gif")}
     alt="Photosynthesis productivity animation"
   />
 
@@ -63,7 +62,6 @@
   <Text><Bold>{@html marked.parseInline(m.con_conclusion_p3())}</Bold></Text>
 
   <PageNav
-    base={base}
     prev={{
       href: "/plant-memory",
       label: m.sde_pagenames_plantlightmemory(),

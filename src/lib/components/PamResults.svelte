@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { ta } from "$lib/i18n";
-  import * as m from "$lib/paraglide/messages";
+  import { ta } from "#lib/i18n.js";
+  import * as m from "#lib/paraglide/messages.js";
   import type { ProtocolStep } from "@computational-biology-aachen/mxlweb-core/pam";
 
   import {
@@ -11,8 +11,8 @@
     normalizeToMax,
   } from "@computational-biology-aachen/mxlweb-core/pam";
 
-  import { simulate, type SimParams } from "$lib/simulations/pamSim";
-  import { audienceStore } from "$lib/stores/audience.svelte";
+  import { simulate, type SimParams } from "#lib/simulations/pamSim.js";
+  import { audienceStore } from "#lib/stores/audience.svelte.js";
   import {
     LineChart,
     ParameterTable,

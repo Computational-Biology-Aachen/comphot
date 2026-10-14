@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { base } from "$app/paths";
-  import { ta } from "$lib/i18n";
-  import * as m from "$lib/paraglide/messages";
-  import { audienceStore } from "$lib/stores/audience.svelte";
+  import { asset } from "$app/paths";
+  import { ta } from "#lib/i18n.js";
+  import * as m from "#lib/paraglide/messages.js";
+  import { audienceStore } from "#lib/stores/audience.svelte.js";
   import {
     Accordion,
     Figure,
@@ -72,7 +72,6 @@
   </InfoBox>
 
   <PageNav
-    base={base}
     prev={{ href: "/", label: m.sde_pagenames_start() }}
     next={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
   />
@@ -91,11 +90,11 @@
 
   {#if audienceStore.audience === "4math"}
     <Image
-      src="{base}/pictures/plants_basics.jpeg"
+      src={asset("pictures/plants_basics.jpeg")}
       alt="Plant basics"
     />
     <Image
-      src="{base}/pictures/plants_stress.jpeg"
+      src={asset("pictures/plants_stress.jpeg")}
       alt="Plants under stress"
     />
   {:else}
@@ -126,7 +125,7 @@
   </Text>
 
   <Figure
-    src="{base}/pictures/Fotosynthese_eng.jpg"
+    src={asset("pictures/Fotosynthese_eng.jpg")}
     alt="Photosynthesis diagram"
   >
     {#snippet caption()}{ta(
@@ -148,7 +147,7 @@
   </Text>
 
   <Figure
-    src="{base}/pictures/phot_place_upper.PNG"
+    src={asset("pictures/phot_place_upper.PNG")}
     alt="Leaf cross-section showing chloroplasts"
   >
     {#snippet caption()}{ta(
@@ -158,7 +157,7 @@
   </Figure>
 
   <Figure
-    src="{base}/pictures/NPQphotosynthesis.png"
+    src={asset("pictures/NPQphotosynthesis.png")}
     alt="NPQ photosynthesis apparatus"
   >
     {#snippet caption()}{m.pho_caption_fotosynthese_apparat_picture()}{/snippet}
@@ -203,7 +202,7 @@
   </Text>
 
   <Figure
-    src="{base}/pictures/Violaxanthin Scheme-4.png"
+    src={asset("pictures/Violaxanthin Scheme-4.png")}
     alt="Violaxanthin scheme - Xanthophyll cycle"
   >
     {#snippet caption()}{ta(
@@ -228,7 +227,7 @@
 
   <Accordion title={m.pho_expander_model_organismen()}>
     <Figure
-      src="{base}/pictures/Arabidopsis.jpg"
+      src={asset("pictures/Arabidopsis.jpg")}
       alt="Arabidopsis thaliana"
     >
       {#snippet caption()}
@@ -266,7 +265,6 @@
   </Accordion>
 
   <PageNav
-    base={base}
     prev={{ href: "/", label: m.sde_pagenames_start() }}
     next={{ href: "/method", label: m.sde_pagenames_measuringmethod() }}
   />

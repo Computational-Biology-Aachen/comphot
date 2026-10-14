@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { base } from "$app/paths";
+  import { asset } from "$app/paths";
 
-  import PamResults from "$lib/components/PamResults.svelte";
-  import { ta } from "$lib/i18n";
-  import * as m from "$lib/paraglide/messages";
-  import { LOG_STEPS } from "$lib/simulations/pamSim";
-  import { audienceStore } from "$lib/stores/audience.svelte";
+  import PamResults from "#lib/components/PamResults.svelte";
+  import { ta } from "#lib/i18n.js";
+  import * as m from "#lib/paraglide/messages.js";
+  import { LOG_STEPS } from "#lib/simulations/pamSim.js";
+  import { audienceStore } from "#lib/stores/audience.svelte.js";
   import {
     Accordion,
     Bold,
@@ -119,7 +119,6 @@
   </InfoBox>
 
   <PageNav
-    base={base}
     prev={{ href: "/model", label: "Computational Models" }}
     next={{ href: "/plant-memory", label: "Plant Memory" }}
   />
@@ -134,7 +133,7 @@
   </Text>
 
   <Figure
-    src="{base}/pictures/NPQphotosynthesis.png"
+    src={asset("pictures/NPQphotosynthesis.png")}
     alt={m.fal_caption_model_npq()}
   >
     {#snippet caption()}{m.fal_caption_model_npq()}{/snippet}
@@ -564,7 +563,6 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     </Ol>
   </Accordion>
   <PageNav
-    base={base}
     prev={{ href: "/model", label: "Computational Models" }}
     next={{ href: "/plant-memory", label: "Plant Memory" }}
   />

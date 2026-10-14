@@ -1,4 +1,4 @@
-import { audienceStore } from "$lib/stores/audience.svelte";
+import { audienceStore } from "#lib/stores/audience.svelte.js";
 
 /**
  * Selects the bio or math message variant based on the current audience.
