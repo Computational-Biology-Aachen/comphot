@@ -24,7 +24,7 @@
     "@types/node": "^26",
     "eslint": "^10.12.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-svelte": "^3.23.1",
+    "eslint-plugin-svelte": "^3.24.0",
     "globals": "^17.13.0",
     "image-size": "^2.0.4",
     "mdsvex": "^0.12.7",
@@ -35,7 +35,7 @@
     "svelte-check": "^4.7.5",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.71.1",
-    "vite": "^8.3.5"
+    "vite": "^8.3.6"
   },
   "dependencies": {
     "@computational-biology-aachen/design": "github:Computational-Biology-Aachen/design",
