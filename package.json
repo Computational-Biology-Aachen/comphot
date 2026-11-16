@@ -18,7 +18,7 @@
     "@eslint/js": "^10.0.1",
     "@inlang/paraglide-js": "^2.29.3",
     "@sveltejs/adapter-static": "^4.0.1",
-    "@sveltejs/kit": "^3.1.1",
+    "@sveltejs/kit": "^3.2.0",
     "@sveltejs/load-config": "^0.2.2",
     "@sveltejs/vite-plugin-svelte": "^7.3.1",
     "@types/node": "^26",
@@ -28,14 +28,14 @@
     "globals": "^17.13.0",
     "image-size": "^2.0.4",
     "mdsvex": "^0.12.7",
-    "prettier": "^3.9.9",
+    "prettier": "^3.10.1",
     "prettier-plugin-css-order": "^2.2.0",
     "prettier-plugin-svelte": "^4.1.1",
     "svelte": ">=5.57.2",
     "svelte-check": "^4.7.5",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.71.1",
-    "vite": "^8.3.6"
+    "vite": "^8.3.8"
   },
   "dependencies": {
     "@computational-biology-aachen/design": "github:Computational-Biology-Aachen/design",
