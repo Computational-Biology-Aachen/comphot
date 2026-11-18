@@ -23,7 +23,13 @@
     PageNav,
     type PhaseRegion,
     Pre,
+    Table,
+    Tbody,
+    Td,
     Text,
+    Th,
+    Thead,
+    Tr,
     Ul,
   } from "@computational-biology-aachen/design";
   import { buildPamProtocol } from "@computational-biology-aachen/mxlweb-core/pam";
@@ -153,60 +159,60 @@
     {/snippet}
 
     <h3 class="content-table-title">{m.fal_molecules_title()}</h3>
-    <table class="content-table">
-      <thead>
-        <tr>
-          <th>{m.fal_table_col_name()}</th>
-          <th>{m.fal_table_col_description()}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{m.fal_molecules_pq_name()}</td>
-          <td>{m.fal_molecules_pq_desc()}</td>
-        </tr>
-        <tr>
-          <td>{m.fal_molecules_atp_name()}</td>
-          <td>{m.fal_molecules_atp_desc()}</td>
-        </tr>
-        <tr>
-          <td>{m.fal_molecules_xantophyll_name()}</td>
-          <td>{m.fal_molecules_xantophyll_desc()}</td>
-        </tr>
-      </tbody>
-    </table>
+    <Table label={m.fal_molecules_title()}>
+      <Thead>
+        <Tr>
+          <Th>{m.fal_table_col_name()}</Th>
+          <Th>{m.fal_table_col_description()}</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        <Tr>
+          <Td>{m.fal_molecules_pq_name()}</Td>
+          <Td>{m.fal_molecules_pq_desc()}</Td>
+        </Tr>
+        <Tr>
+          <Td>{m.fal_molecules_atp_name()}</Td>
+          <Td>{m.fal_molecules_atp_desc()}</Td>
+        </Tr>
+        <Tr>
+          <Td>{m.fal_molecules_xantophyll_name()}</Td>
+          <Td>{m.fal_molecules_xantophyll_desc()}</Td>
+        </Tr>
+      </Tbody>
+    </Table>
 
     <h3 class="content-table-title">{m.fal_enzymes_title()}</h3>
-    <table class="content-table">
-      <thead>
-        <tr>
-          <th>{m.fal_table_col_name()}</th>
-          <th>{m.fal_table_col_description()}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{m.fal_enzymes_psii_name()}</td>
-          <td>{m.fal_enzymes_psii_desc()}</td>
-        </tr>
-        <tr>
-          <td>{m.fal_enzymes_psbs_name()}</td>
-          <td>{m.fal_enzymes_psbs_desc()}</td>
-        </tr>
-        <tr>
-          <td>{m.fal_enzymes_ptox_name()}</td>
-          <td>{m.fal_enzymes_ptox_desc()}</td>
-        </tr>
-        <tr>
-          <td>{m.fal_enzymes_cytb6f_name()}</td>
-          <td>{m.fal_enzymes_cytb6f_desc()}</td>
-        </tr>
-        <tr>
-          <td>{m.fal_enzymes_atpase_name()}</td>
-          <td>{m.fal_enzymes_atpase_desc()}</td>
-        </tr>
-      </tbody>
-    </table>
+    <Table label={m.fal_enzymes_title()}>
+      <Thead>
+        <Tr>
+          <Th>{m.fal_table_col_name()}</Th>
+          <Th>{m.fal_table_col_description()}</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        <Tr>
+          <Td>{m.fal_enzymes_psii_name()}</Td>
+          <Td>{m.fal_enzymes_psii_desc()}</Td>
+        </Tr>
+        <Tr>
+          <Td>{m.fal_enzymes_psbs_name()}</Td>
+          <Td>{m.fal_enzymes_psbs_desc()}</Td>
+        </Tr>
+        <Tr>
+          <Td>{m.fal_enzymes_ptox_name()}</Td>
+          <Td>{m.fal_enzymes_ptox_desc()}</Td>
+        </Tr>
+        <Tr>
+          <Td>{m.fal_enzymes_cytb6f_name()}</Td>
+          <Td>{m.fal_enzymes_cytb6f_desc()}</Td>
+        </Tr>
+        <Tr>
+          <Td>{m.fal_enzymes_atpase_name()}</Td>
+          <Td>{m.fal_enzymes_atpase_desc()}</Td>
+        </Tr>
+      </Tbody>
+    </Table>
   </Accordion>
 
   <!-- 4math: ODE equations + code walkthrough -->
@@ -625,26 +631,5 @@ Q &= \gamma_0 (1-\tfrac{Z}{Z+K_{ZSat}}) \mathrm{PsbS} + \gamma_1 (1-\tfrac{Z}{Z+
     margin: var(--space-4, 16px) 0 var(--space-2, 8px);
     font-weight: 600;
     font-size: 1rem;
-  }
-
-  .content-table {
-    margin-bottom: var(--space-4, 16px);
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 0.875rem;
-  }
-
-  .content-table th,
-  .content-table td {
-    vertical-align: top;
-    border-bottom: 1px solid var(--color-border);
-    padding: 0.4rem 0.75rem;
-    text-align: left;
-  }
-
-  .content-table th {
-    background: var(--color-surface);
-    font-weight: 600;
-    white-space: nowrap;
   }
 </style>

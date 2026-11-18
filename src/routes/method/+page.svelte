@@ -77,6 +77,7 @@
   <video
     class="measurement-video"
     controls
+    preload="metadata"
     muted
     loop
     playsinline
