@@ -83,6 +83,7 @@ function serveAndCopyCoreStatic(): Plugin {
 export default defineConfig({
   resolve: { alias: workspaceAlias },
   plugins: [
+    mdsvex({ extensions: [".svx", ".md"] }),
     sveltekit({
       compilerOptions: {
         // Force runes mode for the project, except for libraries. Can be removed in svelte 6.
@@ -108,7 +109,6 @@ export default defineConfig({
         // only recovering reactively after a failed navigation.
         pollInterval: 300_000,
       },
-      preprocess: [mdsvex({ extensions: [".svx", ".md"] })],
       extensions: [".svelte", ".svx", ".md"],
     }),
     paraglideVitePlugin({
